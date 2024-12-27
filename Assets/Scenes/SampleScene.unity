@@ -350,6 +350,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -778, y: -324}
   m_Pivot: {x: 0.5, y: 0.5}
+<<<<<<< HEAD
 --- !u!1 &304080881 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4960245740053973051, guid: 33d5ea3c37ad8924eb317201a3ccd374, type: 3}
@@ -384,6 +385,8 @@ MonoBehaviour:
   m_Spacing: {x: 10, y: 0}
   m_Constraint: 2
   m_ConstraintCount: 1
+=======
+>>>>>>> parent of 76a58ab (setting screen done)
 --- !u!1 &326728045
 GameObject:
   m_ObjectHideFlags: 0
@@ -459,6 +462,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 326728045}
   m_CullTransparentMesh: 1
+<<<<<<< HEAD
 --- !u!1 &436339801
 GameObject:
   m_ObjectHideFlags: 0
@@ -534,6 +538,8 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 436339801}
   m_CullTransparentMesh: 1
+=======
+>>>>>>> parent of 76a58ab (setting screen done)
 --- !u!1 &436965681
 GameObject:
   m_ObjectHideFlags: 0
@@ -786,7 +792,10 @@ RectTransform:
   - {fileID: 326728046}
   - {fileID: 192478795}
   - {fileID: 1619362159}
+<<<<<<< HEAD
   - {fileID: 648963361}
+=======
+>>>>>>> parent of 76a58ab (setting screen done)
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -813,6 +822,7 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+<<<<<<< HEAD
 --- !u!1 &601687190 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2554888484539684163, guid: 1013fc0510dffff49b559ee97c58200f, type: 3}
@@ -823,6 +833,8 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6822809436619969976, guid: 1013fc0510dffff49b559ee97c58200f, type: 3}
   m_PrefabInstance: {fileID: 1658172694866530106}
   m_PrefabAsset: {fileID: 0}
+=======
+>>>>>>> parent of 76a58ab (setting screen done)
 --- !u!1 &641797774
 GameObject:
   m_ObjectHideFlags: 0
@@ -1313,6 +1325,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 715750130}
   m_CullTransparentMesh: 1
+<<<<<<< HEAD
 --- !u!1 &724413720
 GameObject:
   m_ObjectHideFlags: 0
@@ -1463,6 +1476,8 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 724413720}
   m_CullTransparentMesh: 1
+=======
+>>>>>>> parent of 76a58ab (setting screen done)
 --- !u!1 &880071227
 GameObject:
   m_ObjectHideFlags: 0
@@ -2288,7 +2303,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1619362159
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2604,6 +2619,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2078286053}
   m_CullTransparentMesh: 1
+<<<<<<< HEAD
 --- !u!224 &736610436133404313 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 979687870726286653, guid: 860182d0704a6ca47b63e7fa4088d2ce, type: 3}
@@ -3004,6 +3020,8 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 860182d0704a6ca47b63e7fa4088d2ce, type: 3}
+=======
+>>>>>>> parent of 76a58ab (setting screen done)
 --- !u!1001 &6689120910391527745
 PrefabInstance:
   m_ObjectHideFlags: 0
