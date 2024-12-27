@@ -321,7 +321,7 @@ GameObject:
   - component: {fileID: 192478795}
   m_Layer: 5
   m_Name: Screen_MainMenu
-  m_TagString: unityObject
+  m_TagString: unityScreens
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -906,11 +906,11 @@ GameObject:
   - component: {fileID: 648963361}
   m_Layer: 5
   m_Name: Screen_Singleplayer
-  m_TagString: Untagged
+  m_TagString: unityScreens
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &648963361
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1460,6 +1460,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 724413720}
   m_CullTransparentMesh: 1
+--- !u!1 &765471456
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 765471458}
+  - component: {fileID: 765471457}
+  m_Layer: 0
+  m_Name: SC_MenuLogic
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &765471457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 765471456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e77021b776ad2634681b5e01c7ccb4c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &765471458
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 765471456}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 459.1277, y: 311.33902, z: 0.9300693}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &880071227
 GameObject:
   m_ObjectHideFlags: 0
@@ -2281,7 +2325,7 @@ GameObject:
   - component: {fileID: 1619362159}
   m_Layer: 5
   m_Name: Screen_Login
-  m_TagString: Untagged
+  m_TagString: unityScreens
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2526,7 +2570,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2031327943}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2076682621}
+        m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
+        m_MethodName: BTN_Login
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2031327943
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2591,7 +2647,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2076682620}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b15fe17e4613c28439807ccee43e9d59, type: 3}
+  m_Script: {fileID: 11500000, guid: e2702d25aaf9a6a4bb8839d9dafd77ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   menuParent: {fileID: 1668463294}
@@ -3377,6 +3433,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3814897799822656654, guid: 11bc6c592a967b54d9e0eb68b1c73fe5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3814897799822656654, guid: 11bc6c592a967b54d9e0eb68b1c73fe5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: BTN_Login
+      objectReference: {fileID: 0}
+    - target: {fileID: 3814897799822656654, guid: 11bc6c592a967b54d9e0eb68b1c73fe5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MenuController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3814897799822656654, guid: 11bc6c592a967b54d9e0eb68b1c73fe5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 6256969178223606740, guid: 11bc6c592a967b54d9e0eb68b1c73fe5, type: 3}
       propertyPath: m_Name
       value: Button_Login
@@ -3512,3 +3584,4 @@ SceneRoots:
   - {fileID: 1614442541}
   - {fileID: 448145282}
   - {fileID: 2076682622}
+  - {fileID: 765471458}
