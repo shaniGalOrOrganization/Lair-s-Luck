@@ -7,7 +7,7 @@ public class MenuLogic : MonoBehaviour
     #region Variables
     public enum GameScreens
     {
-        MainMenu, Login, Settings
+        MainMenu, Login, Settings, SignUp, Singleplayer
     };
 
     private Dictionary<string, GameObject> _unityScreens;
@@ -30,6 +30,8 @@ public class MenuLogic : MonoBehaviour
 
         _unityScreens["Screen_Login"].SetActive(false);
         _unityScreens["Screen_Settings"].SetActive(false);
+        _unityScreens["Screen_Singleplayer"].SetActive(false);
+        _unityScreens["Screen_SignUp"].SetActive(false);
     }
     #endregion
 
@@ -68,6 +70,20 @@ public class MenuLogic : MonoBehaviour
     public void BTN_SettingsLogin()
     {
         changeScreen(GameScreens.Settings);
+    }
+
+    public void BTN_BackLogic()
+    {
+        if (screenStack.Count > 0)
+        {
+            GameScreens prevScreen = screenStack.Pop();
+            changeScreen(prevScreen, false);
+        }
+    }
+
+    public void BTN_RegisterLogic()
+    {
+        changeScreen(GameScreens.SignUp);
     }
     #endregion
 }

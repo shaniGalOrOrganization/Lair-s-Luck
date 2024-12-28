@@ -16,5 +16,15 @@ public class MenuController : MonoBehaviour
     {
         MenuLogic.Instance.BTN_SettingsLogin();
     }
+
+    public void BTN_Back()
+    {
+        MenuLogic.Instance.BTN_BackLogic();
+    }
+
+    public void BTN_Register()
+    {
+        MenuLogic.Instance.BTN_RegisterLogic();
+    }
     #endregion
 }
