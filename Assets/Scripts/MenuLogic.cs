@@ -29,7 +29,7 @@ public class MenuLogic : MonoBehaviour
         }
 
         _unityScreens["Screen_Login"].SetActive(false);
-    //    _unityScreens["Screen_Settings"].SetActive(false);
+        _unityScreens["Screen_Settings"].SetActive(false);
     }
     #endregion
 
@@ -65,5 +65,9 @@ public class MenuLogic : MonoBehaviour
         changeScreen(GameScreens.Login);
     }
 
+    public void BTN_SettingsLogin()
+    {
+        changeScreen(GameScreens.Settings);
+    }
     #endregion
 }
