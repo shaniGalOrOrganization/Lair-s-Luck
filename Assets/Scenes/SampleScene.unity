@@ -521,7 +521,7 @@ MonoBehaviour:
   m_ChildAlignment: 4
   m_StartCorner: 2
   m_StartAxis: 1
-  m_CellSize: {x: 270, y: 387}
+  m_CellSize: {x: 310, y: 437}
   m_Spacing: {x: 25, y: 0}
   m_Constraint: 2
   m_ConstraintCount: 1
@@ -6196,11 +6196,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6348772000862343146, guid: 1013fc0510dffff49b559ee97c58200f, type: 3}
       propertyPath: m_CellSize.x
-      value: 270
+      value: 310
       objectReference: {fileID: 0}
     - target: {fileID: 6348772000862343146, guid: 1013fc0510dffff49b559ee97c58200f, type: 3}
       propertyPath: m_CellSize.y
-      value: 387
+      value: 437
       objectReference: {fileID: 0}
     - target: {fileID: 6822809436619969976, guid: 1013fc0510dffff49b559ee97c58200f, type: 3}
       propertyPath: m_Pivot.x
@@ -6578,11 +6578,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2314145079051327224, guid: 860182d0704a6ca47b63e7fa4088d2ce, type: 3}
       propertyPath: m_CellSize.x
-      value: 270
+      value: 310
       objectReference: {fileID: 0}
     - target: {fileID: 2314145079051327224, guid: 860182d0704a6ca47b63e7fa4088d2ce, type: 3}
       propertyPath: m_CellSize.y
-      value: 387
+      value: 437
       objectReference: {fileID: 0}
     - target: {fileID: 4511259036632968512, guid: 860182d0704a6ca47b63e7fa4088d2ce, type: 3}
       propertyPath: m_Size.x
