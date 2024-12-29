@@ -36,10 +36,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -10, y: 49}
-  m_SizeDelta: {x: 120, y: 177}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 5.7404, y: 244}
+  m_SizeDelta: {x: 270, y: 387}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6067125818766353326
 CanvasRenderer:
@@ -88,7 +88,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4826523492623471892}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6fc12a7589b95414da53dd45c08443c3, type: 3}
+  m_Script: {fileID: 11500000, guid: 1eefaf231e8e89e429109ca7f1f0dfc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &253650187192909495
@@ -179,7 +179,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 120, y: 177}
+  m_Size: {x: 270, y: 387}
   m_EdgeRadius: 0
 --- !u!50 &-1574145617361262495
 Rigidbody2D:
