@@ -17,17 +17,17 @@ public class DragDrop : MonoBehaviour
         }
     }
 
-    //private void OnCollisionEnter2D(Collision2D collision)
-    //{
-    //    isOverDropZone = true;
-    //    dropZone = collision.gameObject;
-    //}
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        isOverDropZone = true;
+        dropZone = collision.gameObject;
+    }
 
-    //private void OnCollisionExit2D(Collision2D collision)
-    //{
-    //    isOverDropZone = false;
-    //    dropZone = null;
-    //}
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        isOverDropZone = false;
+        dropZone = null;
+    }
 
     public void StartDrag()
     {
