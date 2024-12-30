@@ -8,14 +8,22 @@ public class DrawCards : MonoBehaviour
     public GameObject Card2;
     public GameObject PlayerArea;
     public GameObject EnemyArea;
+    //public Deck deck;
 
-    List<GameObject> cards = new List<GameObject>();
+    //public static DrawCards instance { get; private set; }
+
+    public List<GameObject> cards = new List<GameObject>();
 
     void Start()
     {
         cards.Add(Card1);
         cards.Add(Card2);
     }
+
+    //void Awake()
+    //{
+    //    instance = this;
+    //}
 
     public void OnClick()
     {
@@ -27,5 +35,14 @@ public class DrawCards : MonoBehaviour
             GameObject enemyCard = Instantiate(Card2, new Vector3(0, 0, 0), Quaternion.identity);
             enemyCard.transform.SetParent(EnemyArea.transform, false);
         }
+
+        //Card newcard = GetCard(PlayerArea);
     }
+
+    //private Card GetCard(GameObject currentArea)
+    //{
+    //    Card drawnCard = deck.drawCard();
+    //    drawnCard.transform.SetParent(currentArea.transform, false);
+    //    return drawnCard;
+    //}
 }
