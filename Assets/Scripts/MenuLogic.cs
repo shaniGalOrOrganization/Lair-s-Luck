@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using static MenuLogic;
 
 public class MenuLogic : MonoBehaviour
 {
@@ -84,6 +85,11 @@ public class MenuLogic : MonoBehaviour
     public void BTN_RegisterLogic()
     {
         changeScreen(GameScreens.SignUp);
+    }
+
+    public void BTN_SingleplayerLogic()
+    {
+        changeScreen(GameScreens.Singleplayer);
     }
     #endregion
 }
