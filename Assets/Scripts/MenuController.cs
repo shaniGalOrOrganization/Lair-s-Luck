@@ -6,7 +6,7 @@ public class MenuController : MonoBehaviour
 {
     public GameObject menuParent;
 
-    #region logic 
+    #region Logic 
     public void BTN_Login()
     {
         MenuLogic.Instance.BTN_LoginLogic();
@@ -26,5 +26,11 @@ public class MenuController : MonoBehaviour
     {
         MenuLogic.Instance.BTN_RegisterLogic();
     }
+
+    public void BTN_Singleplayer()
+    {
+        MenuLogic.Instance.BTN_SingleplayerLogic();
+    }
+
     #endregion
 }
