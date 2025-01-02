@@ -33,6 +33,7 @@ public class MenuLogic : MonoBehaviour
         _unityScreens["Screen_Settings"].SetActive(false);
         _unityScreens["Screen_Singleplayer"].SetActive(false);
         _unityScreens["Screen_SignUp"].SetActive(false);
+        _unityScreens["Screen_Loading"].SetActive(false);
     }
     #endregion
 
