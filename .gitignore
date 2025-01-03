@@ -60,7 +60,6 @@ sysinfo.txt
 *.aab
 *.unitypackage
 *.app
-*.asset
 
 # Crashlytics generated file
 crashlytics-build.properties
@@ -71,4 +70,6 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
-# Assets/PlayFabEditorExtensions/Editor/Resources/PlayFabEditorPrefsSO.asset
+
+# # Include essential PlayFab configuration files
+# !Assets/PlayFabSDK/Shared/Public/Resources/PlayFabSharedSettings.asset
