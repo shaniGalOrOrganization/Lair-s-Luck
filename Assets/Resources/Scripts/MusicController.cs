@@ -22,12 +22,13 @@ public class MusicController : MonoBehaviour
         if (PlayerPrefs.HasKey("SavedMusicVolume"))
         {
             LoadVolume();
-            Slider_Music();
+            
         }
         else
         {
             SetVolume(PlayerPrefs.GetFloat("SavedMusicVolume", 100));
         }
+        Slider_Music();
     }
 
     #endregion
@@ -42,8 +43,6 @@ public class MusicController : MonoBehaviour
         PlayerPrefs.SetFloat("SavedMusicVolume", volume);
         musicMixser.SetFloat("MasterVolume", Mathf.Log10(volume / 100) * 20f);
 
-        // save the value of the slider
-        PlayerPrefs.SetFloat("SavedMusicVolume", volume);
     }
 
     // method to save the value of the slider
