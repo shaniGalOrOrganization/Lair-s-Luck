@@ -22,6 +22,7 @@ public class MusicController : MonoBehaviour
         if (PlayerPrefs.HasKey("SavedMusicVolume"))
         {
             LoadVolume();
+            Slider_Music();
         }
         else
         {
