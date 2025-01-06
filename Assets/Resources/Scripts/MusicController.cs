@@ -11,6 +11,7 @@ public class MusicController : MonoBehaviour
 
     [SerializeField] Slider musicSlider;
     [SerializeField] AudioMixer musicMixser;
+    [SerializeField] TextMeshProUGUI musicText;
 
     #endregion
 
@@ -59,7 +60,7 @@ public class MusicController : MonoBehaviour
 
     public void Slider_Music()
     {
-        GameObject.Find("Text_MusicValue").GetComponent<TextMeshProUGUI>().text = musicSlider.GetComponent<Slider>().value.ToString();
+        musicText.text = musicSlider.GetComponent<Slider>().value.ToString();
     }
 
     #endregion

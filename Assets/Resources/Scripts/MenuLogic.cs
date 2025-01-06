@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using static MenuLogic;
 
@@ -8,7 +9,7 @@ public class MenuLogic : MonoBehaviour
     #region Variables
     public enum GameScreens
     {
-        MainMenu, Login, Settings, SignUp, Singleplayer
+        MainMenu, Login, Settings, SignUp, Singleplayer, Loading
     };
 
     private Dictionary<string, GameObject> _unityScreens;
@@ -92,5 +93,7 @@ public class MenuLogic : MonoBehaviour
     {
         changeScreen(GameScreens.Singleplayer);
     }
+
+    
     #endregion
 }
