@@ -91,9 +91,17 @@ public class MenuLogic : MonoBehaviour
 
     public void BTN_SingleplayerLogic()
     {
-        changeScreen(GameScreens.Singleplayer);
+        StartCoroutine(openLaoding(GameScreens.Singleplayer));
     }
 
-    
+    private IEnumerator openLaoding(GameScreens screen)
+    {
+        changeScreen(GameScreens.Loading);
+        yield return new WaitForSeconds(2);
+        changeScreen(screen);
+    }
+
+
+
     #endregion
 }

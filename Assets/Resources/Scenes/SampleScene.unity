@@ -2636,6 +2636,7 @@ MonoBehaviour:
   PlayerArea: {fileID: 304080881}
   EnemyArea: {fileID: 601687190}
   deck: {fileID: 0}
+  deck: {fileID: 1981328582}
   cards: []
 --- !u!114 &724413723
 MonoBehaviour:
