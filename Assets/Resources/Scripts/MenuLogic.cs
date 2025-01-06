@@ -89,6 +89,15 @@ public class MenuLogic : MonoBehaviour
         changeScreen(GameScreens.SignUp);
     }
 
+    public void BTN_SignUpLogic()
+    {
+        changeScreen(GameScreens.Login);
+    }
+
+    public void BTN_ConnectLogic()
+    {
+        changeScreen(GameScreens.MainMenu);
+    }
     public void BTN_SingleplayerLogic()
     {
         StartCoroutine(openLaoding(GameScreens.Singleplayer));
