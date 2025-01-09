@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+// using System.Security.Permissions;
 using UnityEngine;
 
 public class DrawCards : MonoBehaviour
@@ -8,6 +9,7 @@ public class DrawCards : MonoBehaviour
     public GameObject Card2;
     public GameObject PlayerArea;
     public GameObject EnemyArea;
+    public GameObject RealEnemyCardArea;
     public Deck deck;
 
     public static DrawCards instance { get; private set; }
@@ -34,6 +36,10 @@ public class DrawCards : MonoBehaviour
 
             GameObject enemyCard = Instantiate(Card2, new Vector3(0, 0, 0), Quaternion.identity);
             enemyCard.transform.SetParent(EnemyArea.transform, false);
+
+            Card realEnemyCard = deck.drawCard();
+            RealEnemyCardArea.transform.SetParent(RealEnemyCardArea.transform, false);
+
         }
 
         //Card newcard = GetCard(PlayerArea);

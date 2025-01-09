@@ -23,6 +23,15 @@ public class PlayFabManager : MonoBehaviour
         string username = usernameInput.text;
         string password = passwordInput.text;
 
+        // Debugging the input fields
+        Debug.Log($"Attempting to register with Username: {username}, Password: {password}");
+
+        if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+        {
+            Debug.LogError("Username or Password is empty. Please fill in both fields.");
+            return; // Prevent further execution
+        }
+
         var request = new PlayFab.ClientModels.RegisterPlayFabUserRequest
         {
             Username = username,
