@@ -38,7 +38,7 @@ public class DrawCards : MonoBehaviour
             enemyCard.transform.SetParent(EnemyArea.transform, false);
 
             Card realEnemyCard = deck.drawCard();
-            RealEnemyCardArea.transform.SetParent(RealEnemyCardArea.transform, false);
+            realEnemyCard.transform.SetParent(RealEnemyCardArea.transform, false);
 
         }
 

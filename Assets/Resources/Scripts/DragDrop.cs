@@ -37,21 +37,21 @@ public class DragDrop : MonoBehaviour
     }
 
     public void StartDrag()
-{
-    startPosition = transform.position;
-    isDragging = true;
-}
+    {
+        startPosition = transform.position;
+        isDragging = true;
+    }
 
-public void EndDrag()
-{
-    isDragging = false;
-    if (isOverDropZone)
+    public void EndDrag()
     {
-        transform.SetParent(dropZone.transform, false);
+        isDragging = false;
+        if (isOverDropZone)
+        {
+            transform.SetParent(dropZone.transform, false);
+        }
+        else
+        {
+            transform.position = startPosition;
+        }
     }
-    else
-    {
-        transform.position = startPosition;
-    }
-}
 }
