@@ -2326,7 +2326,6 @@ GameObject:
   - component: {fileID: 724413725}
   - component: {fileID: 724413724}
   - component: {fileID: 724413723}
-  - component: {fileID: 724413722}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -2354,6 +2353,7 @@ RectTransform:
   m_AnchoredPosition: {x: 2051.0715, y: 513.92017}
   m_SizeDelta: {x: 555.179, y: 151.367}
   m_Pivot: {x: 0.5, y: 0.5}
+<<<<<<< Updated upstream:Assets/Scenes/SampleScene.unity
 --- !u!114 &724413722
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2370,6 +2370,8 @@ MonoBehaviour:
   Card2: {fileID: 1511395787111189394, guid: 307a33e4b11543a44a6c5f3a992d3479, type: 3}
   PlayerArea: {fileID: 304080881}
   EnemyArea: {fileID: 601687190}
+=======
+>>>>>>> Stashed changes:Assets/Resources/Scenes/SampleScene.unity
 --- !u!114 &724413723
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2414,7 +2416,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 724413722}
+      - m_Target: {fileID: 749615762}
         m_TargetAssemblyTypeName: DrawCards, Assembly-CSharp
         m_MethodName: OnClick
         m_Mode: 1
@@ -2464,6 +2466,66 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 724413720}
   m_CullTransparentMesh: 1
+<<<<<<< Updated upstream:Assets/Scenes/SampleScene.unity
+=======
+--- !u!1 &749615761
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 749615763}
+  - component: {fileID: 749615762}
+  m_Layer: 0
+  m_Name: SC_DrawCards
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &749615762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 749615761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bc5c77604216e8479e71ce8935ef310, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Card1: {fileID: 4826523492623471892, guid: 38a2aaa7006f38e4e8032ed1640c389c, type: 3}
+  Card2: {fileID: 1511395787111189394, guid: 307a33e4b11543a44a6c5f3a992d3479, type: 3}
+  PlayerArea: {fileID: 304080881}
+  EnemyArea: {fileID: 601687190}
+  RealEnemyCardArea: {fileID: 1192325174}
+  Dropzone: {fileID: 751748113}
+  deck: {fileID: 1981328582}
+  cards: []
+--- !u!4 &749615763
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 749615761}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 440.439, y: 210.81082, z: -2.435674}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &751748113 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7970173106641338756, guid: 860182d0704a6ca47b63e7fa4088d2ce, type: 3}
+  m_PrefabInstance: {fileID: 5541212330685333173}
+  m_PrefabAsset: {fileID: 0}
+>>>>>>> Stashed changes:Assets/Resources/Scenes/SampleScene.unity
 --- !u!1 &765471456
 GameObject:
   m_ObjectHideFlags: 0
@@ -7563,3 +7625,9 @@ SceneRoots:
   - {fileID: 765471458}
   - {fileID: 712055113}
   - {fileID: 2109212011}
+<<<<<<< Updated upstream:Assets/Scenes/SampleScene.unity
+=======
+  - {fileID: 1981328583}
+  - {fileID: 749615763}
+  - {fileID: 719841276}
+>>>>>>> Stashed changes:Assets/Resources/Scenes/SampleScene.unity
