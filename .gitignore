@@ -70,3 +70,6 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+
+# # Include essential PlayFab configuration files
+# !Assets/PlayFabSDK/Shared/Public/Resources/PlayFabSharedSettings.asset
