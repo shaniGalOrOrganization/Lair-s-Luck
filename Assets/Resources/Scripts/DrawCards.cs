@@ -10,16 +10,16 @@ public class DrawCards : MonoBehaviour
     public GameObject PlayerArea;
     public GameObject EnemyArea;
     public GameObject RealEnemyCardArea;
+    public GameObject Dropzone;
     public Deck deck;
 
     public static DrawCards instance { get; private set; }
-
+    public bool isPlayerTurn = true;
     public List<GameObject> cards = new List<GameObject>();
 
     void Start()
     {
-        cards.Add(Card1);
-        cards.Add(Card2);
+        initGame();
     }
 
     void Awake()
@@ -28,6 +28,19 @@ public class DrawCards : MonoBehaviour
     }
 
     public void OnClick()
+    {
+        Card newCard = deck.drawCard();
+        if(isPlayerTurn)
+        {
+            newCard.transform.SetParent(PlayerArea.transform, false);
+        }
+        else
+        {
+            newCard.transform.SetParent(RealEnemyCardArea.transform, false);
+        }
+    }
+
+    public void initGame()
     {
         for (var i = 0; i < 10; i++)
         {
@@ -41,8 +54,8 @@ public class DrawCards : MonoBehaviour
             realEnemyCard.transform.SetParent(RealEnemyCardArea.transform, false);
 
         }
-
-        //Card newcard = GetCard(PlayerArea);
+        Card firstCard = deck.drawCard();
+        firstCard.transform.SetParent(Dropzone.transform, false);
     }
 
     //private Card GetCard(GameObject currentArea)
