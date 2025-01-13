@@ -2354,6 +2354,7 @@ RectTransform:
   m_SizeDelta: {x: 555.179, y: 151.367}
   m_Pivot: {x: 0.5, y: 0.5}
 <<<<<<< Updated upstream:Assets/Scenes/SampleScene.unity
+<<<<<<< Updated upstream:Assets/Scenes/SampleScene.unity
 --- !u!114 &724413722
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2370,6 +2371,8 @@ MonoBehaviour:
   Card2: {fileID: 1511395787111189394, guid: 307a33e4b11543a44a6c5f3a992d3479, type: 3}
   PlayerArea: {fileID: 304080881}
   EnemyArea: {fileID: 601687190}
+=======
+>>>>>>> Stashed changes:Assets/Resources/Scenes/SampleScene.unity
 =======
 >>>>>>> Stashed changes:Assets/Resources/Scenes/SampleScene.unity
 --- !u!114 &724413723
@@ -2467,7 +2470,10 @@ CanvasRenderer:
   m_GameObject: {fileID: 724413720}
   m_CullTransparentMesh: 1
 <<<<<<< Updated upstream:Assets/Scenes/SampleScene.unity
+<<<<<<< Updated upstream:Assets/Scenes/SampleScene.unity
 =======
+=======
+>>>>>>> Stashed changes:Assets/Resources/Scenes/SampleScene.unity
 --- !u!1 &749615761
 GameObject:
   m_ObjectHideFlags: 0
