@@ -15,7 +15,6 @@ public class SoundController : MonoBehaviour
     public AudioClip flipcard;
     public AudioClip riffleCardShuffle;
 
-
     #endregion
 
 

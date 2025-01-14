@@ -5,11 +5,16 @@ using UnityEngine;
 
 public class DragDrop : MonoBehaviour
 {
+    #region Variables
+
     private bool isDragging = false;
     private bool isOverDropZone = false;
     private GameObject dropZone;
     private Vector2 startPosition;
 
+    #endregion
+
+    #region MonoBehaviour
     void Update()
     {
         if (isDragging)
@@ -36,6 +41,9 @@ public class DragDrop : MonoBehaviour
         }
     }
 
+    #endregion
+
+    #region Logic
     public void StartDrag()
     {
         startPosition = transform.position;
@@ -54,4 +62,6 @@ public class DragDrop : MonoBehaviour
             transform.position = startPosition;
         }
     }
+
+    #endregion
 }

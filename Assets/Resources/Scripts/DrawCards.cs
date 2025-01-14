@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class DrawCards : MonoBehaviour
 {
+    #region Variables
+
     public GameObject Card1;
     public GameObject Card2;
     public GameObject PlayerArea;
@@ -17,6 +19,9 @@ public class DrawCards : MonoBehaviour
     public bool isPlayerTurn = true;
     public List<GameObject> cards = new List<GameObject>();
 
+    #endregion
+
+    #region MonoBehaviour
     void Start()
     {
         initGame();
@@ -27,6 +32,9 @@ public class DrawCards : MonoBehaviour
         instance = this;
     }
 
+    #endregion
+
+    #region Logic
     public void OnClick()
     {
         Card newCard = deck.drawCard();
@@ -64,4 +72,6 @@ public class DrawCards : MonoBehaviour
     //    drawnCard.transform.SetParent(currentArea.transform, false);
     //    return drawnCard;
     //}
+
+    #endregion
 }
