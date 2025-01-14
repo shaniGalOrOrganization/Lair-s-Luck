@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class Card : MonoBehaviour
 {
+    #region Variables
     public enum Suit { clubs, diamonds, hearts, spades}
     public enum Number { two, three, four, five, six, seven, eight, nine, jack , queen ,king , ace }
 
@@ -16,6 +17,9 @@ public class Card : MonoBehaviour
     public string cardNumber { get => _cardNumber; }
     public Sprite cardImg { get => _cardImg; }
 
+    #endregion
+
+    #region Logic
     public void SetupCard(string suit, string number, Sprite img)
     {
         _cardSuit = suit;
@@ -33,4 +37,5 @@ public class Card : MonoBehaviour
             drawCards.instance.playedCards[i].transform.SetParent(drawCards.instance.deckArray.transform, false);
         }
     }*/
+    #endregion
 }

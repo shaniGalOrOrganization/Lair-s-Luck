@@ -5,18 +5,25 @@ using UnityEngine.UI;
 
 public class Deck : MonoBehaviour
 {
+    #region Variables
+
     [SerializeField] private GameObject cardPrefab;
     [SerializeField] private Transform cardParent;
     public List<Card> cards = new List<Card>();
 
     private Card lastCard;
 
+    #endregion
+
+    #region MonoBehaviour
     void Awake()
     {
         createDeck();
     }
 
+    #endregion
 
+    #region Logic
     void createDeck()
     {
         Card card;
@@ -68,12 +75,13 @@ public class Deck : MonoBehaviour
         return card;
     }
 
- /*   public void returnCardsToDeck()
-    {
-        for (int i = 0; i < DrawCards.instance.cards.Count; i++)
-        {
-            lastCard = DrawCards.instance.cards[i];
-            DrawCards.instance.cards[i].transform.SetParent(DrawCards.instance.DeckArray.transform, false);
-        }
-    }*/
+    /*   public void returnCardsToDeck()
+       {
+           for (int i = 0; i < DrawCards.instance.cards.Count; i++)
+           {
+               lastCard = DrawCards.instance.cards[i];
+               DrawCards.instance.cards[i].transform.SetParent(DrawCards.instance.DeckArray.transform, false);
+           }
+       }*/
+    #endregion
 }

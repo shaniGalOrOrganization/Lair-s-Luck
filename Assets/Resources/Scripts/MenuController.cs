@@ -5,7 +5,11 @@ using static MenuLogic;
 
 public class MenuController : MonoBehaviour
 {
+    #region Variables
+
     public GameObject menuParent;
+
+    #endregion
 
     #region Logic 
     public void BTN_Login()
