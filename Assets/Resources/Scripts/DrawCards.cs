@@ -2,34 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 // using System.Security.Permissions;
 using UnityEngine;
+using static GameManager;
 
 public class DrawCards : MonoBehaviour
 {
-    #region Variables
-
-    public GameObject Card1;
-    public GameObject Card2;
-    public GameObject PlayerArea;
-    public GameObject EnemyArea;
-    public GameObject RealEnemyCardArea;
-    public GameObject Dropzone;
-    public Deck deck;
-
-    public static DrawCards instance { get; private set; }
-    public bool isPlayerTurn = true;
-    public List<GameObject> cards = new List<GameObject>();
-
-    #endregion
-
     #region MonoBehaviour
     void Start()
     {
         initGame();
-    }
-
-    void Awake()
-    {
-        instance = this;
     }
 
     #endregion
@@ -37,14 +17,14 @@ public class DrawCards : MonoBehaviour
     #region Logic
     public void OnClick()
     {
-        Card newCard = deck.drawCard();
-        if(isPlayerTurn)
+        Card newCard = GameManager.instance.deck.drawCard();
+        if(GameManager.instance.isPlayerTurn)
         {
-            newCard.transform.SetParent(PlayerArea.transform, false);
+            newCard.transform.SetParent(GameManager.instance.PlayerArea.transform, false);
         }
         else
         {
-            newCard.transform.SetParent(RealEnemyCardArea.transform, false);
+            newCard.transform.SetParent(GameManager.instance.RealEnemyCardArea.transform, false);
         }
     }
 
@@ -52,18 +32,18 @@ public class DrawCards : MonoBehaviour
     {
         for (var i = 0; i < 10; i++)
         {
-            Card playerCard = deck.drawCard();
-            playerCard.transform.SetParent(PlayerArea.transform, false);
+            Card playerCard = GameManager.instance.deck.drawCard();
+            playerCard.transform.SetParent(GameManager.instance.PlayerArea.transform, false);
 
-            GameObject enemyCard = Instantiate(Card2, new Vector3(0, 0, 0), Quaternion.identity);
-            enemyCard.transform.SetParent(EnemyArea.transform, false);
+            GameObject enemyCard = Instantiate(GameManager.instance.Card2, new Vector3(0, 0, 0), Quaternion.identity);
+            enemyCard.transform.SetParent(GameManager.instance.EnemyArea.transform, false);
 
-            Card realEnemyCard = deck.drawCard();
-            realEnemyCard.transform.SetParent(RealEnemyCardArea.transform, false);
+            Card realEnemyCard = GameManager.instance.deck.drawCard();
+            realEnemyCard.transform.SetParent(GameManager.instance.RealEnemyCardArea.transform, false);
 
         }
-        Card firstCard = deck.drawCard();
-        firstCard.transform.SetParent(Dropzone.transform, false);
+        Card firstCard = GameManager.instance.deck.drawCard();
+        firstCard.transform.SetParent(GameManager.instance.Dropzone.transform, false);
     }
 
     //private Card GetCard(GameObject currentArea)

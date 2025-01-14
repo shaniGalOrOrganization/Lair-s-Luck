@@ -2334,6 +2334,59 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &554154783
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 554154785}
+  - component: {fileID: 554154784}
+  m_Layer: 0
+  m_Name: SC_GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &554154784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 554154783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 125ee01ca77d3d443b348eb432dee78b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isPlayerTurn: 1
+  Card1: {fileID: 4826523492623471892, guid: 38a2aaa7006f38e4e8032ed1640c389c, type: 3}
+  Card2: {fileID: 1511395787111189394, guid: 307a33e4b11543a44a6c5f3a992d3479, type: 3}
+  PlayerArea: {fileID: 304080881}
+  EnemyArea: {fileID: 601687190}
+  RealEnemyCardArea: {fileID: 1192325174}
+  Dropzone: {fileID: 751748113}
+  deck: {fileID: 1981328582}
+  cards: []
+--- !u!4 &554154785
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 554154783}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 459.1277, y: 311.33902, z: 0.9300693}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &556757965
 GameObject:
   m_ObjectHideFlags: 0
@@ -4300,15 +4353,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28faaf39a0ead4546b5e21da8b39ed45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Card1: {fileID: 4826523492623471892, guid: 38a2aaa7006f38e4e8032ed1640c389c, type: 3}
-  Card2: {fileID: 1511395787111189394, guid: 307a33e4b11543a44a6c5f3a992d3479, type: 3}
-  PlayerArea: {fileID: 304080881}
-  EnemyArea: {fileID: 601687190}
-  RealEnemyCardArea: {fileID: 1192325174}
-  Dropzone: {fileID: 751748113}
-  deck: {fileID: 1981328582}
-  isPlayerTurn: 1
-  cards: []
 --- !u!4 &870261321
 Transform:
   m_ObjectHideFlags: 0
@@ -12212,6 +12256,7 @@ SceneRoots:
   - {fileID: 1614442541}
   - {fileID: 448145282}
   - {fileID: 2076682622}
+  - {fileID: 554154785}
   - {fileID: 870261321}
   - {fileID: 765471458}
   - {fileID: 712055113}
