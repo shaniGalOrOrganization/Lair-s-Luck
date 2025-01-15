@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,6 +22,7 @@ public class Card : MonoBehaviour
     public string cardSuitString { get => _cardSuitString; }
     public string cardNumberString { get => _cardNumberString; }
     public Sprite cardImg { get => _cardImg; }
+    public static Action<Card> OnClickCard;
 
     #endregion
 
@@ -44,6 +46,8 @@ public class Card : MonoBehaviour
         _cardImage.sprite = _cardImg;
         gameObject.name = cardSuitString + "" + cardNumberString;
     }
+
+    
 
     /*public void returnCardsToDeck()
     {
