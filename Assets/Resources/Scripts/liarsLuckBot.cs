@@ -63,6 +63,7 @@ public class liarsLuckBot : MonoBehaviour
         UpdateCardCount(drawnCard);  // Update the known cards
     }
 
+    // need update in the logic according the the rules
     public int playCard(int currentCard)
     {
         // Find valid cards to play (currentCard +- 1)
