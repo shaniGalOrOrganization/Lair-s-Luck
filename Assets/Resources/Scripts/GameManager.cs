@@ -19,10 +19,13 @@ public class GameManager : MonoBehaviour
     public GameObject RealEnemyCardArea;
     public GameObject Dropzone;
 
-    private int currentlast;
-    private int currentprev;
-    private int beforeprev;
-    private int afterprev;
+    public int currentlast;
+    public int currentprev;
+    public int beforeprev;
+    public int afterprev;
+    public int beforelast;
+    public int afterlast;
+
 
     public Deck deck;
 
@@ -47,9 +50,9 @@ public class GameManager : MonoBehaviour
 
     public void checkchosencard()
     {
-        transform.SetParent(Dropzone.transform, false);
+        //transform.SetParent(Dropzone.transform, false);
         int childCount = Dropzone.transform.childCount;
-        if (childCount > 0)
+        if (childCount > 1)
         {
             Transform lastChild = Dropzone.transform.GetChild(childCount - 1);
             Transform prevChild = Dropzone.transform.GetChild(childCount - 2);
@@ -64,9 +67,9 @@ public class GameManager : MonoBehaviour
                 if (Enum.TryParse<Card.Number>(lastCardData.cardNumberString, true, out Card.Number currentNumber))
                 {
                     currentlast = (int)currentNumber;
-                    int beforelast = currentlast - 1;
+                    beforelast = currentlast - 1;
                     if (beforelast < 1) beforelast = 13;
-                    int afterlast = currentlast + 1;
+                    afterlast = currentlast + 1;
                     if (afterlast > 13) afterlast = 1;
                     Debug.Log($"Current last: {currentlast}, Before last: {beforelast}, After last: {afterlast}");
                 }
@@ -83,9 +86,9 @@ public class GameManager : MonoBehaviour
                 if (Enum.TryParse<Card.Number>(prevCardData.cardNumberString, true, out Card.Number currentNumber))
                 {
                     currentprev = (int)currentNumber;
-                    int beforeprev = currentprev - 1;
+                    beforeprev = currentprev - 1;
                     if (beforeprev < 1) beforeprev = 13;
-                    int afterprev = currentprev + 1;
+                    afterprev = currentprev + 1;
                     if (afterprev > 13) afterprev = 1;
                     Debug.Log($"Current prev: {currentprev}, Before prev: {beforeprev}, After prev: {afterprev}");
                 }
