@@ -18,7 +18,7 @@ public class DrawCards : MonoBehaviour
     public void OnClick()
     {
         Card newCard = GameManager.instance.deck.drawCard();
-        if(GameManager.instance.isPlayerTurn)
+        if(GameManager.isPlayerTurn)
         {
             newCard.transform.SetParent(GameManager.instance.PlayerArea.transform, false);
         }

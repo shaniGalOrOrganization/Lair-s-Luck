@@ -2558,13 +2558,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 125ee01ca77d3d443b348eb432dee78b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPlayerTurn: 1
   Card1: {fileID: 4826523492623471892, guid: 38a2aaa7006f38e4e8032ed1640c389c, type: 3}
   Card2: {fileID: 1511395787111189394, guid: 307a33e4b11543a44a6c5f3a992d3479, type: 3}
   PlayerArea: {fileID: 304080881}
   EnemyArea: {fileID: 601687190}
   RealEnemyCardArea: {fileID: 1192325174}
   Dropzone: {fileID: 751748113}
+  currentlast: 0
+  currentprev: 0
+  beforeprev: 0
+  afterprev: 0
+  beforelast: 0
+  afterlast: 0
+  LairButton: {fileID: 1581657377}
   deck: {fileID: 1981328582}
   cards: []
 --- !u!4 &554154785
@@ -9807,7 +9813,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1581657378}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 554154784}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: BTN_Lair
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1581657378
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11778,7 +11796,7 @@ MonoBehaviour:
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_PressedColor: {r: 0.8867924, g: 0.11210393, b: 0.11210393, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1

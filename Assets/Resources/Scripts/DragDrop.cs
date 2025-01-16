@@ -86,7 +86,7 @@ public class DragDrop : MonoBehaviour
             int childCount = dropZone.transform.childCount;
             if (childCount > 0)
             {
-                Transform lastChild = dropZone.transform.GetChild(childCount - 1);
+                Transform lastChild = dropZone.transform.GetChild(childCount - 2);
                 Card lastCardData = lastChild.GetComponent<Card>();
                 if (lastCardData != null)
                 {
@@ -178,6 +178,10 @@ public class DragDrop : MonoBehaviour
                             break;
                     }
                 }
+
+                GameManager.instance.checkchosencard();
+                GameManager.instance.LairButton.interactable = false;
+
             }
             else
             {
