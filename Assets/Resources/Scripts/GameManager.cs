@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour
 
     public void checkchosencard()
     {
-        // transform.SetParent(Dropzone.transform, false);
+        //transform.SetParent(Dropzone.transform, false);
         int childCount = Dropzone.transform.childCount;
         if (childCount > 1)
         {
