@@ -11209,7 +11209,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1802365203}
   m_Layer: 5
-  m_Name: Multyplayer_Connect_Screen
+  m_Name: Screen_multiplayer
   m_TagString: unityScreens
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
