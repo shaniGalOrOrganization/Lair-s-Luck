@@ -2420,6 +2420,7 @@ MonoBehaviour:
   afterprev: 0
   beforelast: 0
   afterlast: 0
+  LairButton: {fileID: 1581657377}
   deck: {fileID: 1981328582}
   cards: []
 --- !u!4 &554154785

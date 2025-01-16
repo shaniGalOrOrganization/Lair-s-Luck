@@ -4,6 +4,7 @@ using System.Collections.Generic;
 //using System.Diagnostics;
 using System.Security.Cryptography;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -27,6 +28,7 @@ public class GameManager : MonoBehaviour
     public int afterprev;
     public int beforelast;
     public int afterlast;
+    public Button LairButton;
 
     public Deck deck;
 

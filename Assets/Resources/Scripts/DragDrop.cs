@@ -14,7 +14,6 @@ public class DragDrop : MonoBehaviour
     private GameObject dropZone;
     private Vector2 startPosition;
     private Dictionary<string, GameObject> _unityButtonsLairChoose = new Dictionary<string, GameObject>();
-    public Button LairButton;
     #endregion
 
     
@@ -181,7 +180,7 @@ public class DragDrop : MonoBehaviour
                 }
 
                 GameManager.instance.checkchosencard();
-                LairButton.interactable = false;
+                GameManager.instance.LairButton.interactable = false;
 
             }
             else
