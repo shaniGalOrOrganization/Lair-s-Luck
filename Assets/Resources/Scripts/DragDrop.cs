@@ -178,6 +178,8 @@ public class DragDrop : MonoBehaviour
                             break;
                     }
                 }
+
+                GameManager.instance.checkchosencard();
             }
             else
             {

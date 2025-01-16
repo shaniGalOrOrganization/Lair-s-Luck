@@ -1,15 +1,16 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    #region Variables
-
-    //public static bool PlayerAnnounceLie;
-    //public static bool EnemyAnnounceLie;
+    #region Variable
     public static bool AnnounceLie;
-    public bool isPlayerTurn = true;
+    public static bool isPlayerTurn = true;
+    public static bool EnemyAnnounceLie = false;
+    public static bool isEnemyTurn = true;
+    public static bool PlayerAnnounceLie = false;
 
     public GameObject Card1;
     public GameObject Card2;
@@ -17,6 +18,11 @@ public class GameManager : MonoBehaviour
     public GameObject EnemyArea;
     public GameObject RealEnemyCardArea;
     public GameObject Dropzone;
+
+    private int currentlast;
+    private int currentprev;
+    private int beforeprev;
+    private int afterprev;
 
     public Deck deck;
 
@@ -34,54 +40,101 @@ public class GameManager : MonoBehaviour
         instance = this;
     }
 
-    
+
     #endregion
 
     #region Logic
 
-
-
-    /*public void checkchosencard(Card card)// בודק בהכרזה אם הקלף ששמת שונה ממה שאמרת.
+    public void checkchosencard()
     {
-        if ((card.cardNumber != TempCardValue) || (card.cardNumber != TempCardValue - 1) || card.cardNumber != TempCardValue + 1) // בודק אם הקלף ששמת הוא ולידי
+        transform.SetParent(Dropzone.transform, false);
+        int childCount = Dropzone.transform.childCount;
+        if (childCount > 0)
         {
-            AnnounceLie = true;
-        }
-        else
-        {
-            AnnounceLie = false;
-        }
+            Transform lastChild = Dropzone.transform.GetChild(childCount - 1);
+            Transform prevChild = Dropzone.transform.GetChild(childCount - 2);
 
-        if (isPlayerTurn)
-        {
-            PlayerAnnounceLie = AnnounceLie;
-            Debug.Log(PlayerAnnounceLie + " (true = your Openning card was a lie , false =  Openning card wasn't a lie)");
-        }
+            Card lastCardData = lastChild.GetComponent<Card>();
+            Card prevCardData = prevChild.GetComponent<Card>();
 
-        else
-        {
-            EnemyAnnounceLie = AnnounceLie;
-        }
-    }*/
-
-    public void BTN_Lair()
-    {
-        if(isPlayerTurn)
-        {
-            if (AnnounceLie)
+            if (lastCardData != null)
             {
-                //הבוט שיקר צריך להזיז את הקלפים אל היד של הבוט 
+                Debug.Log($"Last card check in drop zone: {lastCardData.cardNumberString} of {lastCardData.cardSuitString}");
+
+                if (Enum.TryParse<Card.Number>(lastCardData.cardNumberString, true, out Card.Number currentNumber))
+                {
+                    currentlast = (int)currentNumber;
+                    int beforelast = currentlast - 1;
+                    if (beforelast < 1) beforelast = 13;
+                    int afterlast = currentlast + 1;
+                    if (afterlast > 13) afterlast = 1;
+                    Debug.Log($"Current last: {currentlast}, Before last: {beforelast}, After last: {afterlast}");
+                }
+                else
+                {
+                    Debug.LogError($"Invalid card number string: {lastCardData.cardNumberString}");
+                }
+            }
+
+            if (prevCardData != null)
+            {
+                Debug.Log($"Prev card check in drop zone: {prevCardData.cardNumberString} of {prevCardData.cardSuitString}");
+
+                if (Enum.TryParse<Card.Number>(prevCardData.cardNumberString, true, out Card.Number currentNumber))
+                {
+                    currentprev = (int)currentNumber;
+                    int beforeprev = currentprev - 1;
+                    if (beforeprev < 1) beforeprev = 13;
+                    int afterprev = currentprev + 1;
+                    if (afterprev > 13) afterprev = 1;
+                    Debug.Log($"Current prev: {currentprev}, Before prev: {beforeprev}, After prev: {afterprev}");
+                }
+                else
+                {
+                    Debug.LogError($"Invalid card number string: {prevCardData.cardNumberString}");
+                }
+            }
+
+            if ((currentlast != currentprev) && (currentlast != beforeprev) && (currentlast != afterprev))
+            {
+                GameManager.AnnounceLie = true;
+                Debug.Log("Liar");
+            }
+            else
+            {
+                GameManager.AnnounceLie = false;
+                Debug.Log("Not liar");
+            }
+
+            if (GameManager.isPlayerTurn)
+            {
+                GameManager.PlayerAnnounceLie = GameManager.AnnounceLie;
+            }
+            else
+            {
+                EnemyAnnounceLie = GameManager.AnnounceLie;
             }
         }
-        else
-        {
-            if (AnnounceLie)
-            {
-                //השחקן שיקר צריך להזיז את הקלפים אל היד של השחקן
-            }
-        }
-
     }
+
+    //public void BTN_Lair()
+    //{
+    //    if(GameManager.isPlayerTurn)
+    //    {
+    //        if (GameManager.AnnounceLie)
+    //        {
+    //            //הבוט שיקר צריך להזיז את הקלפים אל היד של הבוט 
+    //        }
+    //    }
+    //    else
+    //    {
+    //        if (GameManager.AnnounceLie)
+    //        {
+    //            //השחקן שיקר צריך להזיז את הקלפים אל היד של השחקן
+    //        }
+    //    }
+
+    //}
 
     #endregion
 }
