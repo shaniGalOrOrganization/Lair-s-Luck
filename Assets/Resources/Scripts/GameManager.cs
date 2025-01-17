@@ -36,10 +36,18 @@ public class GameManager : MonoBehaviour
 
     public  static GameManager instance { get; private set; }
 
+    public GameObject bot;
+    private liarsLuckBot botScript;
 
     #endregion
 
     #region MonoBehaviour
+
+    public void Start()
+    {
+        botScript = bot.GetComponent<liarsLuckBot>();
+    }
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -50,6 +58,84 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Logic
+
+    public void onButtonAceClicked()
+    {
+        Debug.Log("Button five clicked");
+        botScript.OnLiarCardSelected(1);
+    }
+
+    public void onButtonTwoClicked()
+    {
+        Debug.Log("Button five clicked");
+        botScript.OnLiarCardSelected(2);
+    }
+
+    public void onButtonThreeClicked()
+    {
+        Debug.Log("Button five clicked");
+        botScript.OnLiarCardSelected(3);
+    }
+
+    public void onButtonFourClicked()
+    {
+        Debug.Log("Button five clicked");
+        botScript.OnLiarCardSelected(4);
+    }
+
+    public void onButtonFiveClicked()
+    {
+        Debug.Log("Button five clicked");
+        botScript.OnLiarCardSelected(5);
+    }
+
+    public void onButtonSixClicked()
+    {
+        Debug.Log("Button five clicked");
+        botScript.OnLiarCardSelected(6);
+    }
+
+    public void onButtonSevenClicked()
+    {
+        Debug.Log("Button five clicked");
+        botScript.OnLiarCardSelected(7);
+    }
+
+    public void onButtonEightClicked()
+    {
+        Debug.Log("Button five clicked");
+        botScript.OnLiarCardSelected(8);
+    }
+
+    public void onButtonNineClicked()
+    {
+        Debug.Log("Button five clicked");
+        botScript.OnLiarCardSelected(9);
+    }
+
+    public void onButtonTenClicked()
+    {
+        Debug.Log("Button five clicked");
+        botScript.OnLiarCardSelected(10);
+    }
+
+    public void onButtonJackClicked()
+    {
+        Debug.Log("Button five clicked");
+        botScript.OnLiarCardSelected(11);
+    }
+
+    public void onButtonQueenClicked()
+    {
+        Debug.Log("Button five clicked");
+        botScript.OnLiarCardSelected(12);
+    }
+
+    public void onButtonKingClicked()
+    {
+        Debug.Log("Button five clicked");
+        botScript.OnLiarCardSelected(13);
+    }
 
     public void checkchosencard()
     {
