@@ -12,7 +12,7 @@ public class liarsLuckBot : MonoBehaviour
 
     //public void InitializeBot(List<int> initialHand, int totalUnseenCards)
     //{
-    //    hand = new List<int>(initialHand);
+    //    // hand = new List<int>(initialHand);
     //    unseenCardsCount = totalUnseenCards;
 
     //    // Initialize cardCounts with 0 - the first cell will remain 0, for simplifying the logic
@@ -22,7 +22,7 @@ public class liarsLuckBot : MonoBehaviour
     //    }
 
     //    // Add the bot's hand to cardCounts
-    //    foreach (int card in hand)
+    //    foreach (int card in initialHand)
     //    {
     //        cardCounts[card]++;
     //    }
@@ -101,8 +101,9 @@ public class liarsLuckBot : MonoBehaviour
         Debug.Log($"Bot received liar button: {buttonNum}");
     }
 
-    //public void OnPlayerDroppedCard(int cardNum)
-    //{
-    //    Debug.Log($"Bot received player dropped card: {cardNum}");
-    //}
+
+    public void OnPlayerDroppedCard(int cardNum)
+    {
+        Debug.Log($"Bot received player dropped card: {cardNum}");
+    }
 }

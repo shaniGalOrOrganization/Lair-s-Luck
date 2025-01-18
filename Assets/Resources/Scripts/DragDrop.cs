@@ -17,21 +17,23 @@ public class DragDrop : MonoBehaviour
     #endregion
 
 
-    //public GameObject bot;
-    //private liarsLuckBot botScript;
-    //public int currentToBot;
-
+    public GameObject bot;
+    private liarsLuckBot botScript;
+    
 
     #region MonoBehaviour
 
-    //public void Start()
-    //{
-    //    botScript = bot.GetComponent<liarsLuckBot>();
-    //}
+    public void Start()
+    {
+        bot = GameObject.Find("Bot");
+        botScript = bot.GetComponent<liarsLuckBot>();
+    }
 
     //_unityButtonsLairChoose["name"].SetActive(true);
     void Awake()
     {
+
+
         GameObject[] curGameObject = GameObject.FindGameObjectsWithTag("ButtonLairChoose");
         foreach (GameObject obj in curGameObject)
         {
@@ -84,23 +86,24 @@ public class DragDrop : MonoBehaviour
         isDragging = true;
     }
 
-    //private void NotifyBotAboutLastDroppedCard(Transform cardTransform)
-    //{
-    //    Card lastCardDataForBot = cardTransform.GetComponent<Card>();
-    //    if (lastCardDataForBot != null)
-    //    {
-    //        Debug.Log($"For bot: Last card in drop zone: {lastCardDataForBot.cardNumberString} of {lastCardDataForBot.cardSuitString}");
+    private void NotifyBotAboutLastDroppedCard(Transform cardTransform)
+    {
+        Card lastCardDataForBot = cardTransform.GetComponent<Card>();
+        if (lastCardDataForBot != null)
+        {
+            Debug.Log($"For bot: Last card in drop zone: {lastCardDataForBot.cardNumberString} of {lastCardDataForBot.cardSuitString}");
 
-    //        if (Enum.TryParse<Card.Number>(lastCardDataForBot.cardNumberString, true, out Card.Number currentNumberForBot))
-    //        {
-    //            botScript.OnPlayerDroppedCard(currentNumberForBot);
-    //        }
-    //        else
-    //        {
-    //            Debug.LogError($"In Notify Bot: Invalid card number string: {lastCardData.cardNumberString}");
-    //        }
-    //    }
-    //}
+            if (Enum.TryParse<Card.Number>(lastCardDataForBot.cardNumberString, true, out Card.Number currentNumberForBot))
+            {
+                int currentIntnum = (int)currentNumberForBot;
+                botScript.OnPlayerDroppedCard(currentIntnum);
+            }
+            else
+            {
+                Debug.LogError($"In Notify Bot: Invalid card number string: {lastCardDataForBot.cardNumberString}");
+            }
+        }
+    }
 
     public void EndDrag()
     {
@@ -114,22 +117,11 @@ public class DragDrop : MonoBehaviour
             int childCount = dropZone.transform.childCount;
             if (childCount > 0)
             {
-                //Transform lastCardForBot = dropZone.transform.GetChild(childCount - 1);
-                //Card lastCardDataForBot = lastCardForBot.GetComponent<Card>();
-                //if (lastCardDataForBot != null)
-                //{
-                //    Debug.Log($"For bot: Last card in drop zone: {lastCardDataForBot.cardNumberString} of {lastCardDataForBot.cardSuitString}");
-                //    if (Enum.TryParse<Card.Number>(lastCardDataForBot.cardNumberString, true, out Card.Number currentNumber))
-                //    {
-                //        currentToBot = (int)currentNumber;
-                //        botScript.OnPlayerDroppedCard(currentToBot);
-                //    }
-                //    else
-                //    {
-                //        Debug.LogError($"In Notify Bot: Invalid card number string: {lastCardDataForBot.cardNumberString}");
-                //    }
-                //}
-                //NotifyBotAboutLastDroppedCard(lastCardForBot);
+                Debug.Log("--- Player dropped a card");
+
+                Transform lastCardForBot = dropZone.transform.GetChild(childCount - 1);
+
+                NotifyBotAboutLastDroppedCard(lastCardForBot);
 
 
                 Transform lastChild = dropZone.transform.GetChild(childCount - 2);

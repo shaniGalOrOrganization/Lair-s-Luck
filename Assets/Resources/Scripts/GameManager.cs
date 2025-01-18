@@ -48,7 +48,20 @@ public class GameManager : MonoBehaviour
         botScript = bot.GetComponent<liarsLuckBot>();
     }
 
+    //public void Start()
+    //{
+    //    //botScript = bot.GetComponent<liarsLuckBot>();
+
+    //    //List<int> botCards = new List<int>();
+    //    //// TBD:
+    //    //// for ....
+    //    ////    botCards.Add(cardNumber);
+    //    //totalUnseenCards = 52 - 10;
+    //    //botScript.InitializeBot(initialHand,totalUnseenCards);
+    //}
+
     // Start is called before the first frame update
+
     void Awake()
     {
         instance = this;
