@@ -2564,6 +2564,7 @@ MonoBehaviour:
   EnemyArea: {fileID: 601687190}
   RealEnemyCardArea: {fileID: 1192325174}
   Dropzone: {fileID: 751748113}
+  DropZoneStack: {fileID: 1483925581}
   currentlast: 0
   currentprev: 0
   beforeprev: 0
