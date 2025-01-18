@@ -181,6 +181,7 @@ public class DragDrop : MonoBehaviour
 
                 GameManager.instance.checkchosencard();
                 GameManager.instance.LairButton.interactable = false;
+                GameManager.instance.TransferCardAndHide();
 
             }
             else
