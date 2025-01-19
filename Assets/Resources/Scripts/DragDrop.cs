@@ -16,12 +16,24 @@ public class DragDrop : MonoBehaviour
     private Dictionary<string, GameObject> _unityButtonsLairChoose = new Dictionary<string, GameObject>();
     #endregion
 
+
+    public GameObject bot;
+    private liarsLuckBot botScript;
     
+
     #region MonoBehaviour
+
+    public void Start()
+    {
+        bot = GameObject.Find("Bot");
+        botScript = bot.GetComponent<liarsLuckBot>();
+    }
 
     //_unityButtonsLairChoose["name"].SetActive(true);
     void Awake()
     {
+
+
         GameObject[] curGameObject = GameObject.FindGameObjectsWithTag("ButtonLairChoose");
         foreach (GameObject obj in curGameObject)
         {
@@ -74,6 +86,25 @@ public class DragDrop : MonoBehaviour
         isDragging = true;
     }
 
+    private void NotifyBotAboutLastDroppedCard(Transform cardTransform)
+    {
+        Card lastCardDataForBot = cardTransform.GetComponent<Card>();
+        if (lastCardDataForBot != null)
+        {
+            Debug.Log($"For bot: Last card in drop zone: {lastCardDataForBot.cardNumberString} of {lastCardDataForBot.cardSuitString}");
+
+            if (Enum.TryParse<Card.Number>(lastCardDataForBot.cardNumberString, true, out Card.Number currentNumberForBot))
+            {
+                int currentIntnum = (int)currentNumberForBot;
+                botScript.OnPlayerDroppedCard(currentIntnum);
+            }
+            else
+            {
+                Debug.LogError($"In Notify Bot: Invalid card number string: {lastCardDataForBot.cardNumberString}");
+            }
+        }
+    }
+
     public void EndDrag()
     {
         int current;
@@ -86,6 +117,13 @@ public class DragDrop : MonoBehaviour
             int childCount = dropZone.transform.childCount;
             if (childCount > 0)
             {
+                Debug.Log("--- Player dropped a card");
+
+                Transform lastCardForBot = dropZone.transform.GetChild(childCount - 1);
+
+                NotifyBotAboutLastDroppedCard(lastCardForBot);
+
+
                 Transform lastChild = dropZone.transform.GetChild(childCount - 2);
                 Card lastCardData = lastChild.GetComponent<Card>();
                 if (lastCardData != null)
