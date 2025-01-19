@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 //using System.Diagnostics;
+
+//using System.Diagnostics;
 using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,6 +23,7 @@ public class GameManager : MonoBehaviour
     public GameObject EnemyArea;
     public GameObject RealEnemyCardArea;
     public GameObject Dropzone;
+    public GameObject DropZoneStack;
 
     public int currentlast;
     public int currentprev;
@@ -233,9 +236,9 @@ public class GameManager : MonoBehaviour
             if (GameManager.AnnounceLie)
             {
                 //הבוט שיקר צריך להזיז את הקלפים אל היד של הבוט 
-                for (int i = GameManager.instance.Dropzone.transform.childCount - 1; i >= 0; i--)
+                for (int i = GameManager.instance.DropZoneStack.transform.childCount - 1; i >= 0; i--)
                 {
-                    Transform card = GameManager.instance.Dropzone.transform.GetChild(i);
+                    Transform card = GameManager.instance.DropZoneStack.transform.GetChild(i);
                     card.SetParent(GameManager.instance.RealEnemyCardArea.transform, false);
                 }
                 Debug.Log("Bot was lying! Cards moved to the bot's hand.");
@@ -250,9 +253,9 @@ public class GameManager : MonoBehaviour
             if (GameManager.AnnounceLie)
             {
                 //השחקן שיקר צריך להזיז את הקלפים אל היד של השחקן
-                for (int i = GameManager.instance.Dropzone.transform.childCount - 1; i >= 0; i--)
+                for (int i = GameManager.instance.DropZoneStack.transform.childCount - 1; i >= 0; i--)
                 {
-                    Transform card = GameManager.instance.Dropzone.transform.GetChild(i);
+                    Transform card = GameManager.instance.DropZoneStack.transform.GetChild(i);
                     card.SetParent(GameManager.instance.PlayerArea.transform, false);
                 }
                 Debug.Log("Player was lying! Cards moved to the player's hand.");
@@ -264,6 +267,31 @@ public class GameManager : MonoBehaviour
         }
 
     }
+
+    public void TransferCardAndHide()
+    {
+        int dropzoneCount = Dropzone.transform.childCount;
+
+        if (dropzoneCount > 0)
+        {
+            // Get the last card in the Dropzone
+            Transform topCard = Dropzone.transform.GetChild(dropzoneCount - 1);
+
+            // Instantiate the card back at the Dropzone
+            GameObject cardBack = Instantiate(Card2, Dropzone.transform.position, Quaternion.identity);
+            cardBack.transform.SetParent(Dropzone.transform, false);
+
+            // Move the original card to the target area
+            topCard.SetParent(DropZoneStack.transform, false);
+
+            Debug.Log($"Card transferred to {DropZoneStack.name} and card back placed in Dropzone.");
+        }
+        else
+        {
+            Debug.LogWarning("Dropzone is empty. No card to transfer.");
+        }
+    }
+
 
     #endregion
 }
