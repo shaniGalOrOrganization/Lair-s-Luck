@@ -173,6 +173,7 @@ public class liarsLuckBot : MonoBehaviour
                     if ((cardNumber == buttonNumPlayerChoose) || (cardNumber == buttonNumPlayerChoose + 1) || (cardNumber == buttonNumPlayerChoose - 1))
                     {
                         cardTransform.SetParent(GameManager.instance.DropZoneStack.transform, false);
+                        break;
                         // Need to do "on" to this button
                     }
                 }
