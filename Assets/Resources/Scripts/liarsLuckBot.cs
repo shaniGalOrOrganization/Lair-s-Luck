@@ -176,6 +176,20 @@ public class liarsLuckBot : MonoBehaviour
                         break;
                         // Need to do "on" to this button
                     }
+                    else
+                    {
+                        if ((GameManager.instance.DropZoneStack.transform.childCount <= 3) && (GameManager.instance.RealEnemyCardArea.transform.childCount >= 4))
+                        {
+                            int childCount = GameManager.instance.RealEnemyCardArea.transform.childCount;
+                            Transform lastChild = GameManager.instance.RealEnemyCardArea.transform.GetChild(childCount - 1);
+                            lastChild.SetParent(GameManager.instance.DropZoneStack.transform, false);
+                            //Need to do "on" to one of the buttons
+                        }
+                        else
+                        {
+                            DrawCards.instance.OnClick();
+                        }
+                    }
                 }
             }
 
