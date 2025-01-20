@@ -221,8 +221,10 @@ public class DragDrop : MonoBehaviour
             {
                 transform.position = startPosition;
             }
+
         }
 
-        #endregion
+        liarsLuckBot.Instance.InitializeBot();
     }
+    #endregion
 }

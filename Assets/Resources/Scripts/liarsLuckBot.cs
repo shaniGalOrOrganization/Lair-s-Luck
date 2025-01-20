@@ -7,6 +7,10 @@ public class liarsLuckBot : MonoBehaviour
 {
     #region Variables
     private static liarsLuckBot instance;
+    public int cardNumber;
+    public static int[] cardCounts = new int[14]; // index=1 -> ace, index=2 -> 2, index=11 -> jack, index=12 -> queen, index=13 -> king , (index 0 is unused)
+    #endregion
+
 
     #endregion
     //public int[] cardCounts = new int[14]; // Tracks how many cards of each rank have been played (index 0 is unused)
@@ -14,23 +18,33 @@ public class liarsLuckBot : MonoBehaviour
     //public int unseenCardsCount; // Total number of unseen cards
     //private System.Random random = new System.Random();
 
-    //public void InitializeBot(List<int> initialHand, int totalUnseenCards)
-    //{
-    //    // hand = new List<int>(initialHand);
-    //    unseenCardsCount = totalUnseenCards;
+    public void InitializeBot()
+    {
+        // Initialize cardCounts with 0 - the first cell will remain 0, for simplifying the logic
+        for (int i = 1; i < cardCounts.Length; i++)
+        {
+            cardCounts[i] = 0;
+        }
 
-    //    // Initialize cardCounts with 0 - the first cell will remain 0, for simplifying the logic
-    //    for (int i = 0; i < cardCounts.Length; i++)
-    //    {
-    //        cardCounts[i] = 0;
-    //    }
+        foreach (Transform cardTransform in GameManager.instance.RealEnemyCardArea.transform)
+        {
+            Card card = cardTransform.GetComponent<Card>(); // Assuming each card has a Card script attached
+            if (card != null)
+            {
+                int cardNumber = GetCardNumber(card.cardNumberString);// int.Parse(card.cardNumberString); // Assuming cardNumber represents the value of the card (2 to 14)
+                if (cardNumber >= 1 && cardNumber <= 13)
+                {
+                    cardCounts[cardNumber]++;
+                }
+            }
+        }
 
-    //    // Add the bot's hand to cardCounts
-    //    foreach (int card in initialHand)
-    //    {
-    //        cardCounts[card]++;
-    //    }
-    //}
+
+        for (int i = 1; i < cardCounts.Length; i++)
+        {
+            Debug.Log($"Bot Card {i}: {cardCounts[i]}");
+        }
+    }
 
     //public void UpdateCardCount(int cardRank) {
     //    cardCounts[cardRank]++; // Increment count for known cards
@@ -122,5 +136,45 @@ public class liarsLuckBot : MonoBehaviour
     {
         Debug.Log($"Bot received player dropped card: {cardNum}");
     }
+
+    private int GetCardNumber(string cardNumberString)
+    {
+        switch (cardNumberString)
+        {
+            case "ace":
+                return 1;
+            case "two":
+                return 2;
+            case "three":
+                return 3;
+            case "four":
+                return 4;
+            case "five":
+                return 5;
+            case "six":
+                return 6;
+            case "seven":
+                return 7;
+            case "eight":
+                return 8;
+            case "nine":
+                return 9;
+            case "ten":
+                return 10;
+            case "jack":
+                return 11;
+            case "queen":
+                return 12;
+            case "king":
+                return 13;
+            default:
+                
+                // Return -1 for invalid inputs
+                Debug.LogWarning($"Invalid card number string: {cardNumberString}");
+                return -1;
+                
+        }
+    }
+
     #endregion
 }
