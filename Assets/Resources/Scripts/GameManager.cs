@@ -242,7 +242,12 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("Bot was truthful. No action taken.");
+                for (int i = DropZoneStack.transform.childCount - 1; i >= 0; i--)
+                {
+                    Transform card = DropZoneStack.transform.GetChild(i);
+                    card.SetParent(PlayerArea.transform, false);
+                }
+                Debug.Log("Bot was truthful. Cards moved to the player's hand.");
             }
         }
         else
@@ -259,7 +264,12 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("Player was truthful. No action taken.");
+                for (int i = DropZoneStack.transform.childCount - 1; i >= 0; i--)
+                {
+                    Transform card = DropZoneStack.transform.GetChild(i);
+                    card.SetParent(RealEnemyCardArea.transform, false);
+                }
+                Debug.Log("Player was truthful.Cards moved to the bot's hand.");
             }
         }
 

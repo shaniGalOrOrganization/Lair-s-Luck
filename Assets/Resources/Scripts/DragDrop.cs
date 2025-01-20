@@ -140,7 +140,7 @@ public class DragDrop : MonoBehaviour
                     {
                         Debug.LogError($"Invalid card number string: {lastCardData.cardNumberString}");
                     }
-                    //Debug.Log(currentNumber);
+                  //  Debug.Log($"Switch: { currentNumber}  ");
                     switch ((int)currentNumber)
                     {
                         case 1:
