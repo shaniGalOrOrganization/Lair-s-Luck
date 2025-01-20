@@ -15,10 +15,10 @@ public class Card : MonoBehaviour
     private Number _cardNumber;
     private Sprite _cardImg;
     [SerializeField] private Image _cardImage;
-    public Suit cardSuit { get => _cardSuit; }
+   // public Suit cardSuit { get => _cardSuit; }
     private string _cardSuitString;
     private string _cardNumberString;
-    public Number cardNumber { get => _cardNumber; }
+    //public Number cardNumber { get => _cardNumber; }
     public string cardSuitString { get => _cardSuitString; }
     public string cardNumberString { get => _cardNumberString; }
     public Sprite cardImg { get => _cardImg; }

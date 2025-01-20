@@ -9,6 +9,7 @@ TagManager:
   - unitySliders
   - dropZone
   - ButtonLairChoose
+  - unityButtonLair
   layers:
   - Default
   - TransparentFX

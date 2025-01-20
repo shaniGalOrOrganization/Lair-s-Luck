@@ -6,6 +6,10 @@ using static GameManager;
 
 public class DrawCards : MonoBehaviour
 {
+    #region Variables
+    //public static DrawCards instance { get; private set; }
+    #endregion
+
     #region MonoBehaviour
     void Start()
     {
@@ -15,10 +19,16 @@ public class DrawCards : MonoBehaviour
     #endregion
 
     #region Logic
+
+    //void Awake()
+    //{
+    //    instance = this;
+    //}
+
     public void OnClick()
     {
         Card newCard = GameManager.instance.deck.drawCard();
-        if(GameManager.isPlayerTurn)
+        if(GameManager.instance.isPlayerTurn)
         {
             newCard.transform.SetParent(GameManager.instance.PlayerArea.transform, false);
         }
