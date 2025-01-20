@@ -30,7 +30,7 @@ public class Deck : MonoBehaviour
 
         foreach (Sprite sprite in Resources.LoadAll<Sprite>("Sprits/cards"))
         {
-            Debug.Log(sprite == null);
+            //Debug.Log(sprite == null);
             card = createCard(sprite);
             cards.Add(card);
 
@@ -54,7 +54,7 @@ public class Deck : MonoBehaviour
 
         Card card = cardObject.GetComponent<Card>();
         card.SetupCard(cardSuit, cardNumber, sprite);
-        Debug.Log(card == null);
+        //Debug.Log(card == null);
         return card;
     }
 
