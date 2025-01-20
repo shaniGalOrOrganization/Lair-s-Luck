@@ -5,18 +5,9 @@ using UnityEngine;
 
 public class liarsLuckBot : MonoBehaviour
 {
+    #region Variables
     private static liarsLuckBot instance;
-    public static liarsLuckBot Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                instance = GameObject.Find("SC_liarsLuckBot").GetComponent<liarsLuckBot>();
-            }
-            return instance;
-        }
-    }
+
     //public int[] cardCounts = new int[14]; // Tracks how many cards of each rank have been played (index 0 is unused)
     //private List<int> hand; // Bot's current hand
     //public int unseenCardsCount; // Total number of unseen cards
@@ -108,6 +99,18 @@ public class liarsLuckBot : MonoBehaviour
     //    }
     //}
 
+    #region Logic
+    public static liarsLuckBot Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = GameObject.Find("SC_liarsLuckBot").GetComponent<liarsLuckBot>();
+            }
+            return instance;
+        }
+    }
     public void OnLiarCardSelected(int buttonNum)
     {
         Debug.Log($"Bot received liar button: {buttonNum}");
@@ -117,4 +120,5 @@ public class liarsLuckBot : MonoBehaviour
     {
         Debug.Log($"Bot received player dropped card: {cardNum}");
     }
+    #endregion
 }

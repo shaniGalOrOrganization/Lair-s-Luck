@@ -207,12 +207,12 @@ public class GameManager : MonoBehaviour
             if ((currentlast != currentprev) && (currentlast != beforeprev) && (currentlast != afterprev))
             {
                 AnnounceLie = true;
-              //  Debug.Log("Liar");
+                Debug.Log("Liar");
             }
             else
             {
                 AnnounceLie = false;
-                //Debug.Log("Not liar");
+                Debug.Log("Not liar");
             }
 
             if (isPlayerTurn)

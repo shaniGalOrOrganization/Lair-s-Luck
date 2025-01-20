@@ -212,7 +212,7 @@ public class DragDrop : MonoBehaviour
                 }
 
                 GameManager.instance.checkchosencard();
-                Debug.Log(GameManager.instance.AnnounceLie);
+               // Debug.Log(GameManager.instance.AnnounceLie);
                 GameManager.instance.LairButton.interactable = false;
                 GameManager.instance.TransferCardAndHide();
 
