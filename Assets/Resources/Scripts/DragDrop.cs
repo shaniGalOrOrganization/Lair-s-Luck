@@ -4,36 +4,30 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-
 public class DragDrop : MonoBehaviour
 {
     #region Variables
 
     private bool isDragging = false;
     private bool isOverDropZone = false;
-    public GameObject DropZoneStack;
     private Vector2 startPosition;
     private Dictionary<string, GameObject> _unityButtonsLairChoose = new Dictionary<string, GameObject>();
+    private GameObject botScript;
     #endregion
 
-
-    public GameObject bot;
-    private liarsLuckBot botScript;
-    
 
     #region MonoBehaviour
 
     public void Start()
     {
-        bot = GameObject.Find("Bot");
-        botScript = bot.GetComponent<liarsLuckBot>();
+        
+        //  GameManager.instance.bot = GameObject.Find("Bot");
+        //botScript = GameManager.instance.bot.GetComponent<liarsLuckBot>();
     }
 
     //_unityButtonsLairChoose["name"].SetActive(true);
     void Awake()
     {
-
-
         GameObject[] curGameObject = GameObject.FindGameObjectsWithTag("ButtonLairChoose");
         foreach (GameObject obj in curGameObject)
         {
@@ -97,7 +91,7 @@ public class DragDrop : MonoBehaviour
             {
                 int currentIntnum = (int)currentNumberForBot;
                 Debug.Log(currentIntnum);
-                //botScript.OnPlayerDroppedCard(currentIntnum);
+                liarsLuckBot.Instance.OnPlayerDroppedCard(currentIntnum);
             }
             else
             {
@@ -218,6 +212,7 @@ public class DragDrop : MonoBehaviour
                 }
 
                 GameManager.instance.checkchosencard();
+                Debug.Log(GameManager.instance.AnnounceLie);
                 GameManager.instance.LairButton.interactable = false;
                 GameManager.instance.TransferCardAndHide();
 

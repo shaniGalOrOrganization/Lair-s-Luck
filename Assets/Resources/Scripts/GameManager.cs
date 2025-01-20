@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-//using System.Diagnostics;
-
-//using System.Diagnostics;
 using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,11 +8,11 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     #region Variable
-    public static bool AnnounceLie;
+    public bool AnnounceLie;
     public static bool isPlayerTurn = true;
     public static bool EnemyAnnounceLie = false;
     public static bool isEnemyTurn = true;
-    public static bool PlayerAnnounceLie = false;
+    public bool PlayerAnnounceLie = false;
 
     public GameObject Card1;
     public GameObject Card2;
@@ -40,7 +37,7 @@ public class GameManager : MonoBehaviour
     public  static GameManager instance { get; private set; }
 
     public GameObject bot;
-    private liarsLuckBot botScript;
+    //private liarsLuckBot botScript;
 
     #endregion
 
@@ -48,7 +45,7 @@ public class GameManager : MonoBehaviour
 
     public void Start()
     {
-        botScript = bot.GetComponent<liarsLuckBot>();
+        //liarsLuckBot.Instance = bot.GetComponent<liarsLuckBot>();
     }
 
     //public void Start()
@@ -78,89 +75,89 @@ public class GameManager : MonoBehaviour
     public void onButtonAceClicked()
     {
         Debug.Log("Button five clicked");
-        botScript.OnLiarCardSelected(1);
+        liarsLuckBot.Instance.OnLiarCardSelected(1);
     }
 
     public void onButtonTwoClicked()
     {
         Debug.Log("Button five clicked");
-        botScript.OnLiarCardSelected(2);
+        liarsLuckBot.Instance.OnLiarCardSelected(2);
     }
 
     public void onButtonThreeClicked()
     {
         Debug.Log("Button five clicked");
-        botScript.OnLiarCardSelected(3);
+        liarsLuckBot.Instance.OnLiarCardSelected(3);
     }
 
     public void onButtonFourClicked()
     {
         Debug.Log("Button five clicked");
-        botScript.OnLiarCardSelected(4);
+        liarsLuckBot.Instance.OnLiarCardSelected(4);
     }
 
     public void onButtonFiveClicked()
     {
         Debug.Log("Button five clicked");
-        botScript.OnLiarCardSelected(5);
+        liarsLuckBot.Instance.OnLiarCardSelected(5);
     }
 
     public void onButtonSixClicked()
     {
         Debug.Log("Button five clicked");
-        botScript.OnLiarCardSelected(6);
+        liarsLuckBot.Instance.OnLiarCardSelected(6);
     }
 
     public void onButtonSevenClicked()
     {
         Debug.Log("Button five clicked");
-        botScript.OnLiarCardSelected(7);
+        liarsLuckBot.Instance.OnLiarCardSelected(7);
     }
 
     public void onButtonEightClicked()
     {
         Debug.Log("Button five clicked");
-        botScript.OnLiarCardSelected(8);
+        liarsLuckBot.Instance.OnLiarCardSelected(8);
     }
 
     public void onButtonNineClicked()
     {
         Debug.Log("Button five clicked");
-        botScript.OnLiarCardSelected(9);
+        liarsLuckBot.Instance.OnLiarCardSelected(9);
     }
 
     public void onButtonTenClicked()
     {
         Debug.Log("Button five clicked");
-        botScript.OnLiarCardSelected(10);
+        liarsLuckBot.Instance.OnLiarCardSelected(10);
     }
 
     public void onButtonJackClicked()
     {
         Debug.Log("Button five clicked");
-        botScript.OnLiarCardSelected(11);
+        liarsLuckBot.Instance.OnLiarCardSelected(11);
     }
 
     public void onButtonQueenClicked()
     {
         Debug.Log("Button five clicked");
-        botScript.OnLiarCardSelected(12);
+        liarsLuckBot.Instance.OnLiarCardSelected(12);
     }
 
     public void onButtonKingClicked()
     {
         Debug.Log("Button five clicked");
-        botScript.OnLiarCardSelected(13);
+        liarsLuckBot.Instance.OnLiarCardSelected(13);
     }
 
     public void checkchosencard()
     {
         //transform.SetParent(Dropzone.transform, false);
-        int childCount = DropZoneStack.transform.childCount;
-        if (childCount > 1)
+        int childCount = Dropzone.transform.childCount;
+        if (childCount > 0)
         {
-            Transform lastChild = DropZoneStack.transform.GetChild(childCount - 1);
-            Transform prevChild = DropZoneStack.transform.GetChild(childCount - 2);
+            Transform lastChild = Dropzone.transform.GetChild(childCount - 1);
+            Transform prevChild = Dropzone.transform.GetChild(childCount - 2);
 
             Card lastCardData = lastChild.GetComponent<Card>();
             Card prevCardData = prevChild.GetComponent<Card>();
@@ -210,12 +207,12 @@ public class GameManager : MonoBehaviour
             if ((currentlast != currentprev) && (currentlast != beforeprev) && (currentlast != afterprev))
             {
                 AnnounceLie = true;
-                Debug.Log("Liar");
+              //  Debug.Log("Liar");
             }
             else
             {
                 AnnounceLie = false;
-                Debug.Log("Not liar");
+                //Debug.Log("Not liar");
             }
 
             if (isPlayerTurn)
