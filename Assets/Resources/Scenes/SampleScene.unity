@@ -868,6 +868,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e88f108ed012fbe45a6db53e15ed8273, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardNumber: 0
+  CheckCheatFlag: 0
 --- !u!1 &134729065
 GameObject:
   m_ObjectHideFlags: 0
@@ -2639,6 +2641,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AnnounceLie: 0
+  isPlayerTurn: 1
   PlayerAnnounceLie: 0
   Card1: {fileID: 4826523492623471892, guid: 38a2aaa7006f38e4e8032ed1640c389c, type: 3}
   Card2: {fileID: 1511395787111189394, guid: 307a33e4b11543a44a6c5f3a992d3479, type: 3}
@@ -10002,7 +10005,7 @@ GameObject:
   - component: {fileID: 1581657377}
   m_Layer: 5
   m_Name: Button_Cheat
-  m_TagString: Untagged
+  m_TagString: unityButtonLair
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class liarsLuckBot : MonoBehaviour
 {
@@ -9,14 +10,23 @@ public class liarsLuckBot : MonoBehaviour
     private static liarsLuckBot instance;
     public int cardNumber;
     public static int[] cardCounts = new int[14]; // index=1 -> ace, index=2 -> 2, index=11 -> jack, index=12 -> queen, index=13 -> king , (index 0 is unused)
-    #endregion
-
+    public int CheckCheatFlag = 0;
+    private Dictionary<string, GameObject> _unityButtonLair = new Dictionary<string, GameObject>();
 
     #endregion
     //public int[] cardCounts = new int[14]; // Tracks how many cards of each rank have been played (index 0 is unused)
     //private List<int> hand; // Bot's current hand
     //public int unseenCardsCount; // Total number of unseen cards
     //private System.Random random = new System.Random();
+
+    void Awake()
+    {
+        GameObject[] curGameObject = GameObject.FindGameObjectsWithTag("unityButtonLair");
+        foreach (GameObject obj in curGameObject)
+        {
+            _unityButtonLair.Add(obj.name, obj);
+        }
+    }
 
     public void InitializeBot()
     {
@@ -39,11 +49,10 @@ public class liarsLuckBot : MonoBehaviour
             }
         }
 
-
-        for (int i = 1; i < cardCounts.Length; i++)
-        {
-            Debug.Log($"Bot Card {i}: {cardCounts[i]}");
-        }
+        //for (int i = 1; i < cardCounts.Length; i++)
+        //{
+        //    Debug.Log($"Bot Card {i}: {cardCounts[i]}");
+        //}
     }
 
     //public void UpdateCardCount(int cardRank) {
@@ -130,6 +139,59 @@ public class liarsLuckBot : MonoBehaviour
     public void OnLiarCardSelected(int buttonNum)
     {
         Debug.Log($"Bot received liar button: {buttonNum}");
+
+        if (buttonNum >= 1 && buttonNum <= 13)
+        {
+            cardCounts[buttonNum]++;
+        }
+
+        for (int i = 1; i < cardCounts.Length; i++)
+        {
+            Debug.Log($"Bot Card recived {i}: {cardCounts[i]}");
+        }
+
+        GameManager.instance.isPlayerTurn = false;
+        BotMoves(buttonNum);
+    }
+
+    public void BotMoves(int buttonNumPlayerChoose)
+    {
+        if (cardCounts[buttonNumPlayerChoose] >= 4)
+        {
+            GameManager.instance.BTN_Lair();
+            CheckCheatFlag = 1;
+        }
+
+        if (CheckCheatFlag == 0)
+        {
+            foreach (Transform cardTransform in GameManager.instance.RealEnemyCardArea.transform)
+            {
+                Card card = cardTransform.GetComponent<Card>(); // Assuming each card has a Card script attached
+                if (card != null)
+                {
+                    int cardNumber = GetCardNumber(card.cardNumberString);// int.Parse(card.cardNumberString); // Assuming cardNumber represents the value of the card (2 to 14)
+                    if ((cardNumber == buttonNumPlayerChoose) || (cardNumber == buttonNumPlayerChoose + 1) || (cardNumber == buttonNumPlayerChoose - 1))
+                    {
+                        cardTransform.SetParent(GameManager.instance.DropZoneStack.transform, false);
+                        // Need to do "on" to this button
+                    }
+                }
+            }
+
+            CheckCheatFlag = 0;
+        }
+
+        GameManager.instance.isPlayerTurn = true;
+        _unityButtonLair["Button_Cheat"].GetComponent<Button>().interactable = true;
+
+        foreach (var pair in DragDrop.Instance._unityButtonsLairChoose)
+        {
+            Button button = pair.Value.GetComponent<Button>();
+            if (button != null)
+            {
+                button.interactable = false;
+            }
+        }
     }
 
     public void OnPlayerDroppedCard(int cardNum)

@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
 {
     #region Variable
     public bool AnnounceLie;
-    public static bool isPlayerTurn = true;
+    public bool isPlayerTurn = true;
     public static bool EnemyAnnounceLie = false;
     public static bool isEnemyTurn = true;
     public bool PlayerAnnounceLie = false;
@@ -207,12 +207,12 @@ public class GameManager : MonoBehaviour
             if ((currentlast != currentprev) && (currentlast != beforeprev) && (currentlast != afterprev))
             {
                 AnnounceLie = true;
-                Debug.Log("Liar");
+              //  Debug.Log("Liar");
             }
             else
             {
                 AnnounceLie = false;
-                Debug.Log("Not liar");
+                //Debug.Log("Not liar");
             }
 
             if (isPlayerTurn)

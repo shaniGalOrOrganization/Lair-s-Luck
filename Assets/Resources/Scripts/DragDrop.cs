@@ -11,8 +11,9 @@ public class DragDrop : MonoBehaviour
     private bool isDragging = false;
     private bool isOverDropZone = false;
     private Vector2 startPosition;
-    private Dictionary<string, GameObject> _unityButtonsLairChoose = new Dictionary<string, GameObject>();
+    public Dictionary<string, GameObject> _unityButtonsLairChoose = new Dictionary<string, GameObject>();
     private GameObject botScript;
+    public static DragDrop Instance { get; private set; }
     #endregion
 
 
@@ -20,7 +21,6 @@ public class DragDrop : MonoBehaviour
 
     public void Start()
     {
-        
         //  GameManager.instance.bot = GameObject.Find("Bot");
         //botScript = GameManager.instance.bot.GetComponent<liarsLuckBot>();
     }
@@ -28,11 +28,14 @@ public class DragDrop : MonoBehaviour
     //_unityButtonsLairChoose["name"].SetActive(true);
     void Awake()
     {
+        Instance = this;
+
         GameObject[] curGameObject = GameObject.FindGameObjectsWithTag("ButtonLairChoose");
         foreach (GameObject obj in curGameObject)
         {
             _unityButtonsLairChoose.Add(obj.name, obj);
         }
+
         foreach (var pair in _unityButtonsLairChoose) 
         {
             Button button = pair.Value.GetComponent<Button>();
