@@ -824,6 +824,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 115060042}
   m_CullTransparentMesh: 1
+--- !u!1 &119369037
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 119369038}
+  - component: {fileID: 119369039}
+  m_Layer: 0
+  m_Name: SC_liarsLuckBot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &119369038
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 119369037}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 339.02188, y: 225.87988, z: -2.067454}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &119369039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 119369037}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e88f108ed012fbe45a6db53e15ed8273, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &134729065
 GameObject:
   m_ObjectHideFlags: 0
@@ -2594,6 +2638,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 125ee01ca77d3d443b348eb432dee78b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AnnounceLie: 0
+  PlayerAnnounceLie: 0
   Card1: {fileID: 4826523492623471892, guid: 38a2aaa7006f38e4e8032ed1640c389c, type: 3}
   Card2: {fileID: 1511395787111189394, guid: 307a33e4b11543a44a6c5f3a992d3479, type: 3}
   PlayerArea: {fileID: 304080881}
@@ -4745,8 +4791,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1eefaf231e8e89e429109ca7f1f0dfc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DropZoneStack: {fileID: 0}
-  bot: {fileID: 1802365202}
 --- !u!4 &850314843
 Transform:
   m_ObjectHideFlags: 0
@@ -13518,6 +13562,7 @@ SceneRoots:
   - {fileID: 765471458}
   - {fileID: 712055113}
   - {fileID: 2109212011}
+  - {fileID: 119369038}
   - {fileID: 418618876}
   - {fileID: 1981328583}
   - {fileID: 719841276}

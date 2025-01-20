@@ -8,6 +8,7 @@ public class liarsLuckBot : MonoBehaviour
     #region Variables
     private static liarsLuckBot instance;
 
+    #endregion
     //public int[] cardCounts = new int[14]; // Tracks how many cards of each rank have been played (index 0 is unused)
     //private List<int> hand; // Bot's current hand
     //public int unseenCardsCount; // Total number of unseen cards
@@ -111,6 +112,7 @@ public class liarsLuckBot : MonoBehaviour
             return instance;
         }
     }
+
     public void OnLiarCardSelected(int buttonNum)
     {
         Debug.Log($"Bot received liar button: {buttonNum}");
