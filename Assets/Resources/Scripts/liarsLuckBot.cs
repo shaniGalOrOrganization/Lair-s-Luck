@@ -185,10 +185,10 @@ public class liarsLuckBot : MonoBehaviour
                             lastChild.SetParent(GameManager.instance.DropZoneStack.transform, false);
                             //Need to do "on" to one of the buttons
                         }
-                        else
-                        {
-                            DrawCards.instance.OnClick();
-                        }
+                        //else
+                        //{
+                        //    DrawCards.instance.OnClick();
+                        //}
                     }
                 }
             }

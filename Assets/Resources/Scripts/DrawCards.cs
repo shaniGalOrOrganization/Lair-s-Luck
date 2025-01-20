@@ -7,7 +7,7 @@ using static GameManager;
 public class DrawCards : MonoBehaviour
 {
     #region Variables
-    public static DrawCards instance { get; private set; }
+    //public static DrawCards instance { get; private set; }
     #endregion
 
     #region MonoBehaviour
@@ -20,10 +20,10 @@ public class DrawCards : MonoBehaviour
 
     #region Logic
 
-    void Awake()
-    {
-        instance = this;
-    }
+    //void Awake()
+    //{
+    //    instance = this;
+    //}
 
     public void OnClick()
     {
