@@ -11,7 +11,7 @@ public class DragDrop : MonoBehaviour
 
     private bool isDragging = false;
     private bool isOverDropZone = false;
-    private GameObject dropZone;
+    public GameObject DropZoneStack;
     private Vector2 startPosition;
     private Dictionary<string, GameObject> _unityButtonsLairChoose = new Dictionary<string, GameObject>();
     #endregion
@@ -62,7 +62,7 @@ public class DragDrop : MonoBehaviour
         if (collision.collider.CompareTag("dropZone"))
         {
             isOverDropZone = true;
-            dropZone = collision.gameObject;
+            GameManager.instance.Dropzone = collision.gameObject;
         }
     }
 
@@ -71,7 +71,7 @@ public class DragDrop : MonoBehaviour
         if (collision.collider.CompareTag("dropZone"))
         {
             isOverDropZone = false;
-            dropZone = null;
+            GameManager.instance.Dropzone = null;
         }
     }
 
@@ -96,7 +96,8 @@ public class DragDrop : MonoBehaviour
             if (Enum.TryParse<Card.Number>(lastCardDataForBot.cardNumberString, true, out Card.Number currentNumberForBot))
             {
                 int currentIntnum = (int)currentNumberForBot;
-                botScript.OnPlayerDroppedCard(currentIntnum);
+                Debug.Log(currentIntnum);
+                //botScript.OnPlayerDroppedCard(currentIntnum);
             }
             else
             {
@@ -111,20 +112,19 @@ public class DragDrop : MonoBehaviour
         isDragging = false;
         if (isOverDropZone)
         {
-            transform.SetParent(dropZone.transform, false);
+            transform.SetParent(GameManager.instance.Dropzone.transform, false);
 
             // Get the last child of the dropZone
-            int childCount = dropZone.transform.childCount;
+            int childCount = GameManager.instance.Dropzone.transform.childCount;
             if (childCount > 0)
             {
                 Debug.Log("--- Player dropped a card");
 
-                Transform lastCardForBot = dropZone.transform.GetChild(childCount - 1);
+                Transform lastCardForBot = GameManager.instance.Dropzone.transform.GetChild(childCount - 1);
 
                 NotifyBotAboutLastDroppedCard(lastCardForBot);
 
-
-                Transform lastChild = dropZone.transform.GetChild(childCount - 2);
+                Transform lastChild = GameManager.instance.Dropzone.transform.GetChild(childCount - 2);
                 Card lastCardData = lastChild.GetComponent<Card>();
                 if (lastCardData != null)
                 {
@@ -143,7 +143,7 @@ public class DragDrop : MonoBehaviour
                     {
                         Debug.LogError($"Invalid card number string: {lastCardData.cardNumberString}");
                     }
-                    Debug.Log(currentNumber);
+                    //Debug.Log(currentNumber);
                     switch ((int)currentNumber)
                     {
                         case 1:

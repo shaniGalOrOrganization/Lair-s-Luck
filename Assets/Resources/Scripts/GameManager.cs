@@ -156,11 +156,11 @@ public class GameManager : MonoBehaviour
     public void checkchosencard()
     {
         //transform.SetParent(Dropzone.transform, false);
-        int childCount = Dropzone.transform.childCount;
+        int childCount = DropZoneStack.transform.childCount;
         if (childCount > 1)
         {
-            Transform lastChild = Dropzone.transform.GetChild(childCount - 1);
-            Transform prevChild = Dropzone.transform.GetChild(childCount - 2);
+            Transform lastChild = DropZoneStack.transform.GetChild(childCount - 1);
+            Transform prevChild = DropZoneStack.transform.GetChild(childCount - 2);
 
             Card lastCardData = lastChild.GetComponent<Card>();
             Card prevCardData = prevChild.GetComponent<Card>();
@@ -209,37 +209,37 @@ public class GameManager : MonoBehaviour
 
             if ((currentlast != currentprev) && (currentlast != beforeprev) && (currentlast != afterprev))
             {
-                GameManager.AnnounceLie = true;
+                AnnounceLie = true;
                 Debug.Log("Liar");
             }
             else
             {
-                GameManager.AnnounceLie = false;
+                AnnounceLie = false;
                 Debug.Log("Not liar");
             }
 
-            if (GameManager.isPlayerTurn)
+            if (isPlayerTurn)
             {
-                GameManager.PlayerAnnounceLie = GameManager.AnnounceLie;
+                PlayerAnnounceLie = AnnounceLie;
             }
             else
             {
-                EnemyAnnounceLie = GameManager.AnnounceLie;
+                EnemyAnnounceLie = AnnounceLie;
             }
         }
     }
 
     public void BTN_Lair()
     {
-        if (GameManager.isPlayerTurn)
+        if (isPlayerTurn)
         {
-            if (GameManager.AnnounceLie)
+            if (AnnounceLie)
             {
                 //הבוט שיקר צריך להזיז את הקלפים אל היד של הבוט 
-                for (int i = GameManager.instance.DropZoneStack.transform.childCount - 1; i >= 0; i--)
+                for (int i = DropZoneStack.transform.childCount - 1; i >= 0; i--)
                 {
-                    Transform card = GameManager.instance.DropZoneStack.transform.GetChild(i);
-                    card.SetParent(GameManager.instance.RealEnemyCardArea.transform, false);
+                    Transform card = DropZoneStack.transform.GetChild(i);
+                    card.SetParent(RealEnemyCardArea.transform, false);
                 }
                 Debug.Log("Bot was lying! Cards moved to the bot's hand.");
             }
@@ -250,13 +250,13 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            if (GameManager.AnnounceLie)
+            if (AnnounceLie)
             {
                 //השחקן שיקר צריך להזיז את הקלפים אל היד של השחקן
-                for (int i = GameManager.instance.DropZoneStack.transform.childCount - 1; i >= 0; i--)
+                for (int i = DropZoneStack.transform.childCount - 1; i >= 0; i--)
                 {
-                    Transform card = GameManager.instance.DropZoneStack.transform.GetChild(i);
-                    card.SetParent(GameManager.instance.PlayerArea.transform, false);
+                    Transform card = DropZoneStack.transform.GetChild(i);
+                    card.SetParent(PlayerArea.transform, false);
                 }
                 Debug.Log("Player was lying! Cards moved to the player's hand.");
             }

@@ -44,7 +44,7 @@ public class Deck : MonoBehaviour
         string cardNumber = cardInfo[1];
         GameObject cardObject = Instantiate(cardPrefab, cardParent);
 
-        Debug.Log(sprite.name);
+        //Debug.Log(sprite.name);
 
         if (cardObject == null)
         {
