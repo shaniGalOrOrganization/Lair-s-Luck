@@ -450,6 +450,7 @@ public class liarsLuckBot : MonoBehaviour
 
         // Switch turns and update UI
         GameManager.instance.isPlayerTurn = true;
+        _unityButtonLair["Button_Cheat"].GetComponent<Button>().interactable = true;
         //EnablePlayerControls();
         //CheckWinCondition();
     }
