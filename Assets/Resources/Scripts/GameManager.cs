@@ -10,7 +10,6 @@ public class GameManager : MonoBehaviour
     #region Variable
     public bool AnnounceLie;
     public bool isPlayerTurn = true;
-    public static bool EnemyAnnounceLie = false;
     public static bool isEnemyTurn = true;
     public bool PlayerAnnounceLie = false;
 
@@ -153,6 +152,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Button five clicked");
         checkchosencard(12);
+
         liarsLuckBot.Instance.OnLiarCardSelected(12);
     }
 
@@ -164,6 +164,7 @@ public class GameManager : MonoBehaviour
     }
 
     public void checkchosencard(int ButtonChoosed)
+    public void checkchosencard()
     {
         //transform.SetParent(Dropzone.transform, false);
         int childCount = Dropzone.transform.childCount;
@@ -171,9 +172,11 @@ public class GameManager : MonoBehaviour
         {
             Transform lastChild = Dropzone.transform.GetChild(childCount - 1);
             //Transform prevChild = Dropzone.transform.GetChild(childCount - 2);
+            Transform prevChild = Dropzone.transform.GetChild(childCount - 2);
 
             Card lastCardData = lastChild.GetComponent<Card>();
             //Card prevCardData = prevChild.GetComponent<Card>();
+            Card prevCardData = prevChild.GetComponent<Card>();
 
             if (lastCardData != null)
             {
@@ -195,17 +198,29 @@ public class GameManager : MonoBehaviour
             }
 
             if ((ButtonChoosed >= 1) && (ButtonChoosed <= 13))
+            if (prevCardData != null)
             {
                 Debug.Log($"Prev card called in drop zone: {ButtonChoosed} ");
                 currentprev = ButtonChoosed;
+                Debug.Log($"Prev card check in drop zone: {prevCardData.cardNumberString} of {prevCardData.cardSuitString}");
+
+                if (Enum.TryParse<Card.Number>(prevCardData.cardNumberString, true, out Card.Number currentNumber))
+                {
+                    currentprev = (int)currentNumber;
                     beforeprev = currentprev - 1;
                     if (beforeprev < 1) beforeprev = 13;
                     afterprev = currentprev + 1;
                     if (afterprev > 13) afterprev = 1;
                     Debug.Log($"Current prev: {currentprev}, Before prev: {beforeprev}, After prev: {afterprev}");
+                }
+                else
+                {
+                    Debug.LogError($"Invalid card number string: {prevCardData.cardNumberString}");
+                }
             }
 
             //debug printing
+            // debug printing
             Debug.Log($"currentlast:{currentlast}, beforeprev: {beforeprev},afterprev: {afterprev}, currentprev:{currentprev}");
 
 
@@ -213,31 +228,33 @@ public class GameManager : MonoBehaviour
             {
                 AnnounceLie = true;
               //  Debug.Log("Liar");
+                Debug.Log("Liar");
             }
             else
             {
                 AnnounceLie = false;
                 //Debug.Log("Not liar");
+                Debug.Log("Not liar");
             }
+
+            Debug.Log(AnnounceLie);
 
             if (isPlayerTurn)
             {
-                PlayerAnnounceLie = AnnounceLie;
             }
             else
             {
-                EnemyAnnounceLie = AnnounceLie;
             }
         }
     }
 
     public void BTN_Lair()
     {
+        checkchosencard();
         if (isPlayerTurn)
         {
             if (EnemyAnnounceLie)
             {
-                Debug.Log("Is Player turn");
                 //הבוט שיקר צריך להזיז את הקלפים אל היד של הבוט 
                 for (int i = DropZoneStack.transform.childCount - 1; i >= 0; i--)
                 {
@@ -260,7 +277,6 @@ public class GameManager : MonoBehaviour
         {
             if (PlayerAnnounceLie)
             {
-                Debug.Log("Is Bot turn");
                 //השחקן שיקר צריך להזיז את הקלפים אל היד של השחקן
                 for (int i = DropZoneStack.transform.childCount - 1; i >= 0; i--)
                 {
@@ -277,6 +293,7 @@ public class GameManager : MonoBehaviour
                     card.SetParent(RealEnemyCardArea.transform, false);
                 }
                 Debug.Log("Player was truthful.Cards moved to the bot's hand.");
+                Debug.Log("Player was truthful. No action taken.");
             }
         }
 

@@ -9,7 +9,7 @@ public class liarsLuckBot : MonoBehaviour
     #region Variables
     private static liarsLuckBot instance;
     public int cardNumber;
-    public static int[] cardCounts = new int[14]; // index=1 -> ace, index=2 -> 2, index=11 -> jack, index=12 -> queen, index=13 -> king , (index 0 is unused)
+    public int[] cardCounts = new int[14]; // index=1 -> ace, index=2 -> 2, index=11 -> jack, index=12 -> queen, index=13 -> king , (index 0 is unused)
     public int CheckCheatFlag = 0;
     private Dictionary<string, GameObject> _unityButtonLair = new Dictionary<string, GameObject>();
 
@@ -26,6 +26,11 @@ public class liarsLuckBot : MonoBehaviour
     //private List<int> hand; // Bot's current hand
     //public int unseenCardsCount; // Total number of unseen cards
     //private System.Random random = new System.Random();
+
+    private void Start()
+    {
+        Invoke("InitializeBot", 0.2f);
+    }
 
     void Awake()
     {
@@ -53,7 +58,7 @@ public class liarsLuckBot : MonoBehaviour
             Card card = cardTransform.GetComponent<Card>(); // Assuming each card has a Card script attached
             if (card != null)
             {
-                int cardNumber = GetCardNumber(card.cardNumberString);// int.Parse(card.cardNumberString); // Assuming cardNumber represents the value of the card (2 to 14)
+                int cardNumber = GetCardNumber(card.cardNumberString); // Assuming cardNumber represents the value of the card (2 to 14)
                 if (cardNumber >= 1 && cardNumber <= 13)
                 {
                     cardCounts[cardNumber]++;
@@ -158,10 +163,10 @@ public class liarsLuckBot : MonoBehaviour
             cardCounts[buttonNum]++;
         }
 
-        for (int i = 1; i < cardCounts.Length; i++)
-        {
-            Debug.Log($"Bot Card recived {i}: {cardCounts[i]}");
-        }
+        //for (int i = 1; i < cardCounts.Length; i++)
+        //{
+        //    Debug.Log($"Bot Card recived {i}: {cardCounts[i]}");
+        //}
 
         GameManager.instance.isPlayerTurn = false;
         //GameManager.instance.checkchosencard(buttonNum);
