@@ -581,6 +581,7 @@ public class liarsLuckBot : MonoBehaviour
     {
         string cardName = GetCardName(cardNumber);
         string announcement = $"Bot played: {cardName}";
+        //need to output text "Bot Played {cardName}"
 
         //if (announcementText != null)
         //{
