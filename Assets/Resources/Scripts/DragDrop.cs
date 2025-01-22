@@ -14,6 +14,7 @@ public class DragDrop : MonoBehaviour
     public Dictionary<string, GameObject> _unityButtonsLairChoose = new Dictionary<string, GameObject>();
     private GameObject botScript;
     public static DragDrop Instance { get; private set; }
+    //GameObject _lastDropZone;
     #endregion
 
 
@@ -68,14 +69,15 @@ public class DragDrop : MonoBehaviour
         if (collision.collider.CompareTag("dropZone"))
         {
             isOverDropZone = false;
-            GameManager.instance.Dropzone = null;
+            //GameManager.instance.Dropzone = _lastDropZone;
+            //GameManager.instance.Dropzone = null;
         }
     }
 
     #endregion
 
     #region Logic
-   
+
 
     public void StartDrag()
     {
@@ -213,12 +215,16 @@ public class DragDrop : MonoBehaviour
                             break;
                     }
                 }
+                //else
+                //{
+                //    // Bot has no cards - game should end
+                //    CheckWinCondition();
+                //}
 
                 //GameManager.instance.checkchosencard();
-               // Debug.Log(GameManager.instance.AnnounceLie);
+                // Debug.Log(GameManager.instance.AnnounceLie);
                 GameManager.instance.LairButton.interactable = false;
                 GameManager.instance.TransferCardAndHide();
-
             }
             else
             {

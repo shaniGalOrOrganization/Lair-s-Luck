@@ -154,6 +154,7 @@ public class liarsLuckBot : MonoBehaviour
 
         if (buttonNum >= 1 && buttonNum <= 13)
         {
+            Debug.Log("Im here!");
             cardCounts[buttonNum]++;
         }
 
