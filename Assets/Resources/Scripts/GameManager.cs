@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
     public bool isPlayerTurn = true;
     public static bool isEnemyTurn = true;
     public bool PlayerAnnounceLie = false;
+    public bool EnemyAnnounceLie = false;
+
 
     public GameObject Card1;
     public GameObject Card2;
@@ -28,6 +30,7 @@ public class GameManager : MonoBehaviour
     public int beforelast;
     public int afterlast;
     public Button LairButton;
+    public int chosenNumber;
 
     public Deck deck;
 
@@ -73,98 +76,96 @@ public class GameManager : MonoBehaviour
 
     public void onButtonAceClicked()
     {
-        Debug.Log("Button five clicked");
-        checkchosencard(1);
+        Debug.Log("Button Ace clicked");
+        chosenNumber = 1;
         liarsLuckBot.Instance.OnLiarCardSelected(1);
     }
 
     public void onButtonTwoClicked()
     {
-        Debug.Log("Button five clicked");
-        checkchosencard(2);
+        Debug.Log("Button Two clicked");
+        chosenNumber = 2 ;
         liarsLuckBot.Instance.OnLiarCardSelected(2);
     }
 
     public void onButtonThreeClicked()
     {
-        Debug.Log("Button five clicked");
-        checkchosencard(3);
+        Debug.Log("Button Three clicked");
+        chosenNumber = 3;
         liarsLuckBot.Instance.OnLiarCardSelected(3);
     }
 
     public void onButtonFourClicked()
     {
-        Debug.Log("Button five clicked");
-        checkchosencard(4);
+        Debug.Log("Button four clicked");
+        chosenNumber = 4;
         liarsLuckBot.Instance.OnLiarCardSelected(4);
     }
 
     public void onButtonFiveClicked()
     {
         Debug.Log("Button five clicked");
-        checkchosencard(5);
+        chosenNumber = 5;
         liarsLuckBot.Instance.OnLiarCardSelected(5);
     }
 
     public void onButtonSixClicked()
     {
-        Debug.Log("Button five clicked");
-        checkchosencard(6);
+        Debug.Log("Button six clicked");
+        chosenNumber = 6;
         liarsLuckBot.Instance.OnLiarCardSelected(6);
     }
 
     public void onButtonSevenClicked()
     {
-        Debug.Log("Button five clicked");
-        checkchosencard(7);
+        Debug.Log("Button seven clicked");
+        chosenNumber = 7;
         liarsLuckBot.Instance.OnLiarCardSelected(7);
     }
 
     public void onButtonEightClicked()
     {
-        Debug.Log("Button five clicked");
-        checkchosencard(8);
+        Debug.Log("Button Eight clicked");
+        chosenNumber = 8;
         liarsLuckBot.Instance.OnLiarCardSelected(8);
     }
 
     public void onButtonNineClicked()
     {
-        Debug.Log("Button five clicked");
-        checkchosencard(9);
+        Debug.Log("Button nine clicked");
+        chosenNumber = 9;
         liarsLuckBot.Instance.OnLiarCardSelected(9);
     }
 
     public void onButtonTenClicked()
     {
-        Debug.Log("Button five clicked");
-        checkchosencard(10);
+        Debug.Log("Button ten clicked");
+        chosenNumber = 10;
         liarsLuckBot.Instance.OnLiarCardSelected(10);
     }
 
     public void onButtonJackClicked()
     {
-        Debug.Log("Button five clicked");
-        checkchosencard(11);
+        Debug.Log("Button Jack clicked");
+        chosenNumber = 11;
         liarsLuckBot.Instance.OnLiarCardSelected(11);
     }
 
     public void onButtonQueenClicked()
     {
-        Debug.Log("Button five clicked");
-        checkchosencard(12);
-
+        Debug.Log("Button queen clicked");
+        chosenNumber = 12;
         liarsLuckBot.Instance.OnLiarCardSelected(12);
     }
 
     public void onButtonKingClicked()
     {
-        Debug.Log("Button five clicked");
-        checkchosencard(13);
+        Debug.Log("Button king clicked");
+        chosenNumber = 13;
         liarsLuckBot.Instance.OnLiarCardSelected(13);
     }
 
     public void checkchosencard(int ButtonChoosed)
-    public void checkchosencard()
     {
         //transform.SetParent(Dropzone.transform, false);
         int childCount = Dropzone.transform.childCount;
@@ -172,11 +173,9 @@ public class GameManager : MonoBehaviour
         {
             Transform lastChild = Dropzone.transform.GetChild(childCount - 1);
             //Transform prevChild = Dropzone.transform.GetChild(childCount - 2);
-            Transform prevChild = Dropzone.transform.GetChild(childCount - 2);
+            //Transform prevChild = Dropzone.transform.GetChild(childCount - 2);
 
             Card lastCardData = lastChild.GetComponent<Card>();
-            //Card prevCardData = prevChild.GetComponent<Card>();
-            Card prevCardData = prevChild.GetComponent<Card>();
 
             if (lastCardData != null)
             {
@@ -198,29 +197,16 @@ public class GameManager : MonoBehaviour
             }
 
             if ((ButtonChoosed >= 1) && (ButtonChoosed <= 13))
-            if (prevCardData != null)
             {
                 Debug.Log($"Prev card called in drop zone: {ButtonChoosed} ");
                 currentprev = ButtonChoosed;
-                Debug.Log($"Prev card check in drop zone: {prevCardData.cardNumberString} of {prevCardData.cardSuitString}");
-
-                if (Enum.TryParse<Card.Number>(prevCardData.cardNumberString, true, out Card.Number currentNumber))
-                {
-                    currentprev = (int)currentNumber;
-                    beforeprev = currentprev - 1;
-                    if (beforeprev < 1) beforeprev = 13;
-                    afterprev = currentprev + 1;
-                    if (afterprev > 13) afterprev = 1;
-                    Debug.Log($"Current prev: {currentprev}, Before prev: {beforeprev}, After prev: {afterprev}");
-                }
-                else
-                {
-                    Debug.LogError($"Invalid card number string: {prevCardData.cardNumberString}");
-                }
+                beforeprev = currentprev - 1;
+                if (beforeprev < 1) beforeprev = 13;
+                afterprev = currentprev + 1;
+                if (afterprev > 13) afterprev = 1;
+                Debug.Log($"Current prev: {currentprev}, Before prev: {beforeprev}, After prev: {afterprev}");
             }
 
-            //debug printing
-            // debug printing
             Debug.Log($"currentlast:{currentlast}, beforeprev: {beforeprev},afterprev: {afterprev}, currentprev:{currentprev}");
 
 
@@ -241,16 +227,18 @@ public class GameManager : MonoBehaviour
 
             if (isPlayerTurn)
             {
+                EnemyAnnounceLie = AnnounceLie;
             }
             else
             {
+                PlayerAnnounceLie = AnnounceLie;
             }
         }
     }
 
     public void BTN_Lair()
     {
-        checkchosencard();
+        checkchosencard(chosenNumber);
         if (isPlayerTurn)
         {
             if (EnemyAnnounceLie)
@@ -293,7 +281,7 @@ public class GameManager : MonoBehaviour
                     card.SetParent(RealEnemyCardArea.transform, false);
                 }
                 Debug.Log("Player was truthful.Cards moved to the bot's hand.");
-                Debug.Log("Player was truthful. No action taken.");
+              
             }
         }
 
