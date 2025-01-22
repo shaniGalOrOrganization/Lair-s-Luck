@@ -75,92 +75,105 @@ public class GameManager : MonoBehaviour
     public void onButtonAceClicked()
     {
         Debug.Log("Button five clicked");
+        checkchosencard(1);
         liarsLuckBot.Instance.OnLiarCardSelected(1);
     }
 
     public void onButtonTwoClicked()
     {
         Debug.Log("Button five clicked");
+        checkchosencard(2);
         liarsLuckBot.Instance.OnLiarCardSelected(2);
     }
 
     public void onButtonThreeClicked()
     {
         Debug.Log("Button five clicked");
+        checkchosencard(3);
         liarsLuckBot.Instance.OnLiarCardSelected(3);
     }
 
     public void onButtonFourClicked()
     {
         Debug.Log("Button five clicked");
+        checkchosencard(4);
         liarsLuckBot.Instance.OnLiarCardSelected(4);
     }
 
     public void onButtonFiveClicked()
     {
         Debug.Log("Button five clicked");
+        checkchosencard(5);
         liarsLuckBot.Instance.OnLiarCardSelected(5);
     }
 
     public void onButtonSixClicked()
     {
         Debug.Log("Button five clicked");
+        checkchosencard(6);
         liarsLuckBot.Instance.OnLiarCardSelected(6);
     }
 
     public void onButtonSevenClicked()
     {
         Debug.Log("Button five clicked");
+        checkchosencard(7);
         liarsLuckBot.Instance.OnLiarCardSelected(7);
     }
 
     public void onButtonEightClicked()
     {
         Debug.Log("Button five clicked");
+        checkchosencard(8);
         liarsLuckBot.Instance.OnLiarCardSelected(8);
     }
 
     public void onButtonNineClicked()
     {
         Debug.Log("Button five clicked");
+        checkchosencard(9);
         liarsLuckBot.Instance.OnLiarCardSelected(9);
     }
 
     public void onButtonTenClicked()
     {
         Debug.Log("Button five clicked");
+        checkchosencard(10);
         liarsLuckBot.Instance.OnLiarCardSelected(10);
     }
 
     public void onButtonJackClicked()
     {
         Debug.Log("Button five clicked");
+        checkchosencard(11);
         liarsLuckBot.Instance.OnLiarCardSelected(11);
     }
 
     public void onButtonQueenClicked()
     {
         Debug.Log("Button five clicked");
+        checkchosencard(12);
         liarsLuckBot.Instance.OnLiarCardSelected(12);
     }
 
     public void onButtonKingClicked()
     {
         Debug.Log("Button five clicked");
+        checkchosencard(13);
         liarsLuckBot.Instance.OnLiarCardSelected(13);
     }
 
-    public void checkchosencard()
+    public void checkchosencard(int ButtonChoosed)
     {
         //transform.SetParent(Dropzone.transform, false);
         int childCount = Dropzone.transform.childCount;
         if (childCount > 0)
         {
             Transform lastChild = Dropzone.transform.GetChild(childCount - 1);
-            Transform prevChild = Dropzone.transform.GetChild(childCount - 2);
+            //Transform prevChild = Dropzone.transform.GetChild(childCount - 2);
 
             Card lastCardData = lastChild.GetComponent<Card>();
-            Card prevCardData = prevChild.GetComponent<Card>();
+            //Card prevCardData = prevChild.GetComponent<Card>();
 
             if (lastCardData != null)
             {
@@ -181,26 +194,18 @@ public class GameManager : MonoBehaviour
                 }
             }
 
-            if (prevCardData != null)
+            if ((ButtonChoosed >= 1) && (ButtonChoosed <= 13))
             {
-                Debug.Log($"Prev card check in drop zone: {prevCardData.cardNumberString} of {prevCardData.cardSuitString}");
-
-                if (Enum.TryParse<Card.Number>(prevCardData.cardNumberString, true, out Card.Number currentNumber))
-                {
-                    currentprev = (int)currentNumber;
+                Debug.Log($"Prev card called in drop zone: {ButtonChoosed} ");
+                currentprev = ButtonChoosed;
                     beforeprev = currentprev - 1;
                     if (beforeprev < 1) beforeprev = 13;
                     afterprev = currentprev + 1;
                     if (afterprev > 13) afterprev = 1;
                     Debug.Log($"Current prev: {currentprev}, Before prev: {beforeprev}, After prev: {afterprev}");
-                }
-                else
-                {
-                    Debug.LogError($"Invalid card number string: {prevCardData.cardNumberString}");
-                }
             }
 
-            // debug printing
+            //debug printing
             Debug.Log($"currentlast:{currentlast}, beforeprev: {beforeprev},afterprev: {afterprev}, currentprev:{currentprev}");
 
 
@@ -230,8 +235,9 @@ public class GameManager : MonoBehaviour
     {
         if (isPlayerTurn)
         {
-            if (AnnounceLie)
+            if (EnemyAnnounceLie)
             {
+                Debug.Log("Is Player turn");
                 //הבוט שיקר צריך להזיז את הקלפים אל היד של הבוט 
                 for (int i = DropZoneStack.transform.childCount - 1; i >= 0; i--)
                 {
@@ -252,8 +258,9 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            if (AnnounceLie)
+            if (PlayerAnnounceLie)
             {
+                Debug.Log("Is Bot turn");
                 //השחקן שיקר צריך להזיז את הקלפים אל היד של השחקן
                 for (int i = DropZoneStack.transform.childCount - 1; i >= 0; i--)
                 {
