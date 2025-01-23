@@ -233,7 +233,7 @@ public class DragDrop : MonoBehaviour
 
         }
 
-        liarsLuckBot.Instance.InitializeBot();
+       // liarsLuckBot.Instance.();
     }
     #endregion
 }

@@ -13,10 +13,11 @@ public class GameManager : MonoBehaviour
     #region Variable
     public bool AnnounceLie;
     public bool isPlayerTurn = true;
-    public static bool EnemyAnnounceLie = false;
     public static bool isEnemyTurn = true;
     public bool PlayerAnnounceLie = false;
     
+    public bool EnemyAnnounceLie = false;
+
 
     public GameObject Card1;
     public GameObject Card2;
@@ -37,6 +38,7 @@ public class GameManager : MonoBehaviour
     public Button LairButton;
     public TMP_Text botTextMessage;
     public TMP_Text playerTextMessage;
+    public int chosenNumber;
 
     public Deck deck;
     //private liarsLuckBot LiarsLuckBot;
@@ -84,8 +86,8 @@ public class GameManager : MonoBehaviour
 
     public void onButtonAceClicked()
     {
-        Debug.Log("Button one clicked");
-        checkchosencard(1);
+        Debug.Log("Button Ace clicked");
+        chosenNumber = 1;
         liarsLuckBot.Instance.OnLiarCardSelected(1);
         string cardName = GetCardNameGameManager(1);
         string message = $"Player declared: {cardName}";
@@ -94,8 +96,8 @@ public class GameManager : MonoBehaviour
 
     public void onButtonTwoClicked()
     {
-        Debug.Log("Button two clicked");
-        checkchosencard(2);
+        Debug.Log("Button Two clicked");
+        chosenNumber = 2 ;
         liarsLuckBot.Instance.OnLiarCardSelected(2);
         string cardName = GetCardNameGameManager(2);
         string message = $"Player declared: {cardName}";
@@ -104,8 +106,8 @@ public class GameManager : MonoBehaviour
 
     public void onButtonThreeClicked()
     {
-        Debug.Log("Button three clicked");
-        checkchosencard(3);
+        Debug.Log("Button Three clicked");
+        chosenNumber = 3;
         liarsLuckBot.Instance.OnLiarCardSelected(3);
         string cardName = GetCardNameGameManager(3);
         string message = $"Player declared: {cardName}";
@@ -116,6 +118,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Button four clicked");
         checkchosencard(4);
+        chosenNumber = 4;
         liarsLuckBot.Instance.OnLiarCardSelected(4);
         string cardName = GetCardNameGameManager(4);
         string message = $"Player declared: {cardName}";
@@ -125,7 +128,7 @@ public class GameManager : MonoBehaviour
     public void onButtonFiveClicked()
     {
         Debug.Log("Button five clicked");
-        checkchosencard(5);
+        chosenNumber = 5;
         liarsLuckBot.Instance.OnLiarCardSelected(5);
         string cardName = GetCardNameGameManager(5);
         string message = $"Player declared: {cardName}";
@@ -136,6 +139,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Button six clicked");
         checkchosencard(6);
+        chosenNumber = 6;
         liarsLuckBot.Instance.OnLiarCardSelected(6);
         string cardName = GetCardNameGameManager(6);
         string message = $"Player declared: {cardName}";
@@ -146,6 +150,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Button seven clicked");
         checkchosencard(7);
+        chosenNumber = 7;
         liarsLuckBot.Instance.OnLiarCardSelected(7);
         string cardName = GetCardNameGameManager(7);
         string message = $"Player declared: {cardName}";
@@ -154,8 +159,8 @@ public class GameManager : MonoBehaviour
 
     public void onButtonEightClicked()
     {
-        Debug.Log("Button eight clicked");
-        checkchosencard(8);
+        Debug.Log("Button Eight clicked");
+        chosenNumber = 8;
         liarsLuckBot.Instance.OnLiarCardSelected(8);
         string cardName = GetCardNameGameManager(8);
         string message = $"Player declared: {cardName}";
@@ -166,6 +171,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Button nine clicked");
         checkchosencard(9);
+        chosenNumber = 9;
         liarsLuckBot.Instance.OnLiarCardSelected(9);
         string cardName = GetCardNameGameManager(9);
         string message = $"Player declared: {cardName}";
@@ -176,6 +182,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Button ten clicked");
         checkchosencard(10);
+        chosenNumber = 10;
         liarsLuckBot.Instance.OnLiarCardSelected(10);
         string cardName = GetCardNameGameManager(10);
         string message = $"Player declared: {cardName}";
@@ -184,8 +191,8 @@ public class GameManager : MonoBehaviour
 
     public void onButtonJackClicked()
     {
-        Debug.Log("Button jack clicked");
-        checkchosencard(11);
+        Debug.Log("Button Jack clicked");
+        chosenNumber = 11;
         liarsLuckBot.Instance.OnLiarCardSelected(11);
         string cardName = GetCardNameGameManager(11);
         string message = $"Player declared: {cardName}";
@@ -196,6 +203,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Button queen clicked");
         checkchosencard(12);
+        chosenNumber = 12;
         liarsLuckBot.Instance.OnLiarCardSelected(12);
         string cardName = GetCardNameGameManager(12);
         string message = $"Player declared: {cardName}";
@@ -206,6 +214,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Button king clicked");
         checkchosencard(13);
+        chosenNumber = 13;
         liarsLuckBot.Instance.OnLiarCardSelected(13);
         string cardName = GetCardNameGameManager(13);
         string message = $"Player declared: {cardName}";
@@ -220,9 +229,9 @@ public class GameManager : MonoBehaviour
         {
             Transform lastChild = Dropzone.transform.GetChild(childCount - 1);
             //Transform prevChild = Dropzone.transform.GetChild(childCount - 2);
+            //Transform prevChild = Dropzone.transform.GetChild(childCount - 2);
 
             Card lastCardData = lastChild.GetComponent<Card>();
-            //Card prevCardData = prevChild.GetComponent<Card>();
 
             if (lastCardData != null)
             {
@@ -247,14 +256,13 @@ public class GameManager : MonoBehaviour
             {
                 Debug.Log($"Prev card called in drop zone: {ButtonChoosed} ");
                 currentprev = ButtonChoosed;
-                    beforeprev = currentprev - 1;
-                    if (beforeprev < 1) beforeprev = 13;
-                    afterprev = currentprev + 1;
-                    if (afterprev > 13) afterprev = 1;
-                    Debug.Log($"Current prev: {currentprev}, Before prev: {beforeprev}, After prev: {afterprev}");
+                beforeprev = currentprev - 1;
+                if (beforeprev < 1) beforeprev = 13;
+                afterprev = currentprev + 1;
+                if (afterprev > 13) afterprev = 1;
+                Debug.Log($"Current prev: {currentprev}, Before prev: {beforeprev}, After prev: {afterprev}");
             }
 
-            //debug printing
             Debug.Log($"currentlast:{currentlast}, beforeprev: {beforeprev},afterprev: {afterprev}, currentprev:{currentprev}");
 
 
@@ -262,31 +270,35 @@ public class GameManager : MonoBehaviour
             {
                 AnnounceLie = true;
               //  Debug.Log("Liar");
+                Debug.Log("Liar");
             }
             else
             {
                 AnnounceLie = false;
                 //Debug.Log("Not liar");
+                Debug.Log("Not liar");
             }
+
+            Debug.Log(AnnounceLie);
 
             if (isPlayerTurn)
             {
-                PlayerAnnounceLie = AnnounceLie;
+                EnemyAnnounceLie = AnnounceLie;
             }
             else
             {
-                EnemyAnnounceLie = AnnounceLie;
+                PlayerAnnounceLie = AnnounceLie;
             }
         }
     }
 
     public void BTN_Lair()
     {
+        checkchosencard(chosenNumber);
         if (isPlayerTurn)
         {
             if (EnemyAnnounceLie)
             {
-                Debug.Log("Is Player turn");
                 //הבוט שיקר צריך להזיז את הקלפים אל היד של הבוט 
                 for (int i = DropZoneStack.transform.childCount - 1; i >= 0; i--)
                 {
@@ -309,7 +321,6 @@ public class GameManager : MonoBehaviour
         {
             if (PlayerAnnounceLie)
             {
-                Debug.Log("Is Bot turn");
                 //השחקן שיקר צריך להזיז את הקלפים אל היד של השחקן
                 for (int i = DropZoneStack.transform.childCount - 1; i >= 0; i--)
                 {
@@ -326,6 +337,7 @@ public class GameManager : MonoBehaviour
                     card.SetParent(RealEnemyCardArea.transform, false);
                 }
                 Debug.Log("Player was truthful.Cards moved to the bot's hand.");
+              
             }
         }
 

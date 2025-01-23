@@ -9,7 +9,7 @@ public class liarsLuckBot : MonoBehaviour
     #region Variables
     private static liarsLuckBot instance;
     public int cardNumber;
-    public static int[] cardCounts = new int[14]; // index=1 -> ace, index=2 -> 2, index=11 -> jack, index=12 -> queen, index=13 -> king , (index 0 is unused)
+    public int[] cardCounts = new int[14]; // index=1 -> ace, index=2 -> 2, index=11 -> jack, index=12 -> queen, index=13 -> king , (index 0 is unused)
     public int CheckCheatFlag = 0;
     private Dictionary<string, GameObject> _unityButtonLair = new Dictionary<string, GameObject>();
 
@@ -27,6 +27,11 @@ public class liarsLuckBot : MonoBehaviour
     //public int unseenCardsCount; // Total number of unseen cards
     //private System.Random random = new System.Random();
     private GameManager gameManager; // Reference to the GameManager
+
+    private void Start()
+    {
+        Invoke("InitializeBot", 0.2f);
+    }
 
     void Awake()
     {
@@ -56,7 +61,7 @@ public class liarsLuckBot : MonoBehaviour
             Card card = cardTransform.GetComponent<Card>(); // Assuming each card has a Card script attached
             if (card != null)
             {
-                int cardNumber = GetCardNumber(card.cardNumberString);// int.Parse(card.cardNumberString); // Assuming cardNumber represents the value of the card (2 to 14)
+                int cardNumber = GetCardNumber(card.cardNumberString); // Assuming cardNumber represents the value of the card (2 to 14)
                 if (cardNumber >= 1 && cardNumber <= 13)
                 {
                     cardCounts[cardNumber]++;
@@ -161,10 +166,10 @@ public class liarsLuckBot : MonoBehaviour
             cardCounts[buttonNum]++;
         }
 
-        for (int i = 1; i < cardCounts.Length; i++)
-        {
-            Debug.Log($"Bot Card recived {i}: {cardCounts[i]}");
-        }
+        //for (int i = 1; i < cardCounts.Length; i++)
+        //{
+        //    Debug.Log($"Bot Card recived {i}: {cardCounts[i]}");
+        //}
 
         GameManager.instance.isPlayerTurn = false;
         //GameManager.instance.checkchosencard(buttonNum);
@@ -316,7 +321,7 @@ public class liarsLuckBot : MonoBehaviour
         // Reset bluffing status
         isBluffing = false;
         lastPlayedCard = -1;
-
+       // GameManager.instance.checkchosencard(cardNumber);
         // First check if player was lying
         if (cardCounts[buttonNumPlayerChoose] >= 4)
         {
@@ -334,6 +339,7 @@ public class liarsLuckBot : MonoBehaviour
             Card card = cardTransform.GetComponent<Card>();
             if (card != null)
             {
+
                 int cardNumber = GetCardNumber(card.cardNumberString);
                 if ((cardNumber == buttonNumPlayerChoose) ||
                     (cardNumber == buttonNumPlayerChoose + 1) ||
@@ -351,83 +357,96 @@ public class liarsLuckBot : MonoBehaviour
                             button.interactable = false;
                         }
                     }
-
+                    
                     switch (cardNumber)
                     {
                         case 1:
                             Debug.Log("Yes1");
+                            GameManager.instance.chosenNumber = 1;
                             DragDrop.Instance._unityButtonsLairChoose["Button_ace"].GetComponent<Button>().interactable = true; //current
                             DragDrop.Instance._unityButtonsLairChoose["Button_two"].GetComponent<Button>().interactable = true; //after
                             DragDrop.Instance._unityButtonsLairChoose["Button_king"].GetComponent<Button>().interactable = true; //before
                             break;
                         case 2:
                             Debug.Log("Yes2");
+                            GameManager.instance.chosenNumber = 2;
                             DragDrop.Instance._unityButtonsLairChoose["Button_two"].GetComponent<Button>().interactable = true; //current
                             DragDrop.Instance._unityButtonsLairChoose["Button_three"].GetComponent<Button>().interactable = true; //after
                             DragDrop.Instance._unityButtonsLairChoose["Button_ace"].GetComponent<Button>().interactable = true; //before
                             break;
                         case 3:
                             Debug.Log("Yes3");
+                            GameManager.instance.chosenNumber = 3;
                             DragDrop.Instance._unityButtonsLairChoose["Button_three"].GetComponent<Button>().interactable = true; //current
                             DragDrop.Instance._unityButtonsLairChoose["Button_four"].GetComponent<Button>().interactable = true; //after
                             DragDrop.Instance._unityButtonsLairChoose["Button_two"].GetComponent<Button>().interactable = true; //before
                             break;
                         case 4:
                             Debug.Log("Yes4");
+                            GameManager.instance.chosenNumber = 4;
                             DragDrop.Instance._unityButtonsLairChoose["Button_four"].GetComponent<Button>().interactable = true; //current
                             DragDrop.Instance._unityButtonsLairChoose["Button_five"].GetComponent<Button>().interactable = true; //after
                             DragDrop.Instance._unityButtonsLairChoose["Button_three"].GetComponent<Button>().interactable = true; //before
                             break;
                         case 5:
                             Debug.Log("Yes5");
+                            GameManager.instance.chosenNumber = 5;
                             DragDrop.Instance._unityButtonsLairChoose["Button_five"].GetComponent<Button>().interactable = true; //current
                             DragDrop.Instance._unityButtonsLairChoose["Button_six"].GetComponent<Button>().interactable = true; //after
                             DragDrop.Instance._unityButtonsLairChoose["Button_four"].GetComponent<Button>().interactable = true; //before
                             break;
                         case 6:
                             Debug.Log("Yes6");
+                            GameManager.instance.chosenNumber = 6;
                             DragDrop.Instance._unityButtonsLairChoose["Button_six"].GetComponent<Button>().interactable = true; //current
                             DragDrop.Instance._unityButtonsLairChoose["Button_seven"].GetComponent<Button>().interactable = true; //after
                             DragDrop.Instance._unityButtonsLairChoose["Button_five"].GetComponent<Button>().interactable = true; //before
                             break;
                         case 7:
                             Debug.Log("Yes7");
+                            GameManager.instance.chosenNumber = 7;
                             DragDrop.Instance._unityButtonsLairChoose["Button_seven"].GetComponent<Button>().interactable = true; //current
                             DragDrop.Instance._unityButtonsLairChoose["Button_eight"].GetComponent<Button>().interactable = true; //after
                             DragDrop.Instance._unityButtonsLairChoose["Button_six"].GetComponent<Button>().interactable = true; //before
                             break;
                         case 8:
                             Debug.Log("Yes8");
+                            GameManager.instance.chosenNumber = 8;
                             DragDrop.Instance._unityButtonsLairChoose["Button_eight"].GetComponent<Button>().interactable = true; //current
                             DragDrop.Instance._unityButtonsLairChoose["Button_nine"].GetComponent<Button>().interactable = true; //after
                             DragDrop.Instance._unityButtonsLairChoose["Button_seven"].GetComponent<Button>().interactable = true; //before
                             break;
                         case 9:
                             Debug.Log("Yes9");
+                            GameManager.instance.chosenNumber = 9;
                             DragDrop.Instance._unityButtonsLairChoose["Button_nine"].GetComponent<Button>().interactable = true; //current
                             DragDrop.Instance._unityButtonsLairChoose["Button_ten"].GetComponent<Button>().interactable = true; //after
                             DragDrop.Instance._unityButtonsLairChoose["Button_eight"].GetComponent<Button>().interactable = true; //before
                             break;
                         case 10:
                             Debug.Log("Yes10");
+                            GameManager.instance.chosenNumber = 10;
                             DragDrop.Instance._unityButtonsLairChoose["Button_ten"].GetComponent<Button>().interactable = true; //current
                             DragDrop.Instance._unityButtonsLairChoose["Button_jack"].GetComponent<Button>().interactable = true; //after
                             DragDrop.Instance._unityButtonsLairChoose["Button_nine"].GetComponent<Button>().interactable = true; //before
                             break;
                         case 11:
                             Debug.Log("Yes11");
+                            GameManager.instance.chosenNumber = 11;
                             DragDrop.Instance._unityButtonsLairChoose["Button_jack"].GetComponent<Button>().interactable = true; //current
                             DragDrop.Instance._unityButtonsLairChoose["Button_queen"].GetComponent<Button>().interactable = true; //after
                             DragDrop.Instance._unityButtonsLairChoose["Button_ten"].GetComponent<Button>().interactable = true; //before
                             break;
                         case 12:
                             Debug.Log("Yes12");
+                            GameManager.instance.chosenNumber = 12;
                             DragDrop.Instance._unityButtonsLairChoose["Button_queen"].GetComponent<Button>().interactable = true; //current
                             DragDrop.Instance._unityButtonsLairChoose["Button_king"].GetComponent<Button>().interactable = true; //after
                             DragDrop.Instance._unityButtonsLairChoose["Button_jack"].GetComponent<Button>().interactable = true; //before
                             break;
                         case 13:
                             Debug.Log("Yes13");
+                            GameManager.instance.chosenNumber = 13;
                             DragDrop.Instance._unityButtonsLairChoose["Button_king"].GetComponent<Button>().interactable = true; //current
                             DragDrop.Instance._unityButtonsLairChoose["Button_ace"].GetComponent<Button>().interactable = true; //after
                             DragDrop.Instance._unityButtonsLairChoose["Button_queen"].GetComponent<Button>().interactable = true; //before
