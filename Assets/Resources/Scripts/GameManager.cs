@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.UI;
+using static System.Net.Mime.MediaTypeNames;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,6 +15,7 @@ public class GameManager : MonoBehaviour
     public bool isPlayerTurn = true;
     public static bool isEnemyTurn = true;
     public bool PlayerAnnounceLie = false;
+    
     public bool EnemyAnnounceLie = false;
 
 
@@ -22,6 +26,8 @@ public class GameManager : MonoBehaviour
     public GameObject RealEnemyCardArea;
     public GameObject Dropzone;
     public GameObject DropZoneStack;
+    
+
 
     public int currentlast;
     public int currentprev;
@@ -30,9 +36,12 @@ public class GameManager : MonoBehaviour
     public int beforelast;
     public int afterlast;
     public Button LairButton;
+    public TMP_Text botTextMessage;
+    public TMP_Text playerTextMessage;
     public int chosenNumber;
 
     public Deck deck;
+    //private liarsLuckBot LiarsLuckBot;
 
     public List<GameObject> cards = new List<GameObject>();
 
@@ -67,6 +76,7 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         instance = this;
+        playerTextMessage.gameObject.SetActive(false);
     }
 
 
@@ -79,6 +89,9 @@ public class GameManager : MonoBehaviour
         Debug.Log("Button Ace clicked");
         chosenNumber = 1;
         liarsLuckBot.Instance.OnLiarCardSelected(1);
+        string cardName = GetCardNameGameManager(1);
+        string message = $"Player declared: {cardName}";
+        StartCoroutine(showPlayerMessage(message, 3f));
     }
 
     public void onButtonTwoClicked()
@@ -86,6 +99,9 @@ public class GameManager : MonoBehaviour
         Debug.Log("Button Two clicked");
         chosenNumber = 2 ;
         liarsLuckBot.Instance.OnLiarCardSelected(2);
+        string cardName = GetCardNameGameManager(2);
+        string message = $"Player declared: {cardName}";
+        StartCoroutine(showPlayerMessage(message, 3f));
     }
 
     public void onButtonThreeClicked()
@@ -93,13 +109,20 @@ public class GameManager : MonoBehaviour
         Debug.Log("Button Three clicked");
         chosenNumber = 3;
         liarsLuckBot.Instance.OnLiarCardSelected(3);
+        string cardName = GetCardNameGameManager(3);
+        string message = $"Player declared: {cardName}";
+        StartCoroutine(showPlayerMessage(message, 3f));
     }
 
     public void onButtonFourClicked()
     {
         Debug.Log("Button four clicked");
+        checkchosencard(4);
         chosenNumber = 4;
         liarsLuckBot.Instance.OnLiarCardSelected(4);
+        string cardName = GetCardNameGameManager(4);
+        string message = $"Player declared: {cardName}";
+        StartCoroutine(showPlayerMessage(message, 3f));
     }
 
     public void onButtonFiveClicked()
@@ -107,20 +130,31 @@ public class GameManager : MonoBehaviour
         Debug.Log("Button five clicked");
         chosenNumber = 5;
         liarsLuckBot.Instance.OnLiarCardSelected(5);
+        string cardName = GetCardNameGameManager(5);
+        string message = $"Player declared: {cardName}";
+        StartCoroutine(showPlayerMessage(message, 3f));
     }
 
     public void onButtonSixClicked()
     {
         Debug.Log("Button six clicked");
+        checkchosencard(6);
         chosenNumber = 6;
         liarsLuckBot.Instance.OnLiarCardSelected(6);
+        string cardName = GetCardNameGameManager(6);
+        string message = $"Player declared: {cardName}";
+        StartCoroutine(showPlayerMessage(message, 3f));
     }
 
     public void onButtonSevenClicked()
     {
         Debug.Log("Button seven clicked");
+        checkchosencard(7);
         chosenNumber = 7;
         liarsLuckBot.Instance.OnLiarCardSelected(7);
+        string cardName = GetCardNameGameManager(7);
+        string message = $"Player declared: {cardName}";
+        StartCoroutine(showPlayerMessage(message, 3f));
     }
 
     public void onButtonEightClicked()
@@ -128,20 +162,31 @@ public class GameManager : MonoBehaviour
         Debug.Log("Button Eight clicked");
         chosenNumber = 8;
         liarsLuckBot.Instance.OnLiarCardSelected(8);
+        string cardName = GetCardNameGameManager(8);
+        string message = $"Player declared: {cardName}";
+        StartCoroutine(showPlayerMessage(message, 3f));
     }
 
     public void onButtonNineClicked()
     {
         Debug.Log("Button nine clicked");
+        checkchosencard(9);
         chosenNumber = 9;
         liarsLuckBot.Instance.OnLiarCardSelected(9);
+        string cardName = GetCardNameGameManager(9);
+        string message = $"Player declared: {cardName}";
+        StartCoroutine(showPlayerMessage(message, 3f));
     }
 
     public void onButtonTenClicked()
     {
         Debug.Log("Button ten clicked");
+        checkchosencard(10);
         chosenNumber = 10;
         liarsLuckBot.Instance.OnLiarCardSelected(10);
+        string cardName = GetCardNameGameManager(10);
+        string message = $"Player declared: {cardName}";
+        StartCoroutine(showPlayerMessage(message, 3f));
     }
 
     public void onButtonJackClicked()
@@ -149,20 +194,31 @@ public class GameManager : MonoBehaviour
         Debug.Log("Button Jack clicked");
         chosenNumber = 11;
         liarsLuckBot.Instance.OnLiarCardSelected(11);
+        string cardName = GetCardNameGameManager(11);
+        string message = $"Player declared: {cardName}";
+        StartCoroutine(showPlayerMessage(message, 3f));
     }
 
     public void onButtonQueenClicked()
     {
         Debug.Log("Button queen clicked");
+        checkchosencard(12);
         chosenNumber = 12;
         liarsLuckBot.Instance.OnLiarCardSelected(12);
+        string cardName = GetCardNameGameManager(12);
+        string message = $"Player declared: {cardName}";
+        StartCoroutine(showPlayerMessage(message, 3f));
     }
 
     public void onButtonKingClicked()
     {
         Debug.Log("Button king clicked");
+        checkchosencard(13);
         chosenNumber = 13;
         liarsLuckBot.Instance.OnLiarCardSelected(13);
+        string cardName = GetCardNameGameManager(13);
+        string message = $"Player declared: {cardName}";
+        StartCoroutine(showPlayerMessage(message, 3f));
     }
 
     public void checkchosencard(int ButtonChoosed)
@@ -311,6 +367,40 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // Coroutine to show the bot's message for a few seconds
+    public IEnumerator showBotMessage(string message, float duration)
+    {
+        botTextMessage.text = message; // Set the message
+        botTextMessage.gameObject.SetActive(true); // Show the message
 
+        yield return new WaitForSeconds(duration); // Wait for the specified duration
+        botTextMessage.gameObject.SetActive(false); // Hide the message
+    }
+
+    public IEnumerator showPlayerMessage(string message, float duration)
+    {
+        playerTextMessage.text = message;
+        playerTextMessage.gameObject.SetActive(true);
+
+        yield return new WaitForSeconds(duration);
+        playerTextMessage.gameObject.SetActive(false);
+    }
+
+    private string GetCardNameGameManager(int cardNumber)
+    {
+        switch (cardNumber)
+        {
+            case 1:
+                return "Ace";
+            case 11:
+                return "Jack";
+            case 12:
+                return "Queen";
+            case 13:
+                return "King";
+            default:
+                return cardNumber.ToString();
+        }
+    }
     #endregion
 }
