@@ -26,9 +26,12 @@ public class liarsLuckBot : MonoBehaviour
     //private List<int> hand; // Bot's current hand
     //public int unseenCardsCount; // Total number of unseen cards
     //private System.Random random = new System.Random();
+    private GameManager gameManager; // Reference to the GameManager
 
     void Awake()
     {
+        gameManager = GameObject.FindObjectOfType<GameManager>();
+        gameManager.botTextMessage.gameObject.SetActive(false);
         GameObject[] curGameObject = GameObject.FindGameObjectsWithTag("unityButtonLair");
         foreach (GameObject obj in curGameObject)
         {
@@ -581,7 +584,10 @@ public class liarsLuckBot : MonoBehaviour
     {
         string cardName = GetCardName(cardNumber);
         string announcement = $"Bot played: {cardName}";
+        string message = $"Bot declared: {cardName}";
         //need to output text "Bot Played {cardName}"
+        //StartCoroutine(showBotMessage($"Bot declared: {cardName}", 2f));  // Show for 2 seconds
+        StartCoroutine(gameManager.showBotMessage(message, 3f)); // Show message for 2 seconds
 
         //if (announcementText != null)
         //{
