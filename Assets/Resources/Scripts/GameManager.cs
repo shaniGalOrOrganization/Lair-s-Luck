@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using static System.Net.Mime.MediaTypeNames;
 using TMPro;
+using Unity.VisualScripting;
 
 public class GameManager : MonoBehaviour
 {
@@ -15,9 +16,8 @@ public class GameManager : MonoBehaviour
     public bool isPlayerTurn = true;
     public static bool isEnemyTurn = true;
     public bool PlayerAnnounceLie = false;
-    
     public bool EnemyAnnounceLie = false;
-
+    public bool EndFlag = false;
 
     public GameObject Card1;
     public GameObject Card2;
@@ -26,9 +26,6 @@ public class GameManager : MonoBehaviour
     public GameObject RealEnemyCardArea;
     public GameObject Dropzone;
     public GameObject DropZoneStack;
-    
-
-
     public int currentlast;
     public int currentprev;
     public int beforeprev;
@@ -39,15 +36,14 @@ public class GameManager : MonoBehaviour
     public TMP_Text botTextMessage;
     public TMP_Text playerTextMessage;
     public int chosenNumber;
-
     public Deck deck;
-    //private liarsLuckBot LiarsLuckBot;
-
     public List<GameObject> cards = new List<GameObject>();
 
+    [SerializeField] private GameObject winPopupPanel; 
+    [SerializeField] private TextMeshProUGUI winPopupText;
     public  static GameManager instance { get; private set; }
 
-    public GameObject bot;
+    //public GameObject bot;
     //private liarsLuckBot botScript;
 
     #endregion
@@ -56,7 +52,7 @@ public class GameManager : MonoBehaviour
 
     public void Start()
     {
-        //liarsLuckBot.Instance = bot.GetComponent<liarsLuckBot>();
+        winPopupPanel.SetActive(false);
     }
 
     //public void Start()
@@ -312,6 +308,8 @@ public class GameManager : MonoBehaviour
                 for (int i = DropZoneStack.transform.childCount - 1; i >= 0; i--)
                 {
                     Transform card = DropZoneStack.transform.GetChild(i);
+                    int cardNumber = liarsLuckBot.Instance.GetCardNumber(card.GetComponent<Card>().cardNumberString);
+                    liarsLuckBot.Instance.cardCounts[cardNumber]--;
                     card.SetParent(PlayerArea.transform, false);
                 }
                 Debug.Log("Bot was truthful. Cards moved to the player's hand.");
@@ -325,7 +323,10 @@ public class GameManager : MonoBehaviour
                 for (int i = DropZoneStack.transform.childCount - 1; i >= 0; i--)
                 {
                     Transform card = DropZoneStack.transform.GetChild(i);
+                    int cardNumber = liarsLuckBot.Instance.GetCardNumber(card.GetComponent<Card>().cardNumberString);
+                    liarsLuckBot.Instance.cardCounts[cardNumber]--;
                     card.SetParent(PlayerArea.transform, false);
+                   
                 }
                 Debug.Log("Player was lying! Cards moved to the player's hand.");
             }
@@ -401,6 +402,35 @@ public class GameManager : MonoBehaviour
             default:
                 return cardNumber.ToString();
         }
+    }
+
+    public void CheckWinCondition()
+    {
+        int botCardCount = GameManager.instance.RealEnemyCardArea.transform.childCount;
+        int playerCardCount = GameManager.instance.PlayerArea.transform.childCount;
+
+        if (botCardCount == 0)
+        {
+            ShowWinPopup(false); // Bot wins
+            EndFlag = true;
+        }
+        else if (playerCardCount == 0)
+        {
+            ShowWinPopup(true); // Player wins
+            EndFlag = true;
+        }
+        EndFlag = false;
+    }
+
+    private void ShowWinPopup(bool playerWon)
+    {
+        if (winPopupPanel != null && winPopupText != null)
+        {
+            winPopupText.text = playerWon ? "Congratulations! You won!" : "Game Over - Bot wins!";
+            winPopupPanel.SetActive(true);
+        }
+
+        Debug.Log(playerWon ? "Player won!" : "Bot won!");
     }
     #endregion
 }

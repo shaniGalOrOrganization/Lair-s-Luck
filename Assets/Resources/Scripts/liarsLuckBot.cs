@@ -68,6 +68,7 @@ public class liarsLuckBot : MonoBehaviour
                 }
             }
         }
+        cardCounts[GameManager.instance.Dropzone.transform.GetChild(0).GetSiblingIndex()]++;
 
         //for (int i = 1; i < cardCounts.Length; i++)
         //{
@@ -173,7 +174,11 @@ public class liarsLuckBot : MonoBehaviour
 
         GameManager.instance.isPlayerTurn = false;
         //GameManager.instance.checkchosencard(buttonNum);
-        BotMoves(buttonNum);
+        GameManager.instance.CheckWinCondition();
+        if (GameManager.instance.EndFlag == false)
+        {
+            BotMoves(buttonNum);
+        }
     }
 
     //public void BotMoves(int buttonNumPlayerChoose)
@@ -323,7 +328,7 @@ public class liarsLuckBot : MonoBehaviour
         lastPlayedCard = -1;
        // GameManager.instance.checkchosencard(cardNumber);
         // First check if player was lying
-        if (cardCounts[buttonNumPlayerChoose] >= 4)
+        if (cardCounts[buttonNumPlayerChoose] >= 3)
         {
             GameManager.instance.BTN_Lair();
             CheckCheatFlag = 1;
@@ -470,12 +475,16 @@ public class liarsLuckBot : MonoBehaviour
         {
             AnnounceCardPlayed(lastPlayedCard, false);
         }
-
-        // Switch turns and update UI
-        GameManager.instance.isPlayerTurn = true;
-        _unityButtonLair["Button_Cheat"].GetComponent<Button>().interactable = true;
+        GameManager.instance.CheckWinCondition();
+        if (GameManager.instance.EndFlag == false)
+        {
+            // Switch turns and update UI
+            GameManager.instance.isPlayerTurn = true;
+            _unityButtonLair["Button_Cheat"].GetComponent<Button>().interactable = true;
+        }
         //EnablePlayerControls();
-        //CheckWinCondition();
+
+        
     }
 
     private void PlayBluffCard(int currentNumber)
@@ -668,7 +677,7 @@ public class liarsLuckBot : MonoBehaviour
         Debug.Log($"Bot received player dropped card: {cardNum}");
     }
 
-    private int GetCardNumber(string cardNumberString)
+    public int GetCardNumber(string cardNumberString)
     {
         switch (cardNumberString)
         {
