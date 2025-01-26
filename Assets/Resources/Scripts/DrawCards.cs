@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 // using System.Security.Permissions;
 using UnityEngine;
-using static GameManager;
+using UnityEngine.UI;
+//using static GameManager;
 
 public class DrawCards : MonoBehaviour
 {
     #region Variables
-    //public static DrawCards instance { get; private set; }
+    public static DrawCards instance { get; private set; }
     #endregion
 
     #region MonoBehaviour
@@ -20,10 +21,10 @@ public class DrawCards : MonoBehaviour
 
     #region Logic
 
-    //void Awake()
-    //{
-    //    instance = this;
-    //}
+    void Awake()
+    {
+        instance = this;
+    }
 
     public void OnClick()
     {
@@ -31,10 +32,14 @@ public class DrawCards : MonoBehaviour
         if(GameManager.instance.isPlayerTurn)
         {
             newCard.transform.SetParent(GameManager.instance.PlayerArea.transform, false);
+            GameManager.instance.isPlayerTurn = false;
+            liarsLuckBot.Instance.BotMoves(GameManager.instance.chosenNumber);
         }
         else
         {
             newCard.transform.SetParent(GameManager.instance.RealEnemyCardArea.transform, false);
+            GameManager.instance.isPlayerTurn = true;
+            liarsLuckBot.Instance._unityButtonLair["Button_Cheat"].GetComponent<Button>().interactable = true;
         }
     }
 
@@ -54,6 +59,8 @@ public class DrawCards : MonoBehaviour
         }
         Card firstCard = GameManager.instance.deck.drawCard();
         firstCard.transform.SetParent(GameManager.instance.Dropzone.transform, false);
+
+        liarsLuckBot.Instance.InitializeBot();
     }
 
     //private Card GetCard(GameObject currentArea)

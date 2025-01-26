@@ -111,7 +111,10 @@ public class MenuLogic : MonoBehaviour
         changeScreen(screen);
     }
 
-
+    public void BTN_MenuLogic()
+    {
+        changeScreen(GameScreens.MainMenu);
+    }
 
     #endregion
 }

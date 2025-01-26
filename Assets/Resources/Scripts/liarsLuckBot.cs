@@ -11,7 +11,7 @@ public class liarsLuckBot : MonoBehaviour
     public int cardNumber;
     public int[] cardCounts = new int[14]; // index=1 -> ace, index=2 -> 2, index=11 -> jack, index=12 -> queen, index=13 -> king , (index 0 is unused)
     public int CheckCheatFlag = 0;
-    private Dictionary<string, GameObject> _unityButtonLair = new Dictionary<string, GameObject>();
+    public Dictionary<string, GameObject> _unityButtonLair = new Dictionary<string, GameObject>();
 
 
     //[SerializeField] private TextMeshProUGUI announcementText; // Reference to UI text component
@@ -26,6 +26,7 @@ public class liarsLuckBot : MonoBehaviour
     //private List<int> hand; // Bot's current hand
     //public int unseenCardsCount; // Total number of unseen cards
     //private System.Random random = new System.Random();
+    private GameManager gameManager; // Reference to the GameManager
 
     private void Start()
     {
@@ -34,6 +35,8 @@ public class liarsLuckBot : MonoBehaviour
 
     void Awake()
     {
+        gameManager = GameObject.FindObjectOfType<GameManager>();
+        gameManager.botTextMessage.gameObject.SetActive(false);
         GameObject[] curGameObject = GameObject.FindGameObjectsWithTag("unityButtonLair");
         foreach (GameObject obj in curGameObject)
         {
@@ -65,6 +68,7 @@ public class liarsLuckBot : MonoBehaviour
                 }
             }
         }
+        cardCounts[GameManager.instance.Dropzone.transform.GetChild(0).GetSiblingIndex()]++;
 
         //for (int i = 1; i < cardCounts.Length; i++)
         //{
@@ -170,7 +174,11 @@ public class liarsLuckBot : MonoBehaviour
 
         GameManager.instance.isPlayerTurn = false;
         //GameManager.instance.checkchosencard(buttonNum);
-        BotMoves(buttonNum);
+        GameManager.instance.CheckWinCondition();
+        if (GameManager.instance.EndFlag == false)
+        {
+            BotMoves(buttonNum);
+        }
     }
 
     //public void BotMoves(int buttonNumPlayerChoose)
@@ -313,14 +321,14 @@ public class liarsLuckBot : MonoBehaviour
     //}
 
 
-    private void BotMoves(int buttonNumPlayerChoose)
+    public void BotMoves(int buttonNumPlayerChoose)
     {
         // Reset bluffing status
         isBluffing = false;
         lastPlayedCard = -1;
        // GameManager.instance.checkchosencard(cardNumber);
         // First check if player was lying
-        if (cardCounts[buttonNumPlayerChoose] >= 4)
+        if (cardCounts[buttonNumPlayerChoose] >= 3)
         {
             GameManager.instance.BTN_Lair();
             cardCounts[buttonNumPlayerChoose] = 0;
@@ -468,12 +476,16 @@ public class liarsLuckBot : MonoBehaviour
         {
             AnnounceCardPlayed(lastPlayedCard, false);
         }
-
-        // Switch turns and update UI
-        GameManager.instance.isPlayerTurn = true;
-        _unityButtonLair["Button_Cheat"].GetComponent<Button>().interactable = true;
+        GameManager.instance.CheckWinCondition();
+        if (GameManager.instance.EndFlag == false)
+        {
+            // Switch turns and update UI
+            GameManager.instance.isPlayerTurn = true;
+            _unityButtonLair["Button_Cheat"].GetComponent<Button>().interactable = true;
+        }
         //EnablePlayerControls();
-        //CheckWinCondition();
+
+        
     }
 
     private void PlayBluffCard(int currentNumber)
@@ -601,7 +613,10 @@ public class liarsLuckBot : MonoBehaviour
     {
         string cardName = GetCardName(cardNumber);
         string announcement = $"Bot played: {cardName}";
+        string message = $"Bot declared: {cardName}";
         //need to output text "Bot Played {cardName}"
+        //StartCoroutine(showBotMessage($"Bot declared: {cardName}", 2f));  // Show for 2 seconds
+        StartCoroutine(gameManager.showBotMessage(message, 3f)); // Show message for 2 seconds
 
         //if (announcementText != null)
         //{
@@ -663,7 +678,7 @@ public class liarsLuckBot : MonoBehaviour
         Debug.Log($"Bot received player dropped card: {cardNum}");
     }
 
-    private int GetCardNumber(string cardNumberString)
+    public int GetCardNumber(string cardNumberString)
     {
         switch (cardNumberString)
         {
