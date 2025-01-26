@@ -8,7 +8,7 @@ public class Deck : MonoBehaviour
     #region Variables
 
     [SerializeField] private GameObject cardPrefab;
-    [SerializeField] private Transform cardParent;
+    //[SerializeField] private Transform cardParent;
     public List<Card> cards = new List<Card>();
 
     private Card lastCard;
@@ -42,7 +42,7 @@ public class Deck : MonoBehaviour
         string[] cardInfo = sprite.name.Split('_');
         string cardSuit = cardInfo[0];
         string cardNumber = cardInfo[1];
-        GameObject cardObject = Instantiate(cardPrefab, cardParent);
+        GameObject cardObject = Instantiate(cardPrefab, GameManager.instance.DeckArray);
 
         //Debug.Log(sprite.name);
 
