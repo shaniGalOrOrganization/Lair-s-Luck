@@ -445,10 +445,11 @@ public class GameManager : MonoBehaviour
 
         foreach(Transform child in EnemyArea.transform)
         {
-            Destroy(child);
+            Destroy(child.gameObject);
         }
 
         DrawCards.instance.initGame();
+        winPopupPanel.SetActive(true);
     }
 
     public void returnCardsToDeck(GameObject area)
