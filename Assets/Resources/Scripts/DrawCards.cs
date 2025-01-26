@@ -18,6 +18,23 @@ public class DrawCards : MonoBehaviour
 
     #endregion
 
+    #region Singleton
+
+    private static DrawCards instance;
+    public static DrawCards Instance
+    {
+        get
+        {
+            if (instance == null)
+                instance = GameObject.Find("SC_DrawCards").GetComponent<DrawCards>();
+
+            return instance;
+        }
+
+    }
+
+    #endregion
+
     #region Logic
 
     //void Awake()

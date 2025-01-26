@@ -3055,6 +3055,7 @@ MonoBehaviour:
   RealEnemyCardArea: {fileID: 1192325174}
   Dropzone: {fileID: 751748113}
   DropZoneStack: {fileID: 1483925581}
+  DrawCards: {fileID: 0}
   currentlast: 0
   currentprev: 0
   beforeprev: 0
@@ -6465,6 +6466,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1145282078}
     m_Modifications:
+    - target: {fileID: 1998801492029299934, guid: 79eb8a345e7cb194bbe9c661701bb30a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 554154784}
+    - target: {fileID: 1998801492029299934, guid: 79eb8a345e7cb194bbe9c661701bb30a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: BTN_Replay
+      objectReference: {fileID: 0}
+    - target: {fileID: 1998801492029299934, guid: 79eb8a345e7cb194bbe9c661701bb30a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1998801492029299934, guid: 79eb8a345e7cb194bbe9c661701bb30a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 2325090490730302906, guid: 79eb8a345e7cb194bbe9c661701bb30a, type: 3}
       propertyPath: m_text
       value: Replay

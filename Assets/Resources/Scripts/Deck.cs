@@ -75,6 +75,15 @@ public class Deck : MonoBehaviour
         return card;
     }
 
+    public void recreateDeck()
+    {
+        if (cards.Count > 0)
+        {
+            cards.Clear();
+        }
+        createDeck();
+    }
+
     /*   public void returnCardsToDeck()
        {
            for (int i = 0; i < DrawCards.instance.cards.Count; i++)
