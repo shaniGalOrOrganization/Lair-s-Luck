@@ -6466,6 +6466,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1145282078}
     m_Modifications:
+    - target: {fileID: 1998801492029299934, guid: 79eb8a345e7cb194bbe9c661701bb30a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 554154784}
+    - target: {fileID: 1998801492029299934, guid: 79eb8a345e7cb194bbe9c661701bb30a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: BTN_Replay
+      objectReference: {fileID: 0}
+    - target: {fileID: 1998801492029299934, guid: 79eb8a345e7cb194bbe9c661701bb30a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1998801492029299934, guid: 79eb8a345e7cb194bbe9c661701bb30a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 2325090490730302906, guid: 79eb8a345e7cb194bbe9c661701bb30a, type: 3}
       propertyPath: m_text
       value: Replay
@@ -13341,7 +13357,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2076682620}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 459.1277, y: 311.33902, z: 0.9300693}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -14502,8 +14518,8 @@ SceneRoots:
   - {fileID: 705507995}
   - {fileID: 1614442541}
   - {fileID: 448145282}
-  - {fileID: 2076682622}
   - {fileID: 554154785}
+  - {fileID: 2076682622}
   - {fileID: 870261321}
   - {fileID: 765471458}
   - {fileID: 712055113}
