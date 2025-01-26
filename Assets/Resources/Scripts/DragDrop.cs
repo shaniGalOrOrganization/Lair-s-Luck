@@ -12,7 +12,7 @@ public class DragDrop : MonoBehaviour
     private bool isOverDropZone = false;
     private Vector2 startPosition;
     public Dictionary<string, GameObject> _unityButtonsLairChoose = new Dictionary<string, GameObject>();
-    private GameObject botScript;
+    //private GameObject botScript;
     public static DragDrop Instance { get; private set; }
     //GameObject _lastDropZone;
     #endregion

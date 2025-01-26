@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class DrawCards : MonoBehaviour
 {
     #region Variables
-    //public static DrawCards instance { get; private set; }
+    public static DrawCards instance { get; private set; }
     #endregion
 
     #region MonoBehaviour
@@ -21,10 +21,10 @@ public class DrawCards : MonoBehaviour
 
     #region Logic
 
-    //void Awake()
-    //{
-    //    instance = this;
-    //}
+    void Awake()
+    {
+        instance = this;
+    }
 
     public void OnClick()
     {
@@ -59,6 +59,8 @@ public class DrawCards : MonoBehaviour
         }
         Card firstCard = GameManager.instance.deck.drawCard();
         firstCard.transform.SetParent(GameManager.instance.Dropzone.transform, false);
+
+        liarsLuckBot.Instance.InitializeBot();
     }
 
     //private Card GetCard(GameObject currentArea)

@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     public bool PlayerAnnounceLie = false;
     public bool EnemyAnnounceLie = false;
     public bool EndFlag = false;
-
+    public Transform DeckArray;
     public GameObject Card1;
     public GameObject Card2;
     public GameObject PlayerArea;
@@ -431,6 +431,30 @@ public class GameManager : MonoBehaviour
         }
 
         Debug.Log(playerWon ? "Player won!" : "Bot won!");
+    }
+
+    public void BTN_Replay()
+    {
+        Transform firstCard = Dropzone.transform.GetChild(1);
+        firstCard.SetParent(DeckArray.transform, false);
+        returnCardsToDeck(DropZoneStack);
+        returnCardsToDeck(PlayerArea);
+        returnCardsToDeck(RealEnemyCardArea);
+
+        foreach(Transform child in EnemyArea.transform)
+        {
+            Destroy(child);
+        }
+
+        DrawCards.instance.initGame();
+    }
+
+    public void returnCardsToDeck(GameObject area)
+    {
+        foreach (Transform child in area.transform)
+        {
+            child.SetParent(DeckArray.transform, false);
+        }
     }
     #endregion
 }
