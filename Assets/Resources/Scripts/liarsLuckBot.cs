@@ -11,7 +11,7 @@ public class liarsLuckBot : MonoBehaviour
     public int cardNumber;
     public int[] cardCounts = new int[14]; // index=1 -> ace, index=2 -> 2, index=11 -> jack, index=12 -> queen, index=13 -> king , (index 0 is unused)
     public int CheckCheatFlag = 0;
-    private Dictionary<string, GameObject> _unityButtonLair = new Dictionary<string, GameObject>();
+    public Dictionary<string, GameObject> _unityButtonLair = new Dictionary<string, GameObject>();
 
 
     //[SerializeField] private TextMeshProUGUI announcementText; // Reference to UI text component
@@ -321,7 +321,7 @@ public class liarsLuckBot : MonoBehaviour
     //}
 
 
-    private void BotMoves(int buttonNumPlayerChoose)
+    public void BotMoves(int buttonNumPlayerChoose)
     {
         // Reset bluffing status
         isBluffing = false;
@@ -331,6 +331,7 @@ public class liarsLuckBot : MonoBehaviour
         if (cardCounts[buttonNumPlayerChoose] >= 3)
         {
             GameManager.instance.BTN_Lair();
+            cardCounts[buttonNumPlayerChoose] = 0;
             CheckCheatFlag = 1;
             return;
         }

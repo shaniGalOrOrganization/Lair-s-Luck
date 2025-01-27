@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
     public bool PlayerAnnounceLie = false;
     public bool EnemyAnnounceLie = false;
     public bool EndFlag = false;
-
+    public Transform DeckArray;
     public GameObject Card1;
     public GameObject Card2;
     public GameObject PlayerArea;
@@ -280,7 +280,8 @@ public class GameManager : MonoBehaviour
             Debug.Log($"currentlast:{currentlast}, beforeprev: {beforeprev},afterprev: {afterprev}, currentprev:{currentprev}");
 
 
-            if ((currentlast != currentprev) && (currentlast != beforeprev) && (currentlast != afterprev))
+            //if ((currentlast != currentprev) && (currentlast != beforeprev) && (currentlast != afterprev))
+            if(currentlast != currentprev)
             {
                 AnnounceLie = true;
               //  Debug.Log("Liar");
@@ -317,6 +318,8 @@ public class GameManager : MonoBehaviour
                 for (int i = DropZoneStack.transform.childCount - 1; i >= 0; i--)
                 {
                     Transform card = DropZoneStack.transform.GetChild(i);
+                    //int cardNumber = liarsLuckBot.Instance.GetCardNumber(card.GetComponent<Card>().cardNumberString);
+                    //liarsLuckBot.Instance.cardCounts[cardNumber]++;
                     card.SetParent(RealEnemyCardArea.transform, false);
                 }
                 Debug.Log("Bot was lying! Cards moved to the bot's hand.");
@@ -451,95 +454,29 @@ public class GameManager : MonoBehaviour
         Debug.Log(playerWon ? "Player won!" : "Bot won!");
     }
 
-    public void returnCardsToDeck()
-    {
-        // check where are the object of the discard pile and earse them - this is what the for supose to do
-        for (int i = 0; i < GameManager.instance.DropZoneStack.transform.childCount; i++)
-        {
-            //lastCard = GameManager.instance.Dropzone.transform.childCount[i];
-            //DrawCards.Instance.playedCards[i].transform.SetParent(DrawCards.Instance.deckArray.transform, false);
-            //GameManager.instance.Dropzone.childCount[i].transform.SetParent();
-            Destroy(GameManager.instance.DropZoneStack.transform.GetChild(i));
-        }
-            //Destroy(GameManager.instance.DropZone.transform.GetChild(0));
-            // call deck script and earse current remenig cards and create the deck again
-            GameManager.instance.deck.recreateDeck();
-    }
-
-    // Helper function to return all cards from a hand to the deck
-    private void returnHandToDeck(GameObject hand)
-    {
-        //while (hand.childCount > 0) 
-        //{
-        //    Transform card = hand.GetChild(0); // Get the first card in the hand
-        //    card.SetParent(DrawCards.Instance.deckArray, false); // Move it back to the deck
-        //}
-        if (hand.transform.childCount > 0)
-        {
-            for (int i = 0; i < hand.transform.childCount; i++)
-            {
-                Destroy(hand.transform.GetChild(i));
-            }
-        }
-        //foreach (Transform cardTransform in GameManager.instance.hand.transform)
-        //{
-        //    Card card = cardTransform.GetComponent<Card>();
-        //    if (card != null)
-        //    {
-
-        //    }
-        //}
-    }
-
-    // Helper function to handle drop zone cards
-    private void clearDropZone()
-    {
-        if (GameManager.instance.Dropzone.transform.childCount  > 0)
-        {
-            //// Return the first card to the deck
-            Transform firstCrad = GameManager.instance.Dropzone.transform.GetChild(0);
-            Destroy(firstCrad);
-            //firstCrad.SetParent(GameManager.instance.DrawCards.Instance.deckArray, false);
-
-            // Destroy all other cards in the drop zone
-            for (int i = 1; i < GameManager.instance.Dropzone.transform.childCount; i++)
-            {
-                Destroy(GameManager.instance.Dropzone.transform.GetChild(i).gameObject);
-            }
-        }
-    }
-
     public void BTN_Replay()
     {
-        // Close the "end game" popup window
-        if (winPopupPanel != null) 
+        Transform firstCard = Dropzone.transform.GetChild(1);
+        firstCard.SetParent(DeckArray.transform, false);
+        returnCardsToDeck(DropZoneStack);
+        returnCardsToDeck(PlayerArea);
+        returnCardsToDeck(RealEnemyCardArea);
+
+        foreach(Transform child in EnemyArea.transform)
         {
-            winPopupPanel.SetActive(false);
+            Destroy(child.gameObject);
         }
 
-        // Return all played cards to the deck
-        returnCardsToDeck();
+        DrawCards.instance.initGame();
+        winPopupPanel.SetActive(false);
+    }
 
-        // Return remaining cards from player and bot hands to the deck
-        returnHandToDeck(GameManager.instance.PlayerArea);
-        returnHandToDeck(GameManager.instance.RealEnemyCardArea);
-
-        // Handle drop zone cards
-        clearDropZone();
-
-        // Reinitalize the game
-        if (GameObject.Find("SC_DrawCards").GetComponent<DrawCards>() != null)
+    public void returnCardsToDeck(GameObject area)
+    {
+        foreach (Transform child in area.transform)
         {
-            //GameManager.instance.DrawCards.initGame();
-            GameObject.Find("SC_DrawCards").GetComponent<DrawCards>().initGame();
+            child.SetParent(DeckArray.transform, false);
         }
-        else
-        {
-            Debug.LogError("drawCards instance is null! Ensure the drawCards script is properly attached and initialized.");
-        }
-
-        // Reset player turn
-        isPlayerTurn = true;
     }
     #endregion
 }

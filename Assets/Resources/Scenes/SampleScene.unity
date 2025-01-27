@@ -3048,6 +3048,7 @@ MonoBehaviour:
   PlayerAnnounceLie: 0
   EnemyAnnounceLie: 0
   EndFlag: 0
+  DeckArray: {fileID: 1287682155}
   Card1: {fileID: 4826523492623471892, guid: 38a2aaa7006f38e4e8032ed1640c389c, type: 3}
   Card2: {fileID: 1511395787111189394, guid: 307a33e4b11543a44a6c5f3a992d3479, type: 3}
   PlayerArea: {fileID: 304080881}
@@ -12924,7 +12925,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardPrefab: {fileID: 4826523492623471892, guid: 38a2aaa7006f38e4e8032ed1640c389c, type: 3}
-  cardParent: {fileID: 1287682155}
   cards: []
 --- !u!4 &1981328583
 Transform:
@@ -13358,7 +13358,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2076682620}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 459.1277, y: 311.33902, z: 0.9300693}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -14519,8 +14519,8 @@ SceneRoots:
   - {fileID: 705507995}
   - {fileID: 1614442541}
   - {fileID: 448145282}
-  - {fileID: 2076682622}
   - {fileID: 554154785}
+  - {fileID: 2076682622}
   - {fileID: 870261321}
   - {fileID: 765471458}
   - {fileID: 712055113}
