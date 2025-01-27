@@ -262,7 +262,8 @@ public class GameManager : MonoBehaviour
             Debug.Log($"currentlast:{currentlast}, beforeprev: {beforeprev},afterprev: {afterprev}, currentprev:{currentprev}");
 
 
-            if ((currentlast != currentprev) && (currentlast != beforeprev) && (currentlast != afterprev))
+            //if ((currentlast != currentprev) && (currentlast != beforeprev) && (currentlast != afterprev))
+            if(currentlast != currentprev)
             {
                 AnnounceLie = true;
               //  Debug.Log("Liar");
