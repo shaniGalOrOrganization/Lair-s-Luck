@@ -438,26 +438,33 @@ public class GameManager : MonoBehaviour
 
     public void BTN_Replay()
     {
-        Transform firstCard = Dropzone.transform.GetChild(1);
+        Debug.Log(Dropzone.transform.childCount, Dropzone.gameObject);
+        Transform firstCard = Dropzone.transform.GetChild(0);
         firstCard.SetParent(DeckArray.transform, false);
+        Debug.Log(Dropzone.transform.childCount, Dropzone.gameObject);
+        Debug.Log(firstCard.name ,firstCard.gameObject);
         returnCardsToDeck(DropZoneStack);
         returnCardsToDeck(PlayerArea);
         returnCardsToDeck(RealEnemyCardArea);
-
-        foreach(Transform child in EnemyArea.transform)
+        
+        foreach (Transform child in EnemyArea.transform)
         {
             Destroy(child.gameObject);
         }
 
-        DrawCards.instance.initGame();
-        winPopupPanel.SetActive(false);
+        if((RealEnemyCardArea.transform.childCount == 0) && (PlayerArea.transform.childCount == 0) && (DropZoneStack.transform.childCount == 0) )
+        {
+            DrawCards.instance.initGame();
+            winPopupPanel.SetActive(false);
+        }
     }
 
     public void returnCardsToDeck(GameObject area)
     {
-        foreach (Transform child in area.transform)
+        for (int i = area.transform.childCount-1; i>=0; i--)
         {
-            child.SetParent(DeckArray.transform, false);
+            area.transform.GetChild(i).SetParent(DeckArray.transform, false);
+            
         }
     }
     #endregion

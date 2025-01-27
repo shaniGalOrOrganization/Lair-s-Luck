@@ -16,15 +16,14 @@ public class DrawCards : MonoBehaviour
     {
         initGame();
     }
-
-    #endregion
-
-    #region Logic
-
     void Awake()
     {
         instance = this;
     }
+
+    #endregion
+
+    #region Logic
 
     public void OnClick()
     {

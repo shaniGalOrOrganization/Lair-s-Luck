@@ -60,7 +60,7 @@ public class DragDrop : MonoBehaviour
         if (collision.collider.CompareTag("dropZone"))
         {
             isOverDropZone = true;
-            GameManager.instance.Dropzone = collision.gameObject;
+     //       GameManager.instance.Dropzone = collision.gameObject;
         }
     }
 
