@@ -68,7 +68,7 @@ public class liarsLuckBot : MonoBehaviour
                 }
             }
         }
-        cardCounts[GameManager.instance.Dropzone.transform.GetChild(0).GetSiblingIndex()]++;
+        cardCounts[GameManager.instance.DropZoneStack.transform.GetChild(0).GetSiblingIndex()]++;
 
         //for (int i = 1; i < cardCounts.Length; i++)
         //{
@@ -354,7 +354,8 @@ public class liarsLuckBot : MonoBehaviour
                     cardTransform.SetParent(GameManager.instance.DropZoneStack.transform, false);
                     lastPlayedCard = cardNumber;
                     cardPlayed = true;
-
+                    GameManager.instance.SyncEnemyArea();
+                    
                     foreach (var pair in DragDrop.Instance._unityButtonsLairChoose)
                     {
                         Button button = pair.Value.GetComponent<Button>();
@@ -716,6 +717,23 @@ public class liarsLuckBot : MonoBehaviour
                 
         }
     }
+
+    /*public void SyncEnemyArea()
+    {
+        Transform enemyArea = GameManager.instance.EnemyArea.transform;
+        Transform realEnemyCardArea = GameManager.instance.RealEnemyCardArea.transform;
+
+        while (enemyArea.childCount > realEnemyCardArea.childCount)
+        {
+            Destroy(enemyArea.GetChild(0).gameObject);
+        }
+
+        while (enemyArea.childCount < realEnemyCardArea.childCount)
+        {
+            GameObject enemyCard = Instantiate(GameManager.instance.Card2, Vector3.zero, Quaternion.identity);
+            enemyCard.transform.SetParent(enemyArea, false);
+        }
+    }*/
 
     #endregion
 }

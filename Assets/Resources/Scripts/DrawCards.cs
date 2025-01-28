@@ -58,7 +58,7 @@ public class DrawCards : MonoBehaviour
         }
         Card firstCard = GameManager.instance.deck.drawCard();
         firstCard.transform.SetParent(GameManager.instance.Dropzone.transform, false);
-
+        Card firstCardDup = Instantiate(firstCard, GameManager.instance.DropZoneStack.transform, false); 
         liarsLuckBot.Instance.InitializeBot();
     }
 
