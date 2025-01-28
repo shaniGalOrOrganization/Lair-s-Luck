@@ -303,7 +303,7 @@ public class GameManager : MonoBehaviour
                     card.SetParent(RealEnemyCardArea.transform, false);
                 }
                 Debug.Log("Bot was lying! Cards moved to the bot's hand.");
-                liarsLuckBot.Instance.SyncEnemyArea();
+                //liarsLuckBot.Instance.SyncEnemyArea();
             }
             else
             {
@@ -340,7 +340,7 @@ public class GameManager : MonoBehaviour
                     card.SetParent(RealEnemyCardArea.transform, false);
                 }
                 Debug.Log("Player was truthful.Cards moved to the bot's hand.");
-                liarsLuckBot.Instance.SyncEnemyArea();
+               // liarsLuckBot.Instance.SyncEnemyArea();
 
             }
         }
