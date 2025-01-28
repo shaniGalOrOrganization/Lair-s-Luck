@@ -345,6 +345,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        SyncEnemyArea();
     }
 
     public void TransferCardAndHide()
@@ -472,5 +473,34 @@ public class GameManager : MonoBehaviour
             
         }
     }
+
+    public void SyncEnemyArea()
+    {
+        Transform enemyArea = EnemyArea.transform;
+        Transform realEnemyCardArea = RealEnemyCardArea.transform;
+
+        int enemyCardCount = enemyArea.childCount;
+        int realEnemyCardCount = realEnemyCardArea.childCount;
+
+        // Remove excess cards from EnemyArea
+        if (enemyCardCount > realEnemyCardCount)
+        {
+            for (int i = 0; i < (enemyCardCount - realEnemyCardCount); i++)
+            {
+                Destroy(enemyArea.GetChild(0).gameObject);
+            }
+        }
+
+        // Add missing cards to EnemyArea
+        else if (enemyCardCount < realEnemyCardCount)
+        {
+            for (int i = 0; i < (realEnemyCardCount - enemyCardCount); i++)
+            {
+                GameObject enemyCard = Instantiate(Card2, Vector3.zero, Quaternion.identity);
+                enemyCard.transform.SetParent(enemyArea, false);
+            }
+        }
+    }
+
     #endregion
 }
