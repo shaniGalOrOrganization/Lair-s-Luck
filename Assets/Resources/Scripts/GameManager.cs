@@ -220,10 +220,10 @@ public class GameManager : MonoBehaviour
     public void checkchosencard(int ButtonChoosed)
     {
         //transform.SetParent(Dropzone.transform, false);
-        int childCount = Dropzone.transform.childCount;
+        int childCount = DropZoneStack.transform.childCount;
         if (childCount > 0)
         {
-            Transform lastChild = Dropzone.transform.GetChild(childCount - 1);
+            Transform lastChild = DropZoneStack.transform.GetChild(childCount - 1);
             //Transform prevChild = Dropzone.transform.GetChild(childCount - 2);
             //Transform prevChild = Dropzone.transform.GetChild(childCount - 2);
 
@@ -303,6 +303,7 @@ public class GameManager : MonoBehaviour
                     card.SetParent(RealEnemyCardArea.transform, false);
                 }
                 Debug.Log("Bot was lying! Cards moved to the bot's hand.");
+                liarsLuckBot.Instance.SyncEnemyArea();
             }
             else
             {
@@ -339,7 +340,8 @@ public class GameManager : MonoBehaviour
                     card.SetParent(RealEnemyCardArea.transform, false);
                 }
                 Debug.Log("Player was truthful.Cards moved to the bot's hand.");
-              
+                liarsLuckBot.Instance.SyncEnemyArea();
+
             }
         }
 
@@ -450,7 +452,12 @@ public class GameManager : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        if((RealEnemyCardArea.transform.childCount == 0) && (PlayerArea.transform.childCount == 0) && (DropZoneStack.transform.childCount == 0) )
+        foreach (Transform child in Dropzone.transform)
+        {
+            Destroy(child.gameObject);
+        }
+
+        if ((RealEnemyCardArea.transform.childCount == 0) && (PlayerArea.transform.childCount == 0) && (DropZoneStack.transform.childCount == 0) )
         {
             DrawCards.instance.initGame();
             winPopupPanel.SetActive(false);
