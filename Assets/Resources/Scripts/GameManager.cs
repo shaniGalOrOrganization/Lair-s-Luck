@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviour
     public Button LairButton;
     public TMP_Text botTextMessage;
     public TMP_Text playerTextMessage;
+    public TMP_Text liarTextMessage;
     public int chosenNumber;
     public Deck deck;
     public List<GameObject> cards = new List<GameObject>();
@@ -73,6 +74,7 @@ public class GameManager : MonoBehaviour
     {
         instance = this;
         playerTextMessage.gameObject.SetActive(false);
+        liarTextMessage.gameObject.SetActive(false);
     }
 
 
@@ -291,6 +293,7 @@ public class GameManager : MonoBehaviour
 
     public void BTN_Lair()
     {
+        string message = "";
         checkchosencard(chosenNumber);
         if (isPlayerTurn)
         {
@@ -305,6 +308,8 @@ public class GameManager : MonoBehaviour
                     card.SetParent(RealEnemyCardArea.transform, false);
                 }
                 Debug.Log("Bot was lying! Cards moved to the bot's hand.");
+                message = $"Bot was lying!";
+                StartCoroutine(showLairMessage(message, 3f));
                 //liarsLuckBot.Instance.SyncEnemyArea();
             }
             else
@@ -317,6 +322,8 @@ public class GameManager : MonoBehaviour
                     card.SetParent(PlayerArea.transform, false);
                 }
                 Debug.Log("Bot was truthful. Cards moved to the player's hand.");
+                message = $"Bot was truthful";
+                StartCoroutine(showLairMessage(message, 3f));
             }
         }
         else
@@ -333,6 +340,8 @@ public class GameManager : MonoBehaviour
                    
                 }
                 Debug.Log("Player was lying! Cards moved to the player's hand.");
+                message = $"Player was lying!";
+                StartCoroutine(showLairMessage(message, 3f));
             }
             else
             {
@@ -342,6 +351,8 @@ public class GameManager : MonoBehaviour
                     card.SetParent(RealEnemyCardArea.transform, false);
                 }
                 Debug.Log("Player was truthful.Cards moved to the bot's hand.");
+                message = $"Player was truthful";
+                StartCoroutine(showLairMessage(message, 3f));
                // liarsLuckBot.Instance.SyncEnemyArea();
 
             }
@@ -391,6 +402,15 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(duration);
         playerTextMessage.gameObject.SetActive(false);
+    }
+
+    public IEnumerator showLairMessage(string message, float duration)
+    {
+        liarTextMessage.text = message;
+        liarTextMessage.gameObject.SetActive(true);
+
+        yield return new WaitForSeconds(duration);
+        liarTextMessage.gameObject.SetActive(false);
     }
 
     private string GetCardNameGameManager(int cardNumber)
