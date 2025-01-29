@@ -330,8 +330,8 @@ public class liarsLuckBot : MonoBehaviour
         // First check if player was lying
         if (cardCounts[buttonNumPlayerChoose] >= 3)
         {
-            GameManager.instance.BTN_Lair();
             cardCounts[buttonNumPlayerChoose] = 0;
+            GameManager.instance.BTN_Lair();
             CheckCheatFlag = 1;
             return;
         }
