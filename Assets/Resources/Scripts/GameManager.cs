@@ -222,10 +222,10 @@ public class GameManager : MonoBehaviour
     public void checkchosencard(int ButtonChoosed)
     {
         //transform.SetParent(Dropzone.transform, false);
-        int childCount = Dropzone.transform.childCount;
+        int childCount = DropZoneStack.transform.childCount;
         if (childCount > 0)
         {
-            Transform lastChild = Dropzone.transform.GetChild(childCount - 1);
+            Transform lastChild = DropZoneStack.transform.GetChild(childCount - 1);
             //Transform prevChild = Dropzone.transform.GetChild(childCount - 2);
             //Transform prevChild = Dropzone.transform.GetChild(childCount - 2);
 
@@ -310,6 +310,7 @@ public class GameManager : MonoBehaviour
                 Debug.Log("Bot was lying! Cards moved to the bot's hand.");
                 message = $"Bot was lying!";
                 StartCoroutine(showLairMessage(message, 3f));
+                //liarsLuckBot.Instance.SyncEnemyArea();
             }
             else
             {
@@ -352,9 +353,12 @@ public class GameManager : MonoBehaviour
                 Debug.Log("Player was truthful.Cards moved to the bot's hand.");
                 message = $"Player was truthful";
                 StartCoroutine(showLairMessage(message, 3f));
+               // liarsLuckBot.Instance.SyncEnemyArea();
+
             }
         }
 
+        SyncEnemyArea();
     }
 
     public void TransferCardAndHide()
@@ -471,7 +475,12 @@ public class GameManager : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        if((RealEnemyCardArea.transform.childCount == 0) && (PlayerArea.transform.childCount == 0) && (DropZoneStack.transform.childCount == 0) )
+        foreach (Transform child in Dropzone.transform)
+        {
+            Destroy(child.gameObject);
+        }
+
+        if ((RealEnemyCardArea.transform.childCount == 0) && (PlayerArea.transform.childCount == 0) && (DropZoneStack.transform.childCount == 0) )
         {
             DrawCards.instance.initGame();
             winPopupPanel.SetActive(false);
@@ -486,5 +495,34 @@ public class GameManager : MonoBehaviour
             
         }
     }
+
+    public void SyncEnemyArea()
+    {
+        Transform enemyArea = EnemyArea.transform;
+        Transform realEnemyCardArea = RealEnemyCardArea.transform;
+
+        int enemyCardCount = enemyArea.childCount;
+        int realEnemyCardCount = realEnemyCardArea.childCount;
+
+        // Remove excess cards from EnemyArea
+        if (enemyCardCount > realEnemyCardCount)
+        {
+            for (int i = 0; i < (enemyCardCount - realEnemyCardCount); i++)
+            {
+                Destroy(enemyArea.GetChild(0).gameObject);
+            }
+        }
+
+        // Add missing cards to EnemyArea
+        else if (enemyCardCount < realEnemyCardCount)
+        {
+            for (int i = 0; i < (realEnemyCardCount - enemyCardCount); i++)
+            {
+                GameObject enemyCard = Instantiate(Card2, Vector3.zero, Quaternion.identity);
+                enemyCard.transform.SetParent(enemyArea, false);
+            }
+        }
+    }
+
     #endregion
 }
