@@ -10,21 +10,21 @@ public class Deck : MonoBehaviour
     [SerializeField] private GameObject cardPrefab;
     //[SerializeField] private Transform cardParent;
     public List<Card> cards = new List<Card>();
-
-   // private Card lastCard;
+    // private Card lastCard;
 
     #endregion
 
     #region MonoBehaviour
     void Awake()
     {
-        createDeck();
+        //createDeck();
+        
     }
 
     #endregion
 
     #region Logic
-    void createDeck()
+    public void createDeck()
     {
         Card card;
 
@@ -42,7 +42,7 @@ public class Deck : MonoBehaviour
         string[] cardInfo = sprite.name.Split('_');
         string cardSuit = cardInfo[0];
         string cardNumber = cardInfo[1];
-        GameObject cardObject = Instantiate(cardPrefab, GameManager.instance.DeckArray);
+        GameObject cardObject = Instantiate(cardPrefab, GameManager.instance.DeckArray.transform);
 
         //Debug.Log(sprite.name);
 

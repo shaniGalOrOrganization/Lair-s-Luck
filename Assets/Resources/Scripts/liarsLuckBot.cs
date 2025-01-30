@@ -18,7 +18,7 @@ public class liarsLuckBot : MonoBehaviour
     //[SerializeField] private GameObject winPopupPanel; // Reference to popup panel
     //[SerializeField] private TextMeshProUGUI winPopupText; // Reference to text in popup
 
-    private bool isBluffing = false;
+    //private bool isBluffing = false;
     private int lastPlayedCard = -1;
 
     #endregion
@@ -324,7 +324,7 @@ public class liarsLuckBot : MonoBehaviour
     public void BotMoves(int buttonNumPlayerChoose)
     {
         // Reset bluffing status
-        isBluffing = false;
+        //isBluffing = false;
         lastPlayedCard = -1;
        // GameManager.instance.checkchosencard(cardNumber);
         // First check if player was lying
@@ -491,7 +491,7 @@ public class liarsLuckBot : MonoBehaviour
 
     private void PlayBluffCard(int currentNumber)
     {
-        isBluffing = true;
+        //isBluffing = true;
         int childCount = GameManager.instance.RealEnemyCardArea.transform.childCount;
 
         if (childCount > 0)

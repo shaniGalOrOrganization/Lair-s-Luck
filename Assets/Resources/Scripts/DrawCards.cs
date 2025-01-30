@@ -44,6 +44,7 @@ public class DrawCards : MonoBehaviour
 
     public void initGame()
     {
+        GameManager.instance.deck.createDeck();
         for (var i = 0; i < 10; i++)
         {
             Card playerCard = GameManager.instance.deck.drawCard();
