@@ -11,7 +11,7 @@ public class Deck : MonoBehaviour
     //[SerializeField] private Transform cardParent;
     public List<Card> cards = new List<Card>();
 
-    private Card lastCard;
+   // private Card lastCard;
 
     #endregion
 
@@ -62,7 +62,7 @@ public class Deck : MonoBehaviour
     {
         if (cards.Count == 0)
         {
-        //    returnCardsToDeck();
+            GameManager.instance.returnCardsToDeck(GameManager.instance.DropZoneStack);
             if (cards.Count == 0)
             {
                 Debug.LogWarning("No cards left to draw.");
@@ -75,13 +75,6 @@ public class Deck : MonoBehaviour
         return card;
     }
 
-    /*   public void returnCardsToDeck()
-       {
-           for (int i = 0; i < DrawCards.instance.cards.Count; i++)
-           {
-               lastCard = DrawCards.instance.cards[i];
-               DrawCards.instance.cards[i].transform.SetParent(DrawCards.instance.DeckArray.transform, false);
-           }
-       }*/
+  
     #endregion
 }

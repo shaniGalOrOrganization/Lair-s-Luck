@@ -1943,7 +1943,7 @@ MonoBehaviour:
   m_StartCorner: 2
   m_StartAxis: 1
   m_CellSize: {x: 310, y: 437}
-  m_Spacing: {x: 25, y: 0}
+  m_Spacing: {x: -120, y: 0}
   m_Constraint: 2
   m_ConstraintCount: 1
 --- !u!1 &326728045
@@ -13599,7 +13599,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6348772000862343146, guid: 1013fc0510dffff49b559ee97c58200f, type: 3}
       propertyPath: m_Spacing.x
-      value: 25
+      value: -120
       objectReference: {fileID: 0}
     - target: {fileID: 6348772000862343146, guid: 1013fc0510dffff49b559ee97c58200f, type: 3}
       propertyPath: m_CellSize.x

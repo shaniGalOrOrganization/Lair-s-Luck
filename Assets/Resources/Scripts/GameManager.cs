@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     #region Variable
     public bool AnnounceLie;
     public bool isPlayerTurn = true;
-    public static bool isEnemyTurn = true;
+    //public static bool isEnemyTurn = true;
     public bool PlayerAnnounceLie = false;
     public bool EnemyAnnounceLie = false;
     public bool EndFlag = false;
@@ -457,6 +457,10 @@ public class GameManager : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
+        isPlayerTurn = true;
+        PlayerAnnounceLie = false;
+        EnemyAnnounceLie = false;
+        EndFlag = false;
 
         if ((RealEnemyCardArea.transform.childCount == 0) && (PlayerArea.transform.childCount == 0) && (DropZoneStack.transform.childCount == 0) )
         {
