@@ -14,11 +14,11 @@ public class GameManager : MonoBehaviour
     #region Variable
     public bool AnnounceLie;
     public bool isPlayerTurn = true;
-    public static bool isEnemyTurn = true;
+    //public static bool isEnemyTurn = true;
     public bool PlayerAnnounceLie = false;
     public bool EnemyAnnounceLie = false;
     public bool EndFlag = false;
-    public Transform DeckArray;
+    public GameObject DeckArray;
     public GameObject Card1;
     public GameObject Card2;
     public GameObject PlayerArea;
@@ -461,15 +461,15 @@ public class GameManager : MonoBehaviour
 
     public void BTN_Replay()
     {
-        Debug.Log(Dropzone.transform.childCount, Dropzone.gameObject);
+        //Debug.Log(Dropzone.transform.childCount, Dropzone.gameObject);
         Transform firstCard = Dropzone.transform.GetChild(0);
         firstCard.SetParent(DeckArray.transform, false);
-        Debug.Log(Dropzone.transform.childCount, Dropzone.gameObject);
-        Debug.Log(firstCard.name ,firstCard.gameObject);
+        //Debug.Log(Dropzone.transform.childCount, Dropzone.gameObject);
+        //Debug.Log(firstCard.name ,firstCard.gameObject);
         returnCardsToDeck(DropZoneStack);
         returnCardsToDeck(PlayerArea);
         returnCardsToDeck(RealEnemyCardArea);
-        
+
         foreach (Transform child in EnemyArea.transform)
         {
             Destroy(child.gameObject);
@@ -479,8 +479,12 @@ public class GameManager : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
+        isPlayerTurn = true;
+        PlayerAnnounceLie = false;
+        EnemyAnnounceLie = false;
+        EndFlag = false;
 
-        if ((RealEnemyCardArea.transform.childCount == 0) && (PlayerArea.transform.childCount == 0) && (DropZoneStack.transform.childCount == 0) )
+        if ((RealEnemyCardArea.transform.childCount == 0) && (PlayerArea.transform.childCount == 0) && (DropZoneStack.transform.childCount == 0))
         {
             DrawCards.instance.initGame();
             winPopupPanel.SetActive(false);
@@ -492,7 +496,6 @@ public class GameManager : MonoBehaviour
         for (int i = area.transform.childCount-1; i>=0; i--)
         {
             area.transform.GetChild(i).SetParent(DeckArray.transform, false);
-            
         }
     }
 

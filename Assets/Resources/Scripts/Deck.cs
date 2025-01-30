@@ -10,21 +10,21 @@ public class Deck : MonoBehaviour
     [SerializeField] private GameObject cardPrefab;
     //[SerializeField] private Transform cardParent;
     public List<Card> cards = new List<Card>();
-
-    private Card lastCard;
+    // private Card lastCard;
 
     #endregion
 
     #region MonoBehaviour
     void Awake()
     {
-        createDeck();
+        //createDeck();
+        
     }
 
     #endregion
 
     #region Logic
-    void createDeck()
+    public void createDeck()
     {
         Card card;
 
@@ -42,7 +42,7 @@ public class Deck : MonoBehaviour
         string[] cardInfo = sprite.name.Split('_');
         string cardSuit = cardInfo[0];
         string cardNumber = cardInfo[1];
-        GameObject cardObject = Instantiate(cardPrefab, GameManager.instance.DeckArray);
+        GameObject cardObject = Instantiate(cardPrefab, GameManager.instance.DeckArray.transform);
 
         //Debug.Log(sprite.name);
 
@@ -62,7 +62,7 @@ public class Deck : MonoBehaviour
     {
         if (cards.Count == 0)
         {
-        //    returnCardsToDeck();
+            GameManager.instance.returnCardsToDeck(GameManager.instance.DropZoneStack);
             if (cards.Count == 0)
             {
                 Debug.LogWarning("No cards left to draw.");
@@ -75,13 +75,6 @@ public class Deck : MonoBehaviour
         return card;
     }
 
-    /*   public void returnCardsToDeck()
-       {
-           for (int i = 0; i < DrawCards.instance.cards.Count; i++)
-           {
-               lastCard = DrawCards.instance.cards[i];
-               DrawCards.instance.cards[i].transform.SetParent(DrawCards.instance.DeckArray.transform, false);
-           }
-       }*/
+  
     #endregion
 }
