@@ -226,11 +226,10 @@ public class DragDrop : MonoBehaviour
                 GameManager.instance.LairButton.interactable = false;
                 GameManager.instance.TransferCardAndHide();
             }
-            else
-            {
-                transform.position = startPosition;
-            }
-
+        } 
+        else
+        {
+            transform.position = startPosition;
         }
 
        // liarsLuckBot.Instance.();
