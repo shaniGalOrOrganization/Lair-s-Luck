@@ -300,11 +300,11 @@ public class GameManager : MonoBehaviour
             if (EnemyAnnounceLie)
             {
                 //הבוט שיקר צריך להזיז את הקלפים אל היד של הבוט 
-                for (int i = DropZoneStack.transform.childCount - 1; i >= 0; i--)
+                for (int i = DropZoneStack.transform.childCount - 1; i >= 1; i--)
                 {
                     Transform card = DropZoneStack.transform.GetChild(i);
-                    //int cardNumber = liarsLuckBot.Instance.GetCardNumber(card.GetComponent<Card>().cardNumberString);
-                    //liarsLuckBot.Instance.cardCounts[cardNumber]++;
+                    int cardNumber = liarsLuckBot.Instance.GetCardNumber(card.GetComponent<Card>().cardNumberString);
+                    liarsLuckBot.Instance.cardCounts[cardNumber]++;
                     card.SetParent(RealEnemyCardArea.transform, false);
                 }
                 Debug.Log("Bot was lying! Cards moved to the bot's hand.");
@@ -314,10 +314,11 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                for (int i = DropZoneStack.transform.childCount - 1; i >= 0; i--)
+                for (int i = DropZoneStack.transform.childCount - 1; i >= 1; i--)
                 {
                     Transform card = DropZoneStack.transform.GetChild(i);
                     int cardNumber = liarsLuckBot.Instance.GetCardNumber(card.GetComponent<Card>().cardNumberString);
+                    Debug.Log($"linoy check {card.GetComponent<Card>().cardNumberString}");
                     liarsLuckBot.Instance.cardCounts[cardNumber]--;
                     card.SetParent(PlayerArea.transform, false);
                 }
@@ -331,7 +332,7 @@ public class GameManager : MonoBehaviour
             if (PlayerAnnounceLie)
             {
                 //השחקן שיקר צריך להזיז את הקלפים אל היד של השחקן
-                for (int i = DropZoneStack.transform.childCount - 1; i >= 0; i--)
+                for (int i = DropZoneStack.transform.childCount - 1; i >= 1; i--)
                 {
                     Transform card = DropZoneStack.transform.GetChild(i);
                     int cardNumber = liarsLuckBot.Instance.GetCardNumber(card.GetComponent<Card>().cardNumberString);
@@ -345,9 +346,11 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                for (int i = DropZoneStack.transform.childCount - 1; i >= 0; i--)
+                for (int i = DropZoneStack.transform.childCount - 1; i >= 1; i--)
                 {
                     Transform card = DropZoneStack.transform.GetChild(i);
+                    int cardNumber = liarsLuckBot.Instance.GetCardNumber(card.GetComponent<Card>().cardNumberString);
+                    liarsLuckBot.Instance.cardCounts[cardNumber]++;
                     card.SetParent(RealEnemyCardArea.transform, false);
                 }
                 Debug.Log("Player was truthful.Cards moved to the bot's hand.");
