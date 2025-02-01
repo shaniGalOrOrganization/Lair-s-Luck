@@ -355,7 +355,7 @@ public class liarsLuckBot : MonoBehaviour
                     lastPlayedCard = cardNumber;
                     cardPlayed = true;
                     GameManager.instance.SyncEnemyArea();
-                    
+
                     foreach (var pair in DragDrop.Instance._unityButtonsLairChoose)
                     {
                         Button button = pair.Value.GetComponent<Button>();
