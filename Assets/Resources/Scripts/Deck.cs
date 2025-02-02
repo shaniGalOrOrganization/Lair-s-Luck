@@ -59,30 +59,21 @@ public class Deck : MonoBehaviour
 
     public Card drawCard()
     {
-        if (cards.Count == 0)
+        if (cards.Count > 0)
         {
-            GameManager.instance.returnCardsToDeck(GameManager.instance.DropZoneStack);
-            if (cards.Count == 0)
-            {
-                Debug.LogWarning("No cards left to draw.");
-                return null;
-            }
+            int index = Random.Range(0, cards.Count);
+            Card card = cards[index];
+            cards.RemoveAt(index);
+            return card;
         }
-        else
+
+        if(cards.Count == 0)
         {
-            if (GameManager.instance.DropZoneStack.transform.childCount > 0)
-            {
-                GameManager.instance.returnCardsToDeck(GameManager.instance.DropZoneStack);
-            }
-            else
-            {
-                DeckButton.GetComponent<Button>().interactable = false;   
-            }
+            DeckButton.GetComponent<Button>().interactable = false;  
+            Debug.LogWarning("No cards left to draw.");
+            return null;
         }
-        int index = Random.Range(0, cards.Count);
-        Card card = cards[index];
-        cards.RemoveAt(index);
-        return card;
+        return null;
     }
 
   
