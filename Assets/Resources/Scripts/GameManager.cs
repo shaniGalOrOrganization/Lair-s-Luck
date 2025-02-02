@@ -54,6 +54,7 @@ public class GameManager : MonoBehaviour
     public void Start()
     {
         winPopupPanel.SetActive(false);
+        DrawCards.instance.initGame();
     }
 
     //public void Start()
@@ -464,36 +465,59 @@ public class GameManager : MonoBehaviour
 
     public void BTN_Replay()
     {
-        //Debug.Log(Dropzone.transform.childCount, Dropzone.gameObject);
-        Transform firstCard = Dropzone.transform.GetChild(0);
-        firstCard.SetParent(DeckArray.transform, false);
-        //Debug.Log(Dropzone.transform.childCount, Dropzone.gameObject);
-        //Debug.Log(firstCard.name ,firstCard.gameObject);
-        returnCardsToDeck(DropZoneStack);
-        returnCardsToDeck(PlayerArea);
-        returnCardsToDeck(RealEnemyCardArea);
+        ////Debug.Log(Dropzone.transform.childCount, Dropzone.gameObject);
+        //Transform firstCard = Dropzone.transform.GetChild(0);
+        //firstCard.SetParent(DeckArray.transform, false);
+        ////Debug.Log(Dropzone.transform.childCount, Dropzone.gameObject);
+        ////Debug.Log(firstCard.name ,firstCard.gameObject);
+        //returnCardsToDeck(DropZoneStack);
+        //returnCardsToDeck(PlayerArea);
+        //returnCardsToDeck(RealEnemyCardArea);
 
-        foreach (Transform child in EnemyArea.transform)
-        {
-            Destroy(child.gameObject);
-        }
+        //foreach (Transform child in EnemyArea.transform)
+        //{
+        //    Destroy(child.gameObject);
+        //}
 
-        foreach (Transform child in Dropzone.transform)
-        {
-            Destroy(child.gameObject);
-        }
+        //foreach (Transform child in Dropzone.transform)
+        //{
+        //    Destroy(child.gameObject);
+        //}
+
+        Debug.Log($"Dropzone : {Dropzone.transform.childCount}, DropZoneStack : {DropZoneStack.transform.childCount},PlayerArea : {PlayerArea.transform.childCount}" +
+            $",RealEnemyCardArea : {RealEnemyCardArea.transform.childCount},EnemyArea : {EnemyArea.transform.childCount}, DeckArray: {DeckArray.transform.childCount}");
+
+        destroyCards(Dropzone);
+        destroyCards(DropZoneStack);
+        destroyCards(PlayerArea);
+        destroyCards(RealEnemyCardArea);
+        destroyCards(EnemyArea);
+        destroyCards(DeckArray);
+        deck.cards.Clear();
+
+        Debug.Log($"Dropzone : {Dropzone.transform.childCount}, DropZoneStack : {DropZoneStack.transform.childCount},PlayerArea : {PlayerArea.transform.childCount}" +
+            $",RealEnemyCardArea : {RealEnemyCardArea.transform.childCount},EnemyArea : {EnemyArea.transform.childCount}, DeckArray: {DeckArray.transform.childCount}");
         isPlayerTurn = true;
         PlayerAnnounceLie = false;
         EnemyAnnounceLie = false;
         EndFlag = false;
-
-        if ((RealEnemyCardArea.transform.childCount == 0) && (PlayerArea.transform.childCount == 0) && (DropZoneStack.transform.childCount == 0))
+        if((Dropzone.transform.childCount == 0) && (DropZoneStack.transform.childCount == 0) && (PlayerArea.transform.childCount == 0) && (RealEnemyCardArea.transform.childCount == 0) && 
+            (EnemyArea.transform.childCount == 0) && (DeckArray.transform.childCount == 0))
         {
             DrawCards.instance.initGame();
             winPopupPanel.SetActive(false);
         }
+            
+        
     }
 
+    public void destroyCards(GameObject area)
+    {
+        for (int i = area.transform.childCount - 1; i >= 0; i--)
+        {
+            DestroyImmediate(area.transform.GetChild(i).gameObject);
+        }
+    }
     public void returnCardsToDeck(GameObject area)
     {
         for (int i = area.transform.childCount-1; i>=0; i--)

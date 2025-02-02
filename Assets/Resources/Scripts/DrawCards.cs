@@ -14,7 +14,8 @@ public class DrawCards : MonoBehaviour
     #region MonoBehaviour
     void Start()
     {
-        initGame();
+        //GameManager.instance.deck.createDeck();
+        //initGame();
     }
     void Awake()
     {

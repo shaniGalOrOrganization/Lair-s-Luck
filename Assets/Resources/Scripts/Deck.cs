@@ -18,7 +18,6 @@ public class Deck : MonoBehaviour
     void Awake()
     {
         //createDeck();
-        
     }
 
     #endregion
