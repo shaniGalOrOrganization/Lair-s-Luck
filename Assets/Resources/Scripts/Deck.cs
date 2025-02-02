@@ -8,7 +8,7 @@ public class Deck : MonoBehaviour
     #region Variables
 
     [SerializeField] private GameObject cardPrefab;
-    //[SerializeField] private Transform cardParent;
+    public GameObject DeckButton;
     public List<Card> cards = new List<Card>();
     // private Card lastCard;
 
@@ -66,6 +66,17 @@ public class Deck : MonoBehaviour
             {
                 Debug.LogWarning("No cards left to draw.");
                 return null;
+            }
+        }
+        else
+        {
+            if (GameManager.instance.DropZoneStack.transform.childCount > 0)
+            {
+                GameManager.instance.returnCardsToDeck(GameManager.instance.DropZoneStack);
+            }
+            else
+            {
+                DeckButton.GetComponent<Button>().interactable = false;   
             }
         }
         int index = Random.Range(0, cards.Count);
