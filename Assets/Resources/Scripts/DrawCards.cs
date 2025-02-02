@@ -41,6 +41,7 @@ public class DrawCards : MonoBehaviour
             GameManager.instance.isPlayerTurn = true;
             liarsLuckBot.Instance._unityButtonLair["Button_Cheat"].GetComponent<Button>().interactable = true;
         }
+
     }
 
     public void initGame()
@@ -60,8 +61,9 @@ public class DrawCards : MonoBehaviour
         }
         Card firstCard = GameManager.instance.deck.drawCard();
         firstCard.transform.SetParent(GameManager.instance.Dropzone.transform, false);
-        Card firstCardDup = Instantiate(firstCard, GameManager.instance.DropZoneStack.transform, false); 
+        Card firstCardDup = Instantiate(firstCard, GameManager.instance.DropZoneStack.transform, false);
         liarsLuckBot.Instance.InitializeBot();
+        GameManager.instance.deck.DeckButton.GetComponent<Button>().interactable = true;
     }
 
     //private Card GetCard(GameObject currentArea)

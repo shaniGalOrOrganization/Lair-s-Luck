@@ -104,7 +104,7 @@ public class GameManager : MonoBehaviour
         liarsLuckBot.Instance.OnLiarCardSelected(3);
         string cardName = GetCardNameGameManager(3);
     }
-
+    
     public void onButtonFourClicked()
     {
         Debug.Log("Button four clicked");
@@ -464,6 +464,8 @@ public class GameManager : MonoBehaviour
         PlayerAnnounceLie = false;
         EnemyAnnounceLie = false;
         EndFlag = false;
+        deck.DeckButton.GetComponent<Button>().interactable = true;
+
         if((Dropzone.transform.childCount == 0) && (DropZoneStack.transform.childCount == 0) && (PlayerArea.transform.childCount == 0) && (RealEnemyCardArea.transform.childCount == 0) && 
             (EnemyArea.transform.childCount == 0) && (DeckArray.transform.childCount == 0))
         {

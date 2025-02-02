@@ -12817,6 +12817,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardPrefab: {fileID: 4826523492623471892, guid: 38a2aaa7006f38e4e8032ed1640c389c, type: 3}
+  DeckButton: {fileID: 724413720}
   cards: []
 --- !u!4 &1981328583
 Transform:
