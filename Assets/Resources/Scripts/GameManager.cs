@@ -90,7 +90,7 @@ public class GameManager : MonoBehaviour
         liarsLuckBot.Instance.OnLiarCardSelected(1);
         string cardName = GetCardNameGameManager(1);
         string message = $"Player declared: {cardName}";
-        StartCoroutine(showPlayerMessage(message, 3f));
+        StartCoroutine(showPlayerMessage(message, 4f));
     }
 
     public void onButtonTwoClicked()
@@ -100,7 +100,7 @@ public class GameManager : MonoBehaviour
         liarsLuckBot.Instance.OnLiarCardSelected(2);
         string cardName = GetCardNameGameManager(2);
         string message = $"Player declared: {cardName}";
-        StartCoroutine(showPlayerMessage(message, 3f));
+        StartCoroutine(showPlayerMessage(message, 4f));
     }
 
     public void onButtonThreeClicked()
@@ -110,7 +110,7 @@ public class GameManager : MonoBehaviour
         liarsLuckBot.Instance.OnLiarCardSelected(3);
         string cardName = GetCardNameGameManager(3);
         string message = $"Player declared: {cardName}";
-        StartCoroutine(showPlayerMessage(message, 3f));
+        StartCoroutine(showPlayerMessage(message, 4f));
     }
     
     public void onButtonFourClicked()
@@ -121,7 +121,7 @@ public class GameManager : MonoBehaviour
         liarsLuckBot.Instance.OnLiarCardSelected(4);
         string cardName = GetCardNameGameManager(4);
         string message = $"Player declared: {cardName}";
-        StartCoroutine(showPlayerMessage(message, 3f));
+        StartCoroutine(showPlayerMessage(message, 4f));
     }
 
     public void onButtonFiveClicked()
@@ -131,7 +131,7 @@ public class GameManager : MonoBehaviour
         liarsLuckBot.Instance.OnLiarCardSelected(5);
         string cardName = GetCardNameGameManager(5);
         string message = $"Player declared: {cardName}";
-        StartCoroutine(showPlayerMessage(message, 3f));
+        StartCoroutine(showPlayerMessage(message, 4f));
     }
 
     public void onButtonSixClicked()
@@ -142,7 +142,7 @@ public class GameManager : MonoBehaviour
         liarsLuckBot.Instance.OnLiarCardSelected(6);
         string cardName = GetCardNameGameManager(6);
         string message = $"Player declared: {cardName}";
-        StartCoroutine(showPlayerMessage(message, 3f));
+        StartCoroutine(showPlayerMessage(message, 4f));
     }
 
     public void onButtonSevenClicked()
@@ -153,7 +153,7 @@ public class GameManager : MonoBehaviour
         liarsLuckBot.Instance.OnLiarCardSelected(7);
         string cardName = GetCardNameGameManager(7);
         string message = $"Player declared: {cardName}";
-        StartCoroutine(showPlayerMessage(message, 3f));
+        StartCoroutine(showPlayerMessage(message, 4f));
     }
 
     public void onButtonEightClicked()
@@ -163,7 +163,7 @@ public class GameManager : MonoBehaviour
         liarsLuckBot.Instance.OnLiarCardSelected(8);
         string cardName = GetCardNameGameManager(8);
         string message = $"Player declared: {cardName}";
-        StartCoroutine(showPlayerMessage(message, 3f));
+        StartCoroutine(showPlayerMessage(message, 4f));
     }
 
     public void onButtonNineClicked()
@@ -174,7 +174,7 @@ public class GameManager : MonoBehaviour
         liarsLuckBot.Instance.OnLiarCardSelected(9);
         string cardName = GetCardNameGameManager(9);
         string message = $"Player declared: {cardName}";
-        StartCoroutine(showPlayerMessage(message, 3f));
+        StartCoroutine(showPlayerMessage(message, 4f));
     }
 
     public void onButtonTenClicked()
@@ -185,7 +185,7 @@ public class GameManager : MonoBehaviour
         liarsLuckBot.Instance.OnLiarCardSelected(10);
         string cardName = GetCardNameGameManager(10);
         string message = $"Player declared: {cardName}";
-        StartCoroutine(showPlayerMessage(message, 3f));
+        StartCoroutine(showPlayerMessage(message, 4f));
     }
 
     public void onButtonJackClicked()
@@ -195,7 +195,7 @@ public class GameManager : MonoBehaviour
         liarsLuckBot.Instance.OnLiarCardSelected(11);
         string cardName = GetCardNameGameManager(11);
         string message = $"Player declared: {cardName}";
-        StartCoroutine(showPlayerMessage(message, 3f));
+        StartCoroutine(showPlayerMessage(message, 4f));
     }
 
     public void onButtonQueenClicked()
@@ -206,7 +206,7 @@ public class GameManager : MonoBehaviour
         liarsLuckBot.Instance.OnLiarCardSelected(12);
         string cardName = GetCardNameGameManager(12);
         string message = $"Player declared: {cardName}";
-        StartCoroutine(showPlayerMessage(message, 3f));
+        StartCoroutine(showPlayerMessage(message, 4f));
     }
 
     public void onButtonKingClicked()
@@ -217,7 +217,7 @@ public class GameManager : MonoBehaviour
         liarsLuckBot.Instance.OnLiarCardSelected(13);
         string cardName = GetCardNameGameManager(13);
         string message = $"Player declared: {cardName}";
-        StartCoroutine(showPlayerMessage(message, 3f));
+        StartCoroutine(showPlayerMessage(message, 4f));
     }
 
     public void checkchosencard(int ButtonChoosed)
@@ -310,7 +310,7 @@ public class GameManager : MonoBehaviour
                 }
                 Debug.Log("Bot was lying! Cards moved to the bot's hand.");
                 message = $"Bot was lying!";
-                StartCoroutine(showLairMessage(message, 3f));
+                StartCoroutine(showLairMessage(message, 4f));
                 //liarsLuckBot.Instance.SyncEnemyArea();
             }
             else
@@ -325,7 +325,7 @@ public class GameManager : MonoBehaviour
                 }
                 Debug.Log("Bot was truthful. Cards moved to the player's hand.");
                 message = $"Bot was truthful";
-                StartCoroutine(showLairMessage(message, 3f));
+                StartCoroutine(showLairMessage(message, 4f));
             }
         }
         else
@@ -343,7 +343,7 @@ public class GameManager : MonoBehaviour
                 }
                 Debug.Log("Player was lying! Cards moved to the player's hand.");
                 message = $"Player was lying!";
-                StartCoroutine(showLairMessage(message, 3f));
+                StartCoroutine(showLairMessage(message, 4f));
             }
             else
             {
@@ -356,7 +356,7 @@ public class GameManager : MonoBehaviour
                 }
                 Debug.Log("Player was truthful.Cards moved to the bot's hand.");
                 message = $"Player was truthful";
-                StartCoroutine(showLairMessage(message, 3f));
+                StartCoroutine(showLairMessage(message, 4f));
                // liarsLuckBot.Instance.SyncEnemyArea();
 
             }
