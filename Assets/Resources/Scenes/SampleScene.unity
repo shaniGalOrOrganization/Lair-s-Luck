@@ -724,8 +724,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 72, y: 30}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 186, y: 12}
+  m_SizeDelta: {x: 540.8196, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &81385878
 MonoBehaviour:
@@ -810,7 +810,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: -134.02003, w: 0}
+  m_margin: {x: 0, y: 0, z: -0.14796452, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1942,7 +1942,7 @@ MonoBehaviour:
   m_StartCorner: 2
   m_StartAxis: 1
   m_CellSize: {x: 310, y: 437}
-  m_Spacing: {x: -120, y: 0}
+  m_Spacing: {x: -150, y: 0}
   m_Constraint: 2
   m_ConstraintCount: 1
 --- !u!1 &326728045
@@ -2349,6 +2349,11 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &394059078 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7970173106641338756, guid: 860182d0704a6ca47b63e7fa4088d2ce, type: 3}
+  m_PrefabInstance: {fileID: 43187177}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &418618874
 GameObject:
   m_ObjectHideFlags: 0
@@ -3181,7 +3186,7 @@ MonoBehaviour:
   PlayerAnnounceLie: 0
   EnemyAnnounceLie: 0
   EndFlag: 0
-  DeckArray: {fileID: 1826817194}
+  DeckArray: {fileID: 394059078}
   Card1: {fileID: 4826523492623471892, guid: 38a2aaa7006f38e4e8032ed1640c389c, type: 3}
   Card2: {fileID: 1511395787111189394, guid: 307a33e4b11543a44a6c5f3a992d3479, type: 3}
   PlayerArea: {fileID: 304080881}
@@ -3833,7 +3838,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Lair!!
+  m_text: Liar!!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 28d9b9f72eb651447a52ec90bbde2947, type: 2}
   m_sharedMaterial: {fileID: 6726087093156280303, guid: 28d9b9f72eb651447a52ec90bbde2947, type: 2}
@@ -3940,8 +3945,8 @@ RectTransform:
   m_Children:
   - {fileID: 436339802}
   - {fileID: 50528917}
-  - {fileID: 226122089}
   - {fileID: 352859690}
+  - {fileID: 226122089}
   - {fileID: 1287682155}
   - {fileID: 736610436133404313}
   - {fileID: 1483925580}
@@ -12414,11 +12419,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &1826817194 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7970173106641338756, guid: 860182d0704a6ca47b63e7fa4088d2ce, type: 3}
-  m_PrefabInstance: {fileID: 43187177}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1855417612 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6131510411780678975, guid: 79eb8a345e7cb194bbe9c661701bb30a, type: 3}
@@ -12954,6 +12954,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardPrefab: {fileID: 4826523492623471892, guid: 38a2aaa7006f38e4e8032ed1640c389c, type: 3}
+  DeckButton: {fileID: 724413720}
   cards: []
 --- !u!4 &1981328583
 Transform:
@@ -13629,7 +13630,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6348772000862343146, guid: 1013fc0510dffff49b559ee97c58200f, type: 3}
       propertyPath: m_Spacing.x
-      value: -120
+      value: -150
       objectReference: {fileID: 0}
     - target: {fileID: 6348772000862343146, guid: 1013fc0510dffff49b559ee97c58200f, type: 3}
       propertyPath: m_CellSize.x
@@ -14516,11 +14517,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6131510411780678975, guid: 79eb8a345e7cb194bbe9c661701bb30a, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 202
+      value: 229.41727
       objectReference: {fileID: 0}
     - target: {fileID: 6131510411780678975, guid: 79eb8a345e7cb194bbe9c661701bb30a, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -87
+      value: -116
       objectReference: {fileID: 0}
     - target: {fileID: 6131510411780678975, guid: 79eb8a345e7cb194bbe9c661701bb30a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

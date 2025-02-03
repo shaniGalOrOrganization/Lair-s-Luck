@@ -8,7 +8,7 @@ public class Deck : MonoBehaviour
     #region Variables
 
     [SerializeField] private GameObject cardPrefab;
-    //[SerializeField] private Transform cardParent;
+    public GameObject DeckButton;
     public List<Card> cards = new List<Card>();
     // private Card lastCard;
 
@@ -18,7 +18,6 @@ public class Deck : MonoBehaviour
     void Awake()
     {
         //createDeck();
-        
     }
 
     #endregion
@@ -60,19 +59,21 @@ public class Deck : MonoBehaviour
 
     public Card drawCard()
     {
-        if (cards.Count == 0)
+        if (cards.Count > 0)
         {
-            GameManager.instance.returnCardsToDeck(GameManager.instance.DropZoneStack);
-            if (cards.Count == 0)
-            {
-                Debug.LogWarning("No cards left to draw.");
-                return null;
-            }
+            int index = Random.Range(0, cards.Count);
+            Card card = cards[index];
+            cards.RemoveAt(index);
+            return card;
         }
-        int index = Random.Range(0, cards.Count);
-        Card card = cards[index];
-        cards.RemoveAt(index);
-        return card;
+
+        if(cards.Count == 0)
+        {
+            DeckButton.GetComponent<Button>().interactable = false;  
+            Debug.LogWarning("No cards left to draw.");
+            return null;
+        }
+        return null;
     }
 
   

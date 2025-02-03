@@ -12,7 +12,8 @@ public class DrawCards : MonoBehaviour
     #region MonoBehaviour
     void Start()
     {
-        initGame();
+        //GameManager.instance.deck.createDeck();
+        //initGame();
     }
 
     void Awake()
@@ -48,6 +49,7 @@ public class DrawCards : MonoBehaviour
         {
             Debug.LogError($"Error in OnClick: {e.Message}");
         }
+
     }
 
     public void initGame()
@@ -89,6 +91,11 @@ public class DrawCards : MonoBehaviour
         {
             Debug.LogError($"Error in initGame: {e.Message}");
         }
+        Card firstCard = GameManager.instance.deck.drawCard();
+        firstCard.transform.SetParent(GameManager.instance.Dropzone.transform, false);
+        Card firstCardDup = Instantiate(firstCard, GameManager.instance.DropZoneStack.transform, false);
+        liarsLuckBot.Instance.InitializeBot();
+        GameManager.instance.deck.DeckButton.GetComponent<Button>().interactable = true;
     }
     #endregion
 }
