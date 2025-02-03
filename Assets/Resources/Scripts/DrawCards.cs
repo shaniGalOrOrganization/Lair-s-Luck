@@ -78,6 +78,15 @@ public class DrawCards : MonoBehaviour
                 }
             }
 
+            //Card firstCard = GameManager.instance.deck.drawCard();
+            //if (firstCard != null)
+            //{
+            //    firstCard.transform.SetParent(GameManager.instance.Dropzone.transform, false);
+            //    Card firstCardDup = Instantiate(firstCard, GameManager.instance.DropZoneStack.transform, false);
+            //}
+
+            //liarsLuckBot.Instance.InitializeBot();
+
             Card firstCard = GameManager.instance.deck.drawCard();
             if (firstCard != null)
             {
@@ -86,16 +95,12 @@ public class DrawCards : MonoBehaviour
             }
 
             liarsLuckBot.Instance.InitializeBot();
+            GameManager.instance.deck.DeckButton.GetComponent<Button>().interactable = true;
         }
         catch (System.Exception e)
         {
             Debug.LogError($"Error in initGame: {e.Message}");
         }
-        Card firstCard = GameManager.instance.deck.drawCard();
-        firstCard.transform.SetParent(GameManager.instance.Dropzone.transform, false);
-        Card firstCardDup = Instantiate(firstCard, GameManager.instance.DropZoneStack.transform, false);
-        liarsLuckBot.Instance.InitializeBot();
-        GameManager.instance.deck.DeckButton.GetComponent<Button>().interactable = true;
     }
     #endregion
 }

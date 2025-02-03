@@ -163,7 +163,7 @@ public class liarsLuckBot : MonoBehaviour
 
     private void UpdatePlayerBluffPattern(int cardNum)
     {
-        if (cardCounts[cardNum] >= 3)
+        if (cardCounts[cardNum] >= 4)
         {
             float oldRate = playerBluffPatterns[cardNum];
             playerBluffPatterns[cardNum] = oldRate * 0.9f + 0.1f;
@@ -278,7 +278,7 @@ public class liarsLuckBot : MonoBehaviour
     private bool ShouldCallBluff(int declaredCard)
     {
         // Basic bluff detection
-        if (cardCounts[declaredCard] >= 3)
+        if (cardCounts[declaredCard] >= 4)
             return true;
 
         // Advanced bluff detection
@@ -291,7 +291,7 @@ public class liarsLuckBot : MonoBehaviour
         // 2. Player has history of bluffing with this card
         // 3. Critical game state (near end)
         return (bluffProbability > 0.7f && playerHandSize <= 3) ||
-               (playerPattern > 0.8f && cardCounts[declaredCard] > 1) ||
+               //(playerPattern > 0.8f && cardCounts[declaredCard] > 1) ||
                (playerHandSize <= 2 && cardCounts[declaredCard] > 1);
     }
 
@@ -629,7 +629,7 @@ public class liarsLuckBot : MonoBehaviour
         {
             if (cardNum >= 1 && cardNum <= 13)
             {
-                cardCounts[cardNum]++;
+                //cardCounts[cardNum]++;
                 UpdatePlayerCardStats(cardNum);
             }
         }
