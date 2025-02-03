@@ -9,142 +9,75 @@ public class liarsLuckBot : MonoBehaviour
     #region Variables
     private static liarsLuckBot instance;
     public int cardNumber;
-    public int[] cardCounts = new int[14]; // index=1 -> ace, index=2 -> 2, index=11 -> jack, index=12 -> queen, index=13 -> king , (index 0 is unused)
+    public int[] cardCounts = new int[14];
     public int CheckCheatFlag = 0;
     public Dictionary<string, GameObject> _unityButtonLair = new Dictionary<string, GameObject>();
 
-
-    //[SerializeField] private TextMeshProUGUI announcementText; // Reference to UI text component
-    //[SerializeField] private GameObject winPopupPanel; // Reference to popup panel
-    //[SerializeField] private TextMeshProUGUI winPopupText; // Reference to text in popup
-
-    //private bool isBluffing = false;
+    // Game state tracking
+    private int consecutiveLies = 0;
+    private int drawsThisGame = 0;
+    private int cardsInDeck;
     private int lastPlayedCard = -1;
+    private GameManager gameManager;
 
+    // Advanced Strategy
+    private static Dictionary<int, float> cardSuccessRates = new Dictionary<int, float>();
+    private static Dictionary<int, int> cardUsageCount = new Dictionary<int, int>();
+    private static Dictionary<int, float> playerBluffPatterns = new Dictionary<int, float>();
+    private static int totalGamesPlayed = 0;
+    private const int MAX_DRAWS_PER_GAME = 1;
+    private const float AGGRESSIVE_THRESHOLD = 0.7f;
+
+    private class MoveHistory
+    {
+        public int CardNumber { get; set; }
+        public bool WasLie { get; set; }
+        public bool WasCaught { get; set; }
+        public int RemainingCards { get; set; }
+    }
+
+    private List<MoveHistory> gameHistory = new List<MoveHistory>();
     #endregion
-    //public int[] cardCounts = new int[14]; // Tracks how many cards of each rank have been played (index 0 is unused)
-    //private List<int> hand; // Bot's current hand
-    //public int unseenCardsCount; // Total number of unseen cards
-    //private System.Random random = new System.Random();
-    private GameManager gameManager; // Reference to the GameManager
 
-    private void Start()
+    #region Initialization
+    void Start()
     {
         Invoke("InitializeBot", 0.2f);
     }
 
     void Awake()
     {
-        gameManager = GameObject.FindObjectOfType<GameManager>();
-        gameManager.botTextMessage.gameObject.SetActive(false);
-        GameObject[] curGameObject = GameObject.FindGameObjectsWithTag("unityButtonLair");
-        foreach (GameObject obj in curGameObject)
+        try
         {
-            _unityButtonLair.Add(obj.name, obj);
-        }
-
-        // Hide win popup at start
-        //if (winPopupPanel != null)
-        //    winPopupPanel.SetActive(false);
-    }
-
-    public void InitializeBot()
-    {
-        // Initialize cardCounts with 0 - the first cell will remain 0, for simplifying the logic
-        for (int i = 1; i < cardCounts.Length; i++)
-        {
-            cardCounts[i] = 0;
-        }
-
-        foreach (Transform cardTransform in GameManager.instance.RealEnemyCardArea.transform)
-        {
-            Card card = cardTransform.GetComponent<Card>(); // Assuming each card has a Card script attached
-            if (card != null)
+            gameManager = GameObject.FindObjectOfType<GameManager>();
+            gameManager.botTextMessage.gameObject.SetActive(false);
+            GameObject[] curGameObject = GameObject.FindGameObjectsWithTag("unityButtonLair");
+            foreach (GameObject obj in curGameObject)
             {
-                int cardNumber = GetCardNumber(card.cardNumberString); // Assuming cardNumber represents the value of the card (2 to 14)
-                if (cardNumber >= 1 && cardNumber <= 13)
-                {
-                    cardCounts[cardNumber]++;
-                }
+                _unityButtonLair.Add(obj.name, obj);
+            }
+
+            if (cardSuccessRates.Count == 0)
+            {
+                InitializeLearningSystem();
             }
         }
-        cardCounts[GameManager.instance.DropZoneStack.transform.GetChild(0).GetSiblingIndex()]++;
-
-        //for (int i = 1; i < cardCounts.Length; i++)
-        //{
-        //    Debug.Log($"Bot Card {i}: {cardCounts[i]}");
-        //}
+        catch (System.Exception e)
+        {
+            Debug.LogError($"Error in Awake: {e.Message}");
+        }
     }
 
-    //public void UpdateCardCount(int cardRank) {
-    //    cardCounts[cardRank]++; // Increment count for known cards
-    //    unseenCardsCount--;       // Decrease unseen card count
-    //}
+    private void InitializeLearningSystem()
+    {
+        for (int i = 1; i <= 13; i++)
+        {
+            cardSuccessRates[i] = 0.5f;
+            cardUsageCount[i] = 0;
+            playerBluffPatterns[i] = 0.5f;
+        }
+    }
 
-    //public double CalculateBluffProbability(int declaredCard)
-    //{
-    //    int totalCardsPerRank = 4; // Total cards of the rank in the entire deck
-    //    int knownCards = cardCounts[declaredCard]; // Known played cards + cards in the bot's hand
-    //    int remainingCards = totalCardsPerRank - knownCards; // Remaining possible cards
-
-    //    // Avoid division by zero
-    //    if (unseenCardsCount == 0) return 0;
-
-    //    return (double)remainingCards / unseenCardsCount;
-    //}
-
-    //public bool ShouldCallBluff(int declaredCard)
-    //{
-    //    double bluffProbability = CalculateBluffProbability(declaredCard);
-
-    //    // Call a bluff if the probability is high enough
-    //    if (bluffProbability > 0.7) // Example threshold: 70% probability
-    //    {
-    //        return true; // call bluff
-    //    }
-    //    return false; // do not call bluff
-    //}
-
-    //public void ReceiveDrawnCard(int drawnCard)
-    //{
-    //    hand.Add(drawnCard);         // Add the drawn card to the bot's hand
-    //    UpdateCardCount(drawnCard);  // Update the known cards
-    //}
-
-    //public int playCard(int currentCard)
-    //{
-    //    // Find valid cards to play (currentCard +- 1)
-    //    List<int> validCards = hand.Where(card => card == currentCard - 1 || card == currentCard + 1).ToList();
-
-    //    if (validCards.Count > 0)
-    //    {
-    //        // Play a valid card
-    //        int chosenCard = validCards[random.Next(validCards.Count)];
-    //        hand.Remove(chosenCard);
-    //        return chosenCard; // Return the played card
-    //    }
-
-    //    // Decide whether to bluff
-    //    else if (random.NextDouble() < 0.3)
-    //    {
-    //        int bluffRank = random.Next(1, 14);
-    //        return bluffRank; // Return a random bluff rank
-    //    }
-
-    //    // If the bot can't play and decides not to bluff, it must draw a card
-    //    else if (unseenCardsCount > 0)
-    //    {
-    //        return 0; // Signal the Game Manager to draw a card
-    //    }
-
-    //    else
-    //    {
-    //        // No cards to draw, bot must bluff
-    //        return random.Next(1, 14); // Bluff with a random rank
-    //    }
-    //}
-
-    #region Logic
     public static liarsLuckBot Instance
     {
         get
@@ -157,531 +90,482 @@ public class liarsLuckBot : MonoBehaviour
         }
     }
 
-    public void OnLiarCardSelected(int buttonNum)
+    public void InitializeBot()
     {
-        Debug.Log($"Bot received liar button: {buttonNum}");
-
-        if (buttonNum >= 1 && buttonNum <= 13)
+        try
         {
-            Debug.Log("Im here!");
-            cardCounts[buttonNum]++;
+            ResetGameState();
+            CountInitialCards();
+            cardsInDeck = 52 - (GameManager.instance.PlayerArea.transform.childCount * 2) - 1;
+            drawsThisGame = 0;
+            gameHistory.Clear();
         }
-
-        //for (int i = 1; i < cardCounts.Length; i++)
-        //{
-        //    Debug.Log($"Bot Card recived {i}: {cardCounts[i]}");
-        //}
-
-        GameManager.instance.isPlayerTurn = false;
-        //GameManager.instance.checkchosencard(buttonNum);
-        GameManager.instance.CheckWinCondition();
-        if (GameManager.instance.EndFlag == false)
+        catch (System.Exception e)
         {
-            BotMoves(buttonNum);
+            Debug.LogError($"Error in InitializeBot: {e.Message}");
         }
     }
 
-    //public void BotMoves(int buttonNumPlayerChoose)
-    //{
-    //    if (cardCounts[buttonNumPlayerChoose] >= 4)
-    //    {
-    //        GameManager.instance.BTN_Lair();
-    //        CheckCheatFlag = 1;
-    //    }
-
-    //    if (CheckCheatFlag == 0)
-    //    {
-    //        foreach (Transform cardTransform in GameManager.instance.RealEnemyCardArea.transform)
-    //        {
-    //            Card card = cardTransform.GetComponent<Card>(); // Assuming each card has a Card script attached
-    //            if (card != null)
-    //            {
-    //                int cardNumber = GetCardNumber(card.cardNumberString);// int.Parse(card.cardNumberString); // Assuming cardNumber represents the value of the card (2 to 14)
-    //                if ((cardNumber == buttonNumPlayerChoose) || (cardNumber == buttonNumPlayerChoose + 1) || (cardNumber == buttonNumPlayerChoose - 1))
-    //                {
-    //                    cardTransform.SetParent(GameManager.instance.DropZoneStack.transform, false);
-
-    //                    foreach (var pair in DragDrop.Instance._unityButtonsLairChoose)
-    //                    {
-    //                        Button button = pair.Value.GetComponent<Button>();
-    //                        if (button != null)
-    //                        {
-    //                            button.interactable = false;
-    //                        }
-    //                    }
-
-    //                    switch (cardNumber)
-    //                    {
-    //                        case 1:
-    //                            Debug.Log("Yes1");
-    //                            DragDrop.Instance._unityButtonsLairChoose["Button_ace"].GetComponent<Button>().interactable = true; //current
-    //                            DragDrop.Instance._unityButtonsLairChoose["Button_two"].GetComponent<Button>().interactable = true; //after
-    //                            DragDrop.Instance._unityButtonsLairChoose["Button_king"].GetComponent<Button>().interactable = true; //before
-    //                            break;
-    //                        case 2:
-    //                            Debug.Log("Yes2");
-    //                            DragDrop.Instance._unityButtonsLairChoose["Button_two"].GetComponent<Button>().interactable = true; //current
-    //                            DragDrop.Instance._unityButtonsLairChoose["Button_three"].GetComponent<Button>().interactable = true; //after
-    //                            DragDrop.Instance._unityButtonsLairChoose["Button_ace"].GetComponent<Button>().interactable = true; //before
-    //                            break;
-    //                        case 3:
-    //                            Debug.Log("Yes3");
-    //                            DragDrop.Instance._unityButtonsLairChoose["Button_three"].GetComponent<Button>().interactable = true; //current
-    //                            DragDrop.Instance._unityButtonsLairChoose["Button_four"].GetComponent<Button>().interactable = true; //after
-    //                            DragDrop.Instance._unityButtonsLairChoose["Button_two"].GetComponent<Button>().interactable = true; //before
-    //                            break;
-    //                        case 4:
-    //                            Debug.Log("Yes4");
-    //                            DragDrop.Instance._unityButtonsLairChoose["Button_four"].GetComponent<Button>().interactable = true; //current
-    //                            DragDrop.Instance._unityButtonsLairChoose["Button_five"].GetComponent<Button>().interactable = true; //after
-    //                            DragDrop.Instance._unityButtonsLairChoose["Button_three"].GetComponent<Button>().interactable = true; //before
-    //                            break;
-    //                        case 5:
-    //                            Debug.Log("Yes5");
-    //                            DragDrop.Instance._unityButtonsLairChoose["Button_five"].GetComponent<Button>().interactable = true; //current
-    //                            DragDrop.Instance._unityButtonsLairChoose["Button_six"].GetComponent<Button>().interactable = true; //after
-    //                            DragDrop.Instance._unityButtonsLairChoose["Button_four"].GetComponent<Button>().interactable = true; //before
-    //                            break;
-    //                        case 6:
-    //                            Debug.Log("Yes6");
-    //                            DragDrop.Instance._unityButtonsLairChoose["Button_six"].GetComponent<Button>().interactable = true; //current
-    //                            DragDrop.Instance._unityButtonsLairChoose["Button_seven"].GetComponent<Button>().interactable = true; //after
-    //                            DragDrop.Instance._unityButtonsLairChoose["Button_five"].GetComponent<Button>().interactable = true; //before
-    //                            break;
-    //                        case 7:
-    //                            Debug.Log("Yes7");
-    //                            DragDrop.Instance._unityButtonsLairChoose["Button_seven"].GetComponent<Button>().interactable = true; //current
-    //                            DragDrop.Instance._unityButtonsLairChoose["Button_eight"].GetComponent<Button>().interactable = true; //after
-    //                            DragDrop.Instance._unityButtonsLairChoose["Button_six"].GetComponent<Button>().interactable = true; //before
-    //                            break;
-    //                        case 8:
-    //                            Debug.Log("Yes8");
-    //                            DragDrop.Instance._unityButtonsLairChoose["Button_eight"].GetComponent<Button>().interactable = true; //current
-    //                            DragDrop.Instance._unityButtonsLairChoose["Button_nine"].GetComponent<Button>().interactable = true; //after
-    //                            DragDrop.Instance._unityButtonsLairChoose["Button_seven"].GetComponent<Button>().interactable = true; //before
-    //                            break;
-    //                        case 9:
-    //                            Debug.Log("Yes9");
-    //                            DragDrop.Instance._unityButtonsLairChoose["Button_nine"].GetComponent<Button>().interactable = true; //current
-    //                            DragDrop.Instance._unityButtonsLairChoose["Button_ten"].GetComponent<Button>().interactable = true; //after
-    //                            DragDrop.Instance._unityButtonsLairChoose["Button_eight"].GetComponent<Button>().interactable = true; //before
-    //                            break;
-    //                        case 10:
-    //                            Debug.Log("Yes10");
-    //                            DragDrop.Instance._unityButtonsLairChoose["Button_ten"].GetComponent<Button>().interactable = true; //current
-    //                            DragDrop.Instance._unityButtonsLairChoose["Button_jack"].GetComponent<Button>().interactable = true; //after
-    //                            DragDrop.Instance._unityButtonsLairChoose["Button_nine"].GetComponent<Button>().interactable = true; //before
-    //                            break;
-    //                        case 11:
-    //                            Debug.Log("Yes11");
-    //                            DragDrop.Instance._unityButtonsLairChoose["Button_jack"].GetComponent<Button>().interactable = true; //current
-    //                            DragDrop.Instance._unityButtonsLairChoose["Button_queen"].GetComponent<Button>().interactable = true; //after
-    //                            DragDrop.Instance._unityButtonsLairChoose["Button_ten"].GetComponent<Button>().interactable = true; //before
-    //                            break;
-    //                        case 12:
-    //                            Debug.Log("Yes12");
-    //                            DragDrop.Instance._unityButtonsLairChoose["Button_queen"].GetComponent<Button>().interactable = true; //current
-    //                            DragDrop.Instance._unityButtonsLairChoose["Button_king"].GetComponent<Button>().interactable = true; //after
-    //                            DragDrop.Instance._unityButtonsLairChoose["Button_jack"].GetComponent<Button>().interactable = true; //before
-    //                            break;
-    //                        case 13:
-    //                            Debug.Log("Yes13");
-    //                            DragDrop.Instance._unityButtonsLairChoose["Button_king"].GetComponent<Button>().interactable = true; //current
-    //                            DragDrop.Instance._unityButtonsLairChoose["Button_ace"].GetComponent<Button>().interactable = true; //after
-    //                            DragDrop.Instance._unityButtonsLairChoose["Button_queen"].GetComponent<Button>().interactable = true; //before
-    //                            break;
-    //                        default:
-    //                            Debug.Log($"Yes{cardNumber}");
-    //                            break;
-    //                    }
-    //                    break;
-    //                }
-    //                //else
-    //                //{
-    //                //    if ((GameManager.instance.DropZoneStack.transform.childCount <= 3) && (GameManager.instance.RealEnemyCardArea.transform.childCount >= 4))
-    //                //    {
-    //                //        int childCount = GameManager.instance.RealEnemyCardArea.transform.childCount;
-    //                //        Transform lastChild = GameManager.instance.RealEnemyCardArea.transform.GetChild(childCount - 1);
-    //                //        lastChild.SetParent(GameManager.instance.DropZoneStack.transform, false);
-    //                //        //Need to do "on" to one of the buttons
-    //                //    }
-    //                //    //else
-    //                //    //{
-    //                //    //    DrawCards.instance.OnClick();
-    //                //    //}
-    //                //}
-    //            }
-    //        }
-
-    //        CheckCheatFlag = 0;
-    //    }
-
-    //    GameManager.instance.isPlayerTurn = true;
-    //    _unityButtonLair["Button_Cheat"].GetComponent<Button>().interactable = true;
-    //}
-
-
-    public void BotMoves(int buttonNumPlayerChoose)
+    private void ResetGameState()
     {
-        // Reset bluffing status
-        //isBluffing = false;
-        lastPlayedCard = -1;
-       // GameManager.instance.checkchosencard(cardNumber);
-        // First check if player was lying
-        if (cardCounts[buttonNumPlayerChoose] >= 3)
+        for (int i = 1; i < cardCounts.Length; i++)
         {
-            cardCounts[buttonNumPlayerChoose] = 0;
-            GameManager.instance.BTN_Lair();
-            CheckCheatFlag = 1;
-            return;
+            cardCounts[i] = 0;
         }
+        consecutiveLies = 0;
+        lastPlayedCard = -1;
+    }
 
-        CheckCheatFlag = 0;
-        bool cardPlayed = false;
-
-        // Try to play a valid card first
+    private void CountInitialCards()
+    {
         foreach (Transform cardTransform in GameManager.instance.RealEnemyCardArea.transform)
         {
             Card card = cardTransform.GetComponent<Card>();
             if (card != null)
             {
-
-                int cardNumber = GetCardNumber(card.cardNumberString);
-                if ((cardNumber == buttonNumPlayerChoose) ||
-                    (cardNumber == buttonNumPlayerChoose + 1) ||
-                    (cardNumber == buttonNumPlayerChoose - 1))
+                int cardNum = GetCardNumber(card.cardNumberString);
+                if (cardNum >= 1 && cardNum <= 13)
                 {
-                    cardTransform.SetParent(GameManager.instance.DropZoneStack.transform, false);
-                    lastPlayedCard = cardNumber;
-                    cardPlayed = true;
-                    GameManager.instance.SyncEnemyArea();
-                    
-                    foreach (var pair in DragDrop.Instance._unityButtonsLairChoose)
-                    {
-                        Button button = pair.Value.GetComponent<Button>();
-                        if (button != null)
-                        {
-                            button.interactable = false;
-                        }
-                    }
-                    
-                    switch (cardNumber)
-                    {
-                        case 1:
-                            Debug.Log("Yes1");
-                            GameManager.instance.chosenNumber = 1;
-                            DragDrop.Instance._unityButtonsLairChoose["Button_ace"].GetComponent<Button>().interactable = true; //current
-                            DragDrop.Instance._unityButtonsLairChoose["Button_two"].GetComponent<Button>().interactable = true; //after
-                            DragDrop.Instance._unityButtonsLairChoose["Button_king"].GetComponent<Button>().interactable = true; //before
-                            break;
-                        case 2:
-                            Debug.Log("Yes2");
-                            GameManager.instance.chosenNumber = 2;
-                            DragDrop.Instance._unityButtonsLairChoose["Button_two"].GetComponent<Button>().interactable = true; //current
-                            DragDrop.Instance._unityButtonsLairChoose["Button_three"].GetComponent<Button>().interactable = true; //after
-                            DragDrop.Instance._unityButtonsLairChoose["Button_ace"].GetComponent<Button>().interactable = true; //before
-                            break;
-                        case 3:
-                            Debug.Log("Yes3");
-                            GameManager.instance.chosenNumber = 3;
-                            DragDrop.Instance._unityButtonsLairChoose["Button_three"].GetComponent<Button>().interactable = true; //current
-                            DragDrop.Instance._unityButtonsLairChoose["Button_four"].GetComponent<Button>().interactable = true; //after
-                            DragDrop.Instance._unityButtonsLairChoose["Button_two"].GetComponent<Button>().interactable = true; //before
-                            break;
-                        case 4:
-                            Debug.Log("Yes4");
-                            GameManager.instance.chosenNumber = 4;
-                            DragDrop.Instance._unityButtonsLairChoose["Button_four"].GetComponent<Button>().interactable = true; //current
-                            DragDrop.Instance._unityButtonsLairChoose["Button_five"].GetComponent<Button>().interactable = true; //after
-                            DragDrop.Instance._unityButtonsLairChoose["Button_three"].GetComponent<Button>().interactable = true; //before
-                            break;
-                        case 5:
-                            Debug.Log("Yes5");
-                            GameManager.instance.chosenNumber = 5;
-                            DragDrop.Instance._unityButtonsLairChoose["Button_five"].GetComponent<Button>().interactable = true; //current
-                            DragDrop.Instance._unityButtonsLairChoose["Button_six"].GetComponent<Button>().interactable = true; //after
-                            DragDrop.Instance._unityButtonsLairChoose["Button_four"].GetComponent<Button>().interactable = true; //before
-                            break;
-                        case 6:
-                            Debug.Log("Yes6");
-                            GameManager.instance.chosenNumber = 6;
-                            DragDrop.Instance._unityButtonsLairChoose["Button_six"].GetComponent<Button>().interactable = true; //current
-                            DragDrop.Instance._unityButtonsLairChoose["Button_seven"].GetComponent<Button>().interactable = true; //after
-                            DragDrop.Instance._unityButtonsLairChoose["Button_five"].GetComponent<Button>().interactable = true; //before
-                            break;
-                        case 7:
-                            Debug.Log("Yes7");
-                            GameManager.instance.chosenNumber = 7;
-                            DragDrop.Instance._unityButtonsLairChoose["Button_seven"].GetComponent<Button>().interactable = true; //current
-                            DragDrop.Instance._unityButtonsLairChoose["Button_eight"].GetComponent<Button>().interactable = true; //after
-                            DragDrop.Instance._unityButtonsLairChoose["Button_six"].GetComponent<Button>().interactable = true; //before
-                            break;
-                        case 8:
-                            Debug.Log("Yes8");
-                            GameManager.instance.chosenNumber = 8;
-                            DragDrop.Instance._unityButtonsLairChoose["Button_eight"].GetComponent<Button>().interactable = true; //current
-                            DragDrop.Instance._unityButtonsLairChoose["Button_nine"].GetComponent<Button>().interactable = true; //after
-                            DragDrop.Instance._unityButtonsLairChoose["Button_seven"].GetComponent<Button>().interactable = true; //before
-                            break;
-                        case 9:
-                            Debug.Log("Yes9");
-                            GameManager.instance.chosenNumber = 9;
-                            DragDrop.Instance._unityButtonsLairChoose["Button_nine"].GetComponent<Button>().interactable = true; //current
-                            DragDrop.Instance._unityButtonsLairChoose["Button_ten"].GetComponent<Button>().interactable = true; //after
-                            DragDrop.Instance._unityButtonsLairChoose["Button_eight"].GetComponent<Button>().interactable = true; //before
-                            break;
-                        case 10:
-                            Debug.Log("Yes10");
-                            GameManager.instance.chosenNumber = 10;
-                            DragDrop.Instance._unityButtonsLairChoose["Button_ten"].GetComponent<Button>().interactable = true; //current
-                            DragDrop.Instance._unityButtonsLairChoose["Button_jack"].GetComponent<Button>().interactable = true; //after
-                            DragDrop.Instance._unityButtonsLairChoose["Button_nine"].GetComponent<Button>().interactable = true; //before
-                            break;
-                        case 11:
-                            Debug.Log("Yes11");
-                            GameManager.instance.chosenNumber = 11;
-                            DragDrop.Instance._unityButtonsLairChoose["Button_jack"].GetComponent<Button>().interactable = true; //current
-                            DragDrop.Instance._unityButtonsLairChoose["Button_queen"].GetComponent<Button>().interactable = true; //after
-                            DragDrop.Instance._unityButtonsLairChoose["Button_ten"].GetComponent<Button>().interactable = true; //before
-                            break;
-                        case 12:
-                            Debug.Log("Yes12");
-                            GameManager.instance.chosenNumber = 12;
-                            DragDrop.Instance._unityButtonsLairChoose["Button_queen"].GetComponent<Button>().interactable = true; //current
-                            DragDrop.Instance._unityButtonsLairChoose["Button_king"].GetComponent<Button>().interactable = true; //after
-                            DragDrop.Instance._unityButtonsLairChoose["Button_jack"].GetComponent<Button>().interactable = true; //before
-                            break;
-                        case 13:
-                            Debug.Log("Yes13");
-                            GameManager.instance.chosenNumber = 13;
-                            DragDrop.Instance._unityButtonsLairChoose["Button_king"].GetComponent<Button>().interactable = true; //current
-                            DragDrop.Instance._unityButtonsLairChoose["Button_ace"].GetComponent<Button>().interactable = true; //after
-                            DragDrop.Instance._unityButtonsLairChoose["Button_queen"].GetComponent<Button>().interactable = true; //before
-                            break;
-                        default:
-                            Debug.Log($"Yes{cardNumber}");
-                            break;
-                    }
+                    cardCounts[cardNum]++;
+                }
+            }
+        }
+    }
+    #endregion
 
-                    break;
+    #region Core Game Logic
+    public void OnLiarCardSelected(int buttonNum)
+    {
+        try
+        {
+            if (buttonNum >= 1 && buttonNum <= 13)
+            {
+                cardCounts[buttonNum]++;
+                UpdatePlayerBluffPattern(buttonNum);
+            }
+
+            GameManager.instance.isPlayerTurn = false;
+            GameManager.instance.CheckWinCondition();
+            if (!GameManager.instance.EndFlag)
+            {
+                BotMoves(buttonNum);
+            }
+            else
+            {
+                UpdateEndGameStats();
+            }
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"Error in OnLiarCardSelected: {e.Message}");
+        }
+    }
+
+    private void UpdatePlayerBluffPattern(int cardNum)
+    {
+        if (cardCounts[cardNum] >= 4)
+        {
+            float oldRate = playerBluffPatterns[cardNum];
+            playerBluffPatterns[cardNum] = oldRate * 0.9f + 0.1f;
+        }
+    }
+
+    public void BotMoves(int buttonNumPlayerChoose)
+    {
+        try
+        {
+            lastPlayedCard = -1;
+
+            // First priority - call bluff if highly likely
+            if (ShouldCallBluff(buttonNumPlayerChoose))
+            {
+                HandleBluffCall(buttonNumPlayerChoose);
+                return;
+            }
+
+            CheckCheatFlag = 0;
+            bool hasValidCard = FindValidCard(buttonNumPlayerChoose, out Transform validCardTransform, out int validCardNumber);
+            int botHandSize = GameManager.instance.RealEnemyCardArea.transform.childCount;
+
+            // Decision making priority
+            if (hasValidCard && !ShouldSaveValidCard(validCardNumber))
+            {
+                PlayCard(validCardTransform, validCardNumber);
+            }
+            else if (ShouldDrawCard(botHandSize))
+            {
+                DrawCards.instance.OnClick();
+                drawsThisGame++;
+            }
+            else
+            {
+                PlayStrategicBluff(buttonNumPlayerChoose);
+            }
+
+            CompleteMove();
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"Error in BotMoves: {e.Message}");
+        }
+    }
+
+    private bool ShouldSaveValidCard(int cardNumber)
+    {
+        // Save card if:
+        // 1. We're close to winning (2-3 cards left)
+        // 2. This card has high success rate
+        // 3. We have alternative moves
+        int botHandSize = GameManager.instance.RealEnemyCardArea.transform.childCount;
+        return botHandSize <= 3 &&
+               botHandSize > 1 &&
+               cardSuccessRates[cardNumber] > AGGRESSIVE_THRESHOLD &&
+               !IsLastValidCard(cardNumber);
+    }
+
+    private bool IsLastValidCard(int cardNumber)
+    {
+        int validCards = 0;
+        foreach (Transform cardTransform in GameManager.instance.RealEnemyCardArea.transform)
+        {
+            Card card = cardTransform.GetComponent<Card>();
+            if (card != null)
+            {
+                int num = GetCardNumber(card.cardNumberString);
+                if (IsValidPlay(num, lastPlayedCard))
+                {
+                    validCards++;
+                    if (validCards > 1)
+                        return false;
+                }
+            }
+        }
+        return validCards == 1;
+    }
+
+    private bool ShouldDrawCard(int botHandSize)
+    {
+        // Add new check for existing valid cards
+        if (HasAnyValidCard())
+            return false;  // Never draw if we have valid cards to play
+
+        if (botHandSize > 1)
+            return false;
+        if (drawsThisGame >= MAX_DRAWS_PER_GAME)
+            return false;
+        if (cardsInDeck <= 0)
+            return false;
+        if (IsOptimalWinningPosition())
+            return false;
+
+        return true;
+    }
+
+    private bool HasAnyValidCard()
+    {
+        return FindValidCard(lastPlayedCard, out _, out _);
+    }
+
+    private bool IsOptimalWinningPosition()
+    {
+        int playerHandSize = GameManager.instance.PlayerArea.transform.childCount;
+        int botHandSize = GameManager.instance.RealEnemyCardArea.transform.childCount;
+        return botHandSize < playerHandSize || botHandSize <= 2;
+    }
+    #endregion
+
+    #region Bluffing Logic
+    private bool ShouldCallBluff(int declaredCard)
+    {
+        // Basic bluff detection
+        if (cardCounts[declaredCard] >= 4)
+            return true;
+
+        // Advanced bluff detection
+        int playerHandSize = GameManager.instance.PlayerArea.transform.childCount;
+        float bluffProbability = CalculateBluffProbability(declaredCard);
+        float playerPattern = playerBluffPatterns[declaredCard];
+
+        // Call bluff if:
+        // 1. High probability of bluff and player has few cards
+        // 2. Player has history of bluffing with this card
+        // 3. Critical game state (near end)
+        return (bluffProbability > 0.7f && playerHandSize <= 3) ||
+               //(playerPattern > 0.8f && cardCounts[declaredCard] > 1) ||
+               (playerHandSize <= 2 && cardCounts[declaredCard] > 1);
+    }
+
+    private float CalculateBluffProbability(int cardNumber)
+    {
+        float visibleCards = cardCounts[cardNumber];
+        float playerHandSize = GameManager.instance.PlayerArea.transform.childCount;
+        float deckFactor = cardsInDeck / 52f;
+        float historicalPattern = playerBluffPatterns[cardNumber];
+
+        // Complex probability calculation
+        float baseProbability = (visibleCards / 4f) * (1 - deckFactor);
+        float playerFactor = 1 + (playerHandSize < 3 ? 0.3f : 0);
+        float historyFactor = 1 + historicalPattern;
+
+        return baseProbability * playerFactor * historyFactor;
+    }
+
+    private void PlayStrategicBluff(int currentNumber)
+    {
+        try
+        {
+            if (GameManager.instance.RealEnemyCardArea.transform.childCount > 0)
+            {
+                Transform cardToPlay;
+
+                // Choose card based on game state
+                if (IsOptimalWinningPosition())
+                {
+                    cardToPlay = ChooseLeastValuableCard();
+                }
+                else
+                {
+                    cardToPlay = ChooseBestBluffCard();
+                }
+
+                cardToPlay.SetParent(GameManager.instance.DropZoneStack.transform, false);
+                lastPlayedCard = currentNumber;
+                consecutiveLies++;
+
+                EnableRelevantButtons(currentNumber);
+                AnnounceCardPlayed(currentNumber, true);
+                GameManager.instance.SyncEnemyArea();
+
+                // Update statistics
+                RecordMove(currentNumber, true);
+            }
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"Error in PlayStrategicBluff: {e.Message}");
+        }
+    }
+
+    private Transform ChooseLeastValuableCard()
+    {
+        float lowestValue = float.MaxValue;
+        Transform chosenCard = null;
+
+        foreach (Transform cardTransform in GameManager.instance.RealEnemyCardArea.transform)
+        {
+            Card card = cardTransform.GetComponent<Card>();
+            if (card != null)
+            {
+                int cardNum = GetCardNumber(card.cardNumberString);
+                float cardValue = EvaluateCardValue(cardNum);
+                if (cardValue < lowestValue)
+                {
+                    lowestValue = cardValue;
+                    chosenCard = cardTransform;
                 }
             }
         }
 
-        // If no valid card found, bot must bluff
-        if (!cardPlayed)
+        return chosenCard ?? GameManager.instance.RealEnemyCardArea.transform.GetChild(0);
+    }
+
+    private Transform ChooseBestBluffCard()
+    {
+        float highestPotential = float.MinValue;
+        Transform chosenCard = null;
+
+        foreach (Transform cardTransform in GameManager.instance.RealEnemyCardArea.transform)
         {
-            PlayBluffCard(buttonNumPlayerChoose);
+            Card card = cardTransform.GetComponent<Card>();
+            if (card != null)
+            {
+                int cardNum = GetCardNumber(card.cardNumberString);
+                float potential = EvaluateBluffPotential(cardNum);
+                if (potential > highestPotential)
+                {
+                    highestPotential = potential;
+                    chosenCard = cardTransform;
+                }
+            }
         }
-        else
+
+        return chosenCard ?? GameManager.instance.RealEnemyCardArea.transform.GetChild(0);
+    }
+
+    private float EvaluateCardValue(int cardNumber)
+    {
+        float successRate = cardSuccessRates[cardNumber];
+        float usageCount = cardUsageCount[cardNumber];
+        float visibilityFactor = 1f - (cardCounts[cardNumber] / 4f);
+
+        return (successRate * 0.5f + visibilityFactor * 0.3f + (usageCount / 10f) * 0.2f);
+    }
+
+    private float EvaluateBluffPotential(int cardNumber)
+    {
+        float successRate = cardSuccessRates[cardNumber];
+        float playerBluffRate = playerBluffPatterns[cardNumber];
+        float visibilityFactor = 1f - (cardCounts[cardNumber] / 4f);
+
+        return (successRate * 0.4f + (1 - playerBluffRate) * 0.3f + visibilityFactor * 0.3f);
+    }
+
+    #endregion
+
+    #region Card Playing and Move Management
+    private void PlayCard(Transform cardTransform, int cardNumber)
+    {
+        try
         {
-            AnnounceCardPlayed(lastPlayedCard, false);
+            cardTransform.SetParent(GameManager.instance.DropZoneStack.transform, false);
+            lastPlayedCard = cardNumber;
+            consecutiveLies = 0;
+
+            EnableRelevantButtons(cardNumber);
+            AnnounceCardPlayed(cardNumber, false);
+            GameManager.instance.SyncEnemyArea();
+
+            // Update statistics and learning
+            cardUsageCount[cardNumber]++;
+            UpdateSuccessRate(cardNumber, true);
+            RecordMove(cardNumber, false);
         }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"Error in PlayCard: {e.Message}");
+        }
+    }
+
+    private void HandleBluffCall(int buttonNum)
+    {
+        try
+        {
+            cardCounts[buttonNum] = 0;
+            GameManager.instance.BTN_Lair();
+            CheckCheatFlag = 1;
+
+            // Update learning when calling bluff
+            MoveHistory lastMove = gameHistory.LastOrDefault();
+            if (lastMove != null)
+            {
+                lastMove.WasCaught = true;
+                UpdateSuccessRate(lastMove.CardNumber, false);
+            }
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"Error in HandleBluffCall: {e.Message}");
+        }
+    }
+
+    private void UpdateSuccessRate(int cardNumber, bool success)
+    {
+        float currentRate = cardSuccessRates[cardNumber];
+        float learningFactor = 1.0f / (cardUsageCount[cardNumber] + 1);
+        cardSuccessRates[cardNumber] = currentRate * (1 - learningFactor) + (success ? learningFactor : 0);
+    }
+
+    private void RecordMove(int cardNumber, bool wasLie)
+    {
+        gameHistory.Add(new MoveHistory
+        {
+            CardNumber = cardNumber,
+            WasLie = wasLie,
+            WasCaught = false,
+            RemainingCards = GameManager.instance.RealEnemyCardArea.transform.childCount
+        });
+    }
+
+    private void CompleteMove()
+    {
         GameManager.instance.CheckWinCondition();
-        if (GameManager.instance.EndFlag == false)
+        if (!GameManager.instance.EndFlag)
         {
-            // Switch turns and update UI
             GameManager.instance.isPlayerTurn = true;
             _unityButtonLair["Button_Cheat"].GetComponent<Button>().interactable = true;
         }
-        //EnablePlayerControls();
-
-        
+        else
+        {
+            UpdateEndGameStats();
+        }
     }
 
-    private void PlayBluffCard(int currentNumber)
+    private void UpdateEndGameStats()
     {
-        //isBluffing = true;
-        int childCount = GameManager.instance.RealEnemyCardArea.transform.childCount;
+        totalGamesPlayed++;
+        bool won = GameManager.instance.RealEnemyCardArea.transform.childCount == 0;
 
-        if (childCount > 0)
+        foreach (var move in gameHistory)
         {
-            // Choose random card from hand
-            int randomIndex = UnityEngine.Random.Range(0, childCount);
-            Transform randomCard = GameManager.instance.RealEnemyCardArea.transform.GetChild(randomIndex);
-            randomCard.SetParent(GameManager.instance.DropZoneStack.transform, false);
-
-            Card cardRand = randomCard.GetComponent<Card>();
-            int cardNumberRand = GetCardNumber(cardRand.cardNumberString);
-
-            // Announce a valid number even though we're bluffing
-            lastPlayedCard = GetValidNumber(currentNumber);        
-
-            foreach (var pair in DragDrop.Instance._unityButtonsLairChoose)
+            float successFactor = won ? 1.2f : 0.8f;
+            if (!move.WasCaught)
             {
-                Button button = pair.Value.GetComponent<Button>();
-                if (button != null)
+                UpdateSuccessRate(move.CardNumber, true);
+                cardSuccessRates[move.CardNumber] *= successFactor;
+            }
+        }
+    }
+
+    #endregion
+
+    #region Helper and UI Methods
+    private bool FindValidCard(int currentNumber, out Transform cardTransform, out int cardNumber)
+    {
+        cardTransform = null;
+        cardNumber = -1;
+        int bestValue = -1;
+        float bestScore = float.MinValue;
+
+        foreach (Transform transform in GameManager.instance.RealEnemyCardArea.transform)
+        {
+            Card card = transform.GetComponent<Card>();
+            if (card != null)
+            {
+                int num = GetCardNumber(card.cardNumberString);
+                if (IsValidPlay(num, currentNumber))
                 {
-                    button.interactable = false;
+                    float score = EvaluateCardForPlay(num);
+                    if (score > bestScore)
+                    {
+                        bestScore = score;
+                        bestValue = num;
+                        cardTransform = transform;
+                    }
                 }
             }
-
-            switch (lastPlayedCard)
-            {
-                case 1:
-                    Debug.Log("Yes1");
-                    DragDrop.Instance._unityButtonsLairChoose["Button_ace"].GetComponent<Button>().interactable = true; //current
-                    DragDrop.Instance._unityButtonsLairChoose["Button_two"].GetComponent<Button>().interactable = true; //after
-                    DragDrop.Instance._unityButtonsLairChoose["Button_king"].GetComponent<Button>().interactable = true; //before
-                    break;
-                case 2:
-                    Debug.Log("Yes2");
-                    DragDrop.Instance._unityButtonsLairChoose["Button_two"].GetComponent<Button>().interactable = true; //current
-                    DragDrop.Instance._unityButtonsLairChoose["Button_three"].GetComponent<Button>().interactable = true; //after
-                    DragDrop.Instance._unityButtonsLairChoose["Button_ace"].GetComponent<Button>().interactable = true; //before
-                    break;
-                case 3:
-                    Debug.Log("Yes3");
-                    DragDrop.Instance._unityButtonsLairChoose["Button_three"].GetComponent<Button>().interactable = true; //current
-                    DragDrop.Instance._unityButtonsLairChoose["Button_four"].GetComponent<Button>().interactable = true; //after
-                    DragDrop.Instance._unityButtonsLairChoose["Button_two"].GetComponent<Button>().interactable = true; //before
-                    break;
-                case 4:
-                    Debug.Log("Yes4");
-                    DragDrop.Instance._unityButtonsLairChoose["Button_four"].GetComponent<Button>().interactable = true; //current
-                    DragDrop.Instance._unityButtonsLairChoose["Button_five"].GetComponent<Button>().interactable = true; //after
-                    DragDrop.Instance._unityButtonsLairChoose["Button_three"].GetComponent<Button>().interactable = true; //before
-                    break;
-                case 5:
-                    Debug.Log("Yes5");
-                    DragDrop.Instance._unityButtonsLairChoose["Button_five"].GetComponent<Button>().interactable = true; //current
-                    DragDrop.Instance._unityButtonsLairChoose["Button_six"].GetComponent<Button>().interactable = true; //after
-                    DragDrop.Instance._unityButtonsLairChoose["Button_four"].GetComponent<Button>().interactable = true; //before
-                    break;
-                case 6:
-                    Debug.Log("Yes6");
-                    DragDrop.Instance._unityButtonsLairChoose["Button_six"].GetComponent<Button>().interactable = true; //current
-                    DragDrop.Instance._unityButtonsLairChoose["Button_seven"].GetComponent<Button>().interactable = true; //after
-                    DragDrop.Instance._unityButtonsLairChoose["Button_five"].GetComponent<Button>().interactable = true; //before
-                    break;
-                case 7:
-                    Debug.Log("Yes7");
-                    DragDrop.Instance._unityButtonsLairChoose["Button_seven"].GetComponent<Button>().interactable = true; //current
-                    DragDrop.Instance._unityButtonsLairChoose["Button_eight"].GetComponent<Button>().interactable = true; //after
-                    DragDrop.Instance._unityButtonsLairChoose["Button_six"].GetComponent<Button>().interactable = true; //before
-                    break;
-                case 8:
-                    Debug.Log("Yes8");
-                    DragDrop.Instance._unityButtonsLairChoose["Button_eight"].GetComponent<Button>().interactable = true; //current
-                    DragDrop.Instance._unityButtonsLairChoose["Button_nine"].GetComponent<Button>().interactable = true; //after
-                    DragDrop.Instance._unityButtonsLairChoose["Button_seven"].GetComponent<Button>().interactable = true; //before
-                    break;
-                case 9:
-                    Debug.Log("Yes9");
-                    DragDrop.Instance._unityButtonsLairChoose["Button_nine"].GetComponent<Button>().interactable = true; //current
-                    DragDrop.Instance._unityButtonsLairChoose["Button_ten"].GetComponent<Button>().interactable = true; //after
-                    DragDrop.Instance._unityButtonsLairChoose["Button_eight"].GetComponent<Button>().interactable = true; //before
-                    break;
-                case 10:
-                    Debug.Log("Yes10");
-                    DragDrop.Instance._unityButtonsLairChoose["Button_ten"].GetComponent<Button>().interactable = true; //current
-                    DragDrop.Instance._unityButtonsLairChoose["Button_jack"].GetComponent<Button>().interactable = true; //after
-                    DragDrop.Instance._unityButtonsLairChoose["Button_nine"].GetComponent<Button>().interactable = true; //before
-                    break;
-                case 11:
-                    Debug.Log("Yes11");
-                    DragDrop.Instance._unityButtonsLairChoose["Button_jack"].GetComponent<Button>().interactable = true; //current
-                    DragDrop.Instance._unityButtonsLairChoose["Button_queen"].GetComponent<Button>().interactable = true; //after
-                    DragDrop.Instance._unityButtonsLairChoose["Button_ten"].GetComponent<Button>().interactable = true; //before
-                    break;
-                case 12:
-                    Debug.Log("Yes12");
-                    DragDrop.Instance._unityButtonsLairChoose["Button_queen"].GetComponent<Button>().interactable = true; //current
-                    DragDrop.Instance._unityButtonsLairChoose["Button_king"].GetComponent<Button>().interactable = true; //after
-                    DragDrop.Instance._unityButtonsLairChoose["Button_jack"].GetComponent<Button>().interactable = true; //before
-                    break;
-                case 13:
-                    Debug.Log("Yes13");
-                    DragDrop.Instance._unityButtonsLairChoose["Button_king"].GetComponent<Button>().interactable = true; //current
-                    DragDrop.Instance._unityButtonsLairChoose["Button_ace"].GetComponent<Button>().interactable = true; //after
-                    DragDrop.Instance._unityButtonsLairChoose["Button_queen"].GetComponent<Button>().interactable = true; //before
-                    break;
-                default:
-                    Debug.Log($"Yes{lastPlayedCard}");
-                    break;
-            }
-
-            AnnounceCardPlayed(lastPlayedCard, true);
         }
-        //else
-        //{
-        //    // Bot has no cards - game should end
-        //    CheckWinCondition();
-        //}
-    }
 
-    private void AnnounceCardPlayed(int cardNumber, bool isBluff)
-    {
-        string cardName = GetCardName(cardNumber);
-        string announcement = $"Bot played: {cardName}";
-        string message = $"Bot declared: {cardName}";
-        //need to output text "Bot Played {cardName}"
-        //StartCoroutine(showBotMessage($"Bot declared: {cardName}", 2f));  // Show for 2 seconds
-        StartCoroutine(gameManager.showBotMessage(message, 3f)); // Show message for 2 seconds
-
-        //if (announcementText != null)
-        //{
-        //    announcementText.text = announcement;
-        //}
-        Debug.Log(announcement + (isBluff ? " (Bluff)" : ""));
-    }
-
-    //private void EnablePlayerControls()
-    //{
-    //    _unityButtonLair["Button_Cheat"].GetComponent<Button>().interactable = true;
-
-    //    foreach (var pair in DragDrop.Instance._unityButtonsLairChoose)
-    //    {
-    //        Button button = pair.Value.GetComponent<Button>();
-    //        if (button != null)
-    //        {
-    //            button.interactable = true;
-    //        }
-    //    }
-    //}
-
-    private void UpdateCardCounts(int cardNum)
-    {
-        if (cardNum >= 1 && cardNum <= 13)
+        if (bestValue != -1)
         {
-            cardCounts[cardNum]++;
+            cardNumber = bestValue;
+            return true;
         }
+        return false;
     }
 
-    private int GetValidNumber(int currentNumber)
+    private float EvaluateCardForPlay(int cardNumber)
     {
-        int[] validNumbers = new int[3];
-        validNumbers[0] = currentNumber;
-        validNumbers[1] = (currentNumber + 1 > 13) ? 1 : currentNumber + 1;
-        validNumbers[2] = (currentNumber - 1 < 1) ? 13 : currentNumber - 1;
-        return validNumbers[UnityEngine.Random.Range(0, 3)];
+        int botHandSize = GameManager.instance.RealEnemyCardArea.transform.childCount;
+        float winningBonus = IsOptimalWinningPosition() ? 0.3f : 0;
+        float endGameBonus = (botHandSize <= 2) ? 0.2f : 0;
+
+        return cardSuccessRates[cardNumber] + winningBonus + endGameBonus;
     }
 
-    private string GetCardName(int cardNumber)
+    private bool IsValidPlay(int cardNumber, int currentNumber)
     {
-        switch (cardNumber)
-        {
-            case 1:
-                return "Ace";
-            case 11:
-                return "Jack";
-            case 12:
-                return "Queen";
-            case 13:
-                return "King";
-            default:
-                return cardNumber.ToString();
-        }
-    }
+        if (cardNumber < 1 || cardNumber > 13)
+            return false;
 
-    public void OnPlayerDroppedCard(int cardNum)
-    {
-        Debug.Log($"Bot received player dropped card: {cardNum}");
+        int next = (currentNumber + 1) > 13 ? 1 : currentNumber + 1;
+        int prev = (currentNumber - 1) < 1 ? 13 : currentNumber - 1;
+
+        return cardNumber == currentNumber || cardNumber == next || cardNumber == prev;
     }
 
     public int GetCardNumber(string cardNumberString)
     {
-        switch (cardNumberString)
+        switch (cardNumberString.ToLower())
         {
             case "ace":
                 return 1;
@@ -710,30 +594,144 @@ public class liarsLuckBot : MonoBehaviour
             case "king":
                 return 13;
             default:
-                
-                // Return -1 for invalid inputs
                 Debug.LogWarning($"Invalid card number string: {cardNumberString}");
                 return -1;
-                
         }
     }
 
-    /*public void SyncEnemyArea()
+    private void AnnounceCardPlayed(int cardNumber, bool isBluff)
     {
-        Transform enemyArea = GameManager.instance.EnemyArea.transform;
-        Transform realEnemyCardArea = GameManager.instance.RealEnemyCardArea.transform;
+        string cardName = GetCardDisplayName(cardNumber);
+        string message = $"Bot declared: {cardName}";
+        StartCoroutine(GameManager.instance.showBotMessage(message, 3f));
+    }
 
-        while (enemyArea.childCount > realEnemyCardArea.childCount)
+    private string GetCardDisplayName(int cardNumber)
+    {
+        switch (cardNumber)
         {
-            Destroy(enemyArea.GetChild(0).gameObject);
+            case 1:
+                return "Ace";
+            case 11:
+                return "Jack";
+            case 12:
+                return "Queen";
+            case 13:
+                return "King";
+            default:
+                return cardNumber.ToString();
         }
+    }
 
-        while (enemyArea.childCount < realEnemyCardArea.childCount)
+    public void OnPlayerDroppedCard(int cardNum)
+    {
+        try
         {
-            GameObject enemyCard = Instantiate(GameManager.instance.Card2, Vector3.zero, Quaternion.identity);
-            enemyCard.transform.SetParent(enemyArea, false);
+            if (cardNum >= 1 && cardNum <= 13)
+            {
+                //cardCounts[cardNum]++;
+                UpdatePlayerCardStats(cardNum);
+            }
         }
-    }*/
+        catch (System.Exception e)
+        {
+            Debug.LogError($"Error in OnPlayerDroppedCard: {e.Message}");
+        }
+    }
 
+    private void UpdatePlayerCardStats(int cardNum)
+    {
+        int playerHandSize = GameManager.instance.PlayerArea.transform.childCount;
+        if (playerHandSize <= 3)
+        {
+            playerBluffPatterns[cardNum] = playerBluffPatterns[cardNum] * 0.7f + 0.3f;
+        }
+    }
+
+    private void EnableRelevantButtons(int cardNumber)
+    {
+        try
+        {
+            foreach (var pair in DragDrop.Instance._unityButtonsLairChoose)
+            {
+                pair.Value.GetComponent<Button>().interactable = false;
+            }
+
+            GameManager.instance.chosenNumber = cardNumber;
+
+            switch (cardNumber)
+            {
+                case 1:
+                    DragDrop.Instance._unityButtonsLairChoose["Button_ace"].GetComponent<Button>().interactable = true;
+                    DragDrop.Instance._unityButtonsLairChoose["Button_two"].GetComponent<Button>().interactable = true;
+                    DragDrop.Instance._unityButtonsLairChoose["Button_king"].GetComponent<Button>().interactable = true;
+                    break;
+                case 2:
+                    DragDrop.Instance._unityButtonsLairChoose["Button_two"].GetComponent<Button>().interactable = true;
+                    DragDrop.Instance._unityButtonsLairChoose["Button_three"].GetComponent<Button>().interactable = true;
+                    DragDrop.Instance._unityButtonsLairChoose["Button_ace"].GetComponent<Button>().interactable = true;
+                    break;
+                case 3:
+                    DragDrop.Instance._unityButtonsLairChoose["Button_three"].GetComponent<Button>().interactable = true;
+                    DragDrop.Instance._unityButtonsLairChoose["Button_four"].GetComponent<Button>().interactable = true;
+                    DragDrop.Instance._unityButtonsLairChoose["Button_two"].GetComponent<Button>().interactable = true;
+                    break;
+                case 4:
+                    DragDrop.Instance._unityButtonsLairChoose["Button_four"].GetComponent<Button>().interactable = true;
+                    DragDrop.Instance._unityButtonsLairChoose["Button_five"].GetComponent<Button>().interactable = true;
+                    DragDrop.Instance._unityButtonsLairChoose["Button_three"].GetComponent<Button>().interactable = true;
+                    break;
+                case 5:
+                    DragDrop.Instance._unityButtonsLairChoose["Button_five"].GetComponent<Button>().interactable = true;
+                    DragDrop.Instance._unityButtonsLairChoose["Button_six"].GetComponent<Button>().interactable = true;
+                    DragDrop.Instance._unityButtonsLairChoose["Button_four"].GetComponent<Button>().interactable = true;
+                    break;
+                case 6:
+                    DragDrop.Instance._unityButtonsLairChoose["Button_six"].GetComponent<Button>().interactable = true;
+                    DragDrop.Instance._unityButtonsLairChoose["Button_seven"].GetComponent<Button>().interactable = true;
+                    DragDrop.Instance._unityButtonsLairChoose["Button_five"].GetComponent<Button>().interactable = true;
+                    break;
+                case 7:
+                    DragDrop.Instance._unityButtonsLairChoose["Button_seven"].GetComponent<Button>().interactable = true;
+                    DragDrop.Instance._unityButtonsLairChoose["Button_eight"].GetComponent<Button>().interactable = true;
+                    DragDrop.Instance._unityButtonsLairChoose["Button_six"].GetComponent<Button>().interactable = true;
+                    break;
+                case 8:
+                    DragDrop.Instance._unityButtonsLairChoose["Button_eight"].GetComponent<Button>().interactable = true;
+                    DragDrop.Instance._unityButtonsLairChoose["Button_nine"].GetComponent<Button>().interactable = true;
+                    DragDrop.Instance._unityButtonsLairChoose["Button_seven"].GetComponent<Button>().interactable = true;
+                    break;
+                case 9:
+                    DragDrop.Instance._unityButtonsLairChoose["Button_nine"].GetComponent<Button>().interactable = true;
+                    DragDrop.Instance._unityButtonsLairChoose["Button_ten"].GetComponent<Button>().interactable = true;
+                    DragDrop.Instance._unityButtonsLairChoose["Button_eight"].GetComponent<Button>().interactable = true;
+                    break;
+                case 10:
+                    DragDrop.Instance._unityButtonsLairChoose["Button_ten"].GetComponent<Button>().interactable = true;
+                    DragDrop.Instance._unityButtonsLairChoose["Button_jack"].GetComponent<Button>().interactable = true;
+                    DragDrop.Instance._unityButtonsLairChoose["Button_nine"].GetComponent<Button>().interactable = true;
+                    break;
+                case 11:
+                    DragDrop.Instance._unityButtonsLairChoose["Button_jack"].GetComponent<Button>().interactable = true;
+                    DragDrop.Instance._unityButtonsLairChoose["Button_queen"].GetComponent<Button>().interactable = true;
+                    DragDrop.Instance._unityButtonsLairChoose["Button_ten"].GetComponent<Button>().interactable = true;
+                    break;
+                case 12:
+                    DragDrop.Instance._unityButtonsLairChoose["Button_queen"].GetComponent<Button>().interactable = true;
+                    DragDrop.Instance._unityButtonsLairChoose["Button_king"].GetComponent<Button>().interactable = true;
+                    DragDrop.Instance._unityButtonsLairChoose["Button_jack"].GetComponent<Button>().interactable = true;
+                    break;
+                case 13:
+                    DragDrop.Instance._unityButtonsLairChoose["Button_king"].GetComponent<Button>().interactable = true;
+                    DragDrop.Instance._unityButtonsLairChoose["Button_ace"].GetComponent<Button>().interactable = true;
+                    DragDrop.Instance._unityButtonsLairChoose["Button_queen"].GetComponent<Button>().interactable = true;
+                    break;
+            }
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"Error in EnableRelevantButtons: {e.Message}");
+        }
+    }
     #endregion
 }
