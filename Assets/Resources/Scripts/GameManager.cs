@@ -282,7 +282,7 @@ public class GameManager : MonoBehaviour
                 }
                 Debug.Log("Bot was lying! Cards moved to the bot's hand.");
                 message = $"Bot was lying!";
-                StartCoroutine(showLairMessage(message, 3f));
+                StartCoroutine(showLairMessage(message, 4f));
                 //liarsLuckBot.Instance.SyncEnemyArea();
             }
             else
@@ -297,7 +297,7 @@ public class GameManager : MonoBehaviour
                 }
                 Debug.Log("Bot was truthful. Cards moved to the player's hand.");
                 message = $"Bot was truthful";
-                StartCoroutine(showLairMessage(message, 3f));
+                StartCoroutine(showLairMessage(message, 4f));
             }
         }
         else
@@ -315,7 +315,7 @@ public class GameManager : MonoBehaviour
                 }
                 Debug.Log("Player was lying! Cards moved to the player's hand.");
                 message = $"Player was lying!";
-                StartCoroutine(showLairMessage(message, 3f));
+                StartCoroutine(showLairMessage(message, 4f));
             }
             else
             {
@@ -328,7 +328,7 @@ public class GameManager : MonoBehaviour
                 }
                 Debug.Log("Player was truthful.Cards moved to the bot's hand.");
                 message = $"Player was truthful";
-                StartCoroutine(showLairMessage(message, 3f));
+                StartCoroutine(showLairMessage(message, 4f));
                // liarsLuckBot.Instance.SyncEnemyArea();
 
             }
