@@ -101,6 +101,7 @@ public class MenuLogic : MonoBehaviour
     }
     public void BTN_SingleplayerLogic()
     {
+        GameManager.instance.BTN_Replay();
         StartCoroutine(openLaoding(GameScreens.Singleplayer));
     }
 

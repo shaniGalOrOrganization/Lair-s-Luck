@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour
     public void Start()
     {
         winPopupPanel.SetActive(false);
-        DrawCards.instance.initGame();
+        //DrawCards.instance.initGame();
     }
 
     //public void Start()
