@@ -10,15 +10,7 @@ public class Deck : MonoBehaviour
     [SerializeField] private GameObject cardPrefab;
     public GameObject DeckButton;
     public List<Card> cards = new List<Card>();
-    // private Card lastCard;
-
-    #endregion
-
-    #region MonoBehaviour
-    void Awake()
-    {
-        //createDeck();
-    }
+    
 
     #endregion
 
@@ -29,10 +21,8 @@ public class Deck : MonoBehaviour
 
         foreach (Sprite sprite in Resources.LoadAll<Sprite>("Sprits/cards"))
         {
-            //Debug.Log(sprite == null);
             card = createCard(sprite);
             cards.Add(card);
-
         }
     }
 
@@ -43,8 +33,6 @@ public class Deck : MonoBehaviour
         string cardNumber = cardInfo[1];
         GameObject cardObject = Instantiate(cardPrefab, GameManager.instance.DeckArray.transform);
 
-        //Debug.Log(sprite.name);
-
         if (cardObject == null)
         {
             Debug.LogError("Failed to instantiate cardPrefab.");
@@ -53,29 +41,24 @@ public class Deck : MonoBehaviour
 
         Card card = cardObject.GetComponent<Card>();
         card.SetupCard(cardSuit, cardNumber, sprite);
-        //Debug.Log(card == null);
         return card;
     }
 
     public Card drawCard()
     {
-        if (cards.Count > 0)
+        // Disable the button if the deck is empty
+        if (cards.Count == 0)
         {
-            int index = Random.Range(0, cards.Count);
-            Card card = cards[index];
-            cards.RemoveAt(index);
-            return card;
-        }
-
-        if(cards.Count == 0)
-        {
-            DeckButton.GetComponent<Button>().interactable = false;  
-            Debug.LogWarning("No cards left to draw.");
+            DeckButton.GetComponent<Button>().interactable = false;
             return null;
         }
-        return null;
+
+        int index = Random.Range(0, cards.Count);
+        Card card = cards[index];
+        cards.RemoveAt(index);
+        return card;
     }
 
-  
+
     #endregion
 }

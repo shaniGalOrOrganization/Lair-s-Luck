@@ -12,21 +12,12 @@ public class DragDrop : MonoBehaviour
     private bool isOverDropZone = false;
     private Vector2 startPosition;
     public Dictionary<string, GameObject> _unityButtonsLairChoose = new Dictionary<string, GameObject>();
-    //private GameObject botScript;
     public static DragDrop Instance { get; private set; }
-    //GameObject _lastDropZone;
     #endregion
 
 
     #region MonoBehaviour
 
-    public void Start()
-    {
-        //  GameManager.instance.bot = GameObject.Find("Bot");
-        //botScript = GameManager.instance.bot.GetComponent<liarsLuckBot>();
-    }
-
-    //_unityButtonsLairChoose["name"].SetActive(true);
     void Awake()
     {
         Instance = this;
@@ -60,7 +51,6 @@ public class DragDrop : MonoBehaviour
         if (collision.collider.CompareTag("dropZone"))
         {
             isOverDropZone = true;
-     //       GameManager.instance.Dropzone = collision.gameObject;
         }
     }
 
@@ -69,8 +59,6 @@ public class DragDrop : MonoBehaviour
         if (collision.collider.CompareTag("dropZone"))
         {
             isOverDropZone = false;
-            //GameManager.instance.Dropzone = _lastDropZone;
-            //GameManager.instance.Dropzone = null;
         }
     }
 
@@ -142,7 +130,6 @@ public class DragDrop : MonoBehaviour
                     {
                         Debug.LogError($"Invalid card number string: {lastCardData.cardNumberString}");
                     }
-                  //  Debug.Log($"Switch: { currentNumber}  ");
                     switch ((int)currentNumber)
                     {
                         case 1:
@@ -215,14 +202,6 @@ public class DragDrop : MonoBehaviour
                             break;
                     }
                 }
-                //else
-                //{
-                //    // Bot has no cards - game should end
-                //    CheckWinCondition();
-                //}
-
-                //GameManager.instance.checkchosencard();
-                // Debug.Log(GameManager.instance.AnnounceLie);
                 GameManager.instance.LairButton.interactable = false;
                 GameManager.instance.TransferCardAndHide();
             }
@@ -231,8 +210,6 @@ public class DragDrop : MonoBehaviour
         {
             transform.position = startPosition;
         }
-
-       // liarsLuckBot.Instance.();
     }
     #endregion
 }
