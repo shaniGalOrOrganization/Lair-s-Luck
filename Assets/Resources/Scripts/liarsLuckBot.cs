@@ -602,7 +602,7 @@ public class liarsLuckBot : MonoBehaviour
     {
         string cardName = GetCardDisplayName(cardNumber);
         string message = $"Bot declared: {cardName}";
-        StartCoroutine(GameManager.instance.showBotMessage(message, 3f));
+        StartCoroutine(GameManager.instance.showBotMessage(message, 4f));
     }
 
     private string GetCardDisplayName(int cardNumber)
