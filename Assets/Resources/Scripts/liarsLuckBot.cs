@@ -291,7 +291,6 @@ public class liarsLuckBot : MonoBehaviour
         // 2. Player has history of bluffing with this card
         // 3. Critical game state (near end)
         return (bluffProbability > 0.7f && playerHandSize <= 3) ||
-               //(playerPattern > 0.8f && cardCounts[declaredCard] > 1) ||
                (playerHandSize <= 2 && cardCounts[declaredCard] > 1);
     }
 
@@ -629,7 +628,6 @@ public class liarsLuckBot : MonoBehaviour
         {
             if (cardNum >= 1 && cardNum <= 13)
             {
-                //cardCounts[cardNum]++;
                 UpdatePlayerCardStats(cardNum);
             }
         }

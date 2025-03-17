@@ -10,11 +10,7 @@ public class DrawCards : MonoBehaviour
     #endregion
 
     #region MonoBehaviour
-    void Start()
-    {
-        //GameManager.instance.deck.createDeck();
-        //initGame();
-    }
+    
 
     void Awake()
     {
@@ -77,15 +73,6 @@ public class DrawCards : MonoBehaviour
                     realEnemyCard.transform.SetParent(GameManager.instance.RealEnemyCardArea.transform, false);
                 }
             }
-
-            //Card firstCard = GameManager.instance.deck.drawCard();
-            //if (firstCard != null)
-            //{
-            //    firstCard.transform.SetParent(GameManager.instance.Dropzone.transform, false);
-            //    Card firstCardDup = Instantiate(firstCard, GameManager.instance.DropZoneStack.transform, false);
-            //}
-
-            //liarsLuckBot.Instance.InitializeBot();
 
             Card firstCard = GameManager.instance.deck.drawCard();
             if (firstCard != null)

@@ -14,7 +14,6 @@ public class GameManager : MonoBehaviour
     #region Variable
     public bool AnnounceLie;
     public bool isPlayerTurn = true;
-    //public static bool isEnemyTurn = true;
     public bool PlayerAnnounceLie = false;
     public bool EnemyAnnounceLie = false;
     public bool EndFlag = false;
@@ -44,8 +43,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI winPopupText;
     public  static GameManager instance { get; private set; }
 
-    //public GameObject bot;
-    //private liarsLuckBot botScript;
 
     #endregion
 
@@ -57,19 +54,6 @@ public class GameManager : MonoBehaviour
         DrawCards.instance.initGame();
     }
 
-    //public void Start()
-    //{
-    //    //botScript = bot.GetComponent<liarsLuckBot>();
-
-    //    //List<int> botCards = new List<int>();
-    //    //// TBD:
-    //    //// for ....
-    //    ////    botCards.Add(cardNumber);
-    //    //totalUnseenCards = 52 - 10;
-    //    //botScript.InitializeBot(initialHand,totalUnseenCards);
-    //}
-
-    // Start is called before the first frame update
 
     void Awake()
     {
@@ -222,14 +206,10 @@ public class GameManager : MonoBehaviour
 
     public void checkchosencard(int ButtonChoosed)
     {
-        //transform.SetParent(Dropzone.transform, false);
         int childCount = DropZoneStack.transform.childCount;
         if (childCount > 0)
         {
             Transform lastChild = DropZoneStack.transform.GetChild(childCount - 1);
-            //Transform prevChild = Dropzone.transform.GetChild(childCount - 2);
-            //Transform prevChild = Dropzone.transform.GetChild(childCount - 2);
-
             Card lastCardData = lastChild.GetComponent<Card>();
 
             if (lastCardData != null)
@@ -264,18 +244,14 @@ public class GameManager : MonoBehaviour
 
             Debug.Log($"currentlast:{currentlast}, beforeprev: {beforeprev},afterprev: {afterprev}, currentprev:{currentprev}");
 
-
-            //if ((currentlast != currentprev) && (currentlast != beforeprev) && (currentlast != afterprev))
             if(currentlast != currentprev)
             {
                 AnnounceLie = true;
-              //  Debug.Log("Liar");
                 Debug.Log("Liar");
             }
             else
             {
                 AnnounceLie = false;
-                //Debug.Log("Not liar");
                 Debug.Log("Not liar");
             }
 
@@ -309,9 +285,8 @@ public class GameManager : MonoBehaviour
                     card.SetParent(RealEnemyCardArea.transform, false);
                 }
                 Debug.Log("Bot was lying! Cards moved to the bot's hand.");
-                message = $"Bot was lying!";
+                message = $"<color=red>Bot was lying!</color>";
                 StartCoroutine(showLairMessage(message, 3f));
-                //liarsLuckBot.Instance.SyncEnemyArea();
             }
             else
             {
@@ -324,7 +299,7 @@ public class GameManager : MonoBehaviour
                     card.SetParent(PlayerArea.transform, false);
                 }
                 Debug.Log("Bot was truthful. Cards moved to the player's hand.");
-                message = $"Bot was truthful";
+                message = $"<color=green>Bot was truthful</color>";
                 StartCoroutine(showLairMessage(message, 3f));
             }
         }
@@ -342,7 +317,7 @@ public class GameManager : MonoBehaviour
                    
                 }
                 Debug.Log("Player was lying! Cards moved to the player's hand.");
-                message = $"Player was lying!";
+                message = $"<color=red>Player was lying!</color>"; ;
                 StartCoroutine(showLairMessage(message, 3f));
             }
             else
@@ -355,10 +330,8 @@ public class GameManager : MonoBehaviour
                     card.SetParent(RealEnemyCardArea.transform, false);
                 }
                 Debug.Log("Player was truthful.Cards moved to the bot's hand.");
-                message = $"Player was truthful";
+                message = $"<color=green>Player was truthful</color>";
                 StartCoroutine(showLairMessage(message, 3f));
-               // liarsLuckBot.Instance.SyncEnemyArea();
-
             }
         }
 
@@ -465,25 +438,6 @@ public class GameManager : MonoBehaviour
 
     public void BTN_Replay()
     {
-        ////Debug.Log(Dropzone.transform.childCount, Dropzone.gameObject);
-        //Transform firstCard = Dropzone.transform.GetChild(0);
-        //firstCard.SetParent(DeckArray.transform, false);
-        ////Debug.Log(Dropzone.transform.childCount, Dropzone.gameObject);
-        ////Debug.Log(firstCard.name ,firstCard.gameObject);
-        //returnCardsToDeck(DropZoneStack);
-        //returnCardsToDeck(PlayerArea);
-        //returnCardsToDeck(RealEnemyCardArea);
-
-        //foreach (Transform child in EnemyArea.transform)
-        //{
-        //    Destroy(child.gameObject);
-        //}
-
-        //foreach (Transform child in Dropzone.transform)
-        //{
-        //    Destroy(child.gameObject);
-        //}
-
         Debug.Log($"Dropzone : {Dropzone.transform.childCount}, DropZoneStack : {DropZoneStack.transform.childCount},PlayerArea : {PlayerArea.transform.childCount}" +
             $",RealEnemyCardArea : {RealEnemyCardArea.transform.childCount},EnemyArea : {EnemyArea.transform.childCount}, DeckArray: {DeckArray.transform.childCount}");
 
